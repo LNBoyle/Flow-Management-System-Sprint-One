@@ -1,7 +1,7 @@
 <%-- 
     Document   : newjsp
-    Created on : 21 Jan 2019, 20:13:36
-    Author     : lboyl
+    Created on : 21-Jan-2019, 20:11:18
+    Author     : Sebastian
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,7 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>This is a test</title>
+        <title>JSP Page</title>
+
     </head>
     <body>
         <h1>Hello World!</h1>
