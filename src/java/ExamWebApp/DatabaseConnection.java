@@ -34,6 +34,14 @@ public class DatabaseConnection {
         }
     }
 
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+
     public boolean checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
