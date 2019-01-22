@@ -20,6 +20,13 @@ public class DatabaseConnection {
         String username = "18agileteam8";
         String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
         
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver loaded!");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
+        }
+        
         try{
             conn = DriverManager.getConnection(address, username, password);
         }catch(SQLException exc){
