@@ -68,10 +68,12 @@ CREATE TABLE `EXAM` (
   `Deadline` date DEFAULT NULL,
   `Status` varchar(20) DEFAULT NULL,
   `File` blob DEFAULT NULL,
-  `AssignedTo` varchar(40) DEFAULT NULL,
+  `AssignedTo` int(10) DEFAULT NULL,
   PRIMARY KEY (`ExamID`),
   KEY `fk_EXAM_USER1` (`AuthorID`),
-  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `fk_EXAM_USER2` (`AssignedTo`),
+  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_EXAM_USER2` FOREIGN KEY (`AssignedTo`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `EXAM` WRITE;
@@ -79,7 +81,11 @@ LOCK TABLES `EXAM` WRITE;
 INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCode`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`File`,`AssignedTo`)
 VALUES
 
-	(00000001,'Agile Software Engineering','Science and Engineering','AC310001','2019-01-21',00010002,'2019-01-29','New',NULL,'Calum');
+	(00000001,'Agile Software Engineering','Science and Engineering','AC310001','2019-01-21',00010002,'2019-01-29','New',NULL,00010006),
+  (00000002,'AI and Algorithims','Science and Engineering','AC330001','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006),
+  (00000003,'Multi Paradigm','Science and Engineering','AC320001','2019-01-22',00010004,'2019-01-29','Completed',NULL,'Calum'),
+  (00000004,'Web Authoring','Science and Engineering','AC350001','2019-01-22',00010003,'2019-01-29','CompletedCompleted',NULL,00010006),
+  (00000005,'Data Structures','Science and Engineering','AC380001','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
