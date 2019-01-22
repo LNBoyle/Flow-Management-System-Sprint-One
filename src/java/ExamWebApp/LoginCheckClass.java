@@ -6,16 +6,11 @@
 package ExamWebApp;
 
 public class LoginCheckClass {
-    
-    public static String makeItLower(String input){
-        return input.toLowerCase();
-    }
-    
+
     public static boolean checkStaffLogin(String userEmail, String userPassword){
-        String email = "test.user@dundee.ac.uk";
-        String password = "Test123";
+        DatabaseConnection checkStaffdb = new DatabaseConnection();
         
-        if(email.equals(userEmail) && password.equals(userPassword)){
+        if(checkStaffdb.checkUser(userEmail, userPassword)){
             return true;
         }else{
             return false;

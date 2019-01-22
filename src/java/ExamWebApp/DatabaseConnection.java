@@ -11,37 +11,35 @@ import java.sql.*;
  */
 public class DatabaseConnection {
     
-    Connection conn = null;
-    Statement stmt = null;
-    ResultSet reslt = null;
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet reslt = null;
     
-    public void connect()throws SQLException{
- 
+    public DatabaseConnection(){
         String password = "8326.at8.6238";
         String username = "18agileteam8";
         String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
         
         try{
             conn = DriverManager.getConnection(address, username, password);
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+    }
+
+    public boolean checkUser(String email, String password){
+        try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("select * from user");
-            while(reslt.next()){
-                System.out.println(reslt.getString("FirstName") + ", " + reslt.getString("Surname"));
+            reslt = stmt.executeQuery("select UserID from user where Email = '" + email + "' and Password = '" + password + "';");
+            
+            if(reslt.next()){
+                return true;
+            }else{
+                return false;
             }
         }catch(SQLException exc){
-        } finally{
-            if(reslt !=null){
-                reslt.close();
-            }
-            
-            if(stmt !=null){
-                stmt.close();
-            }
-            
-            if(conn !=null){
-                conn.close();
-            }
+            System.out.println("Error: " + exc);
         }
-    }  
-    
+        return false;
+    } 
 }
