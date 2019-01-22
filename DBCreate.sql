@@ -84,7 +84,7 @@ VALUES
 	(00000001,'Agile Software Engineering','Science and Engineering','AC310001','2019-01-21',00010002,'2019-01-29','New',NULL,00010006),
   (00000002,'AI and Algorithims','Science and Engineering','AC330001','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006),
   (00000003,'Multi Paradigm','Science and Engineering','AC320001','2019-01-22',00010004,'2019-01-29','Completed',NULL,'Calum'),
-  (00000004,'Web Authoring','Science and Engineering','AC350001','2019-01-22',00010003,'2019-01-29','CompletedCompleted',NULL,00010006),
+  (00000004,'Web Authoring','Science and Engineering','AC350001','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006),
   (00000005,'Data Structures','Science and Engineering','AC380001','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
