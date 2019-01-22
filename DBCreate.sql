@@ -46,7 +46,7 @@ VALUES
 	(00010003,'Calum','Scott','External Examiner','c.scott@dundee.ac.uk','Calum1'),
 	(00010004,'Iain','Murray','Exam Vetting Comittee','i.murray@dundee.ac.uk','IDog123'),
   (00010005,'Craig','Ramsey','Local Exam Officer','c.ramsey@dundee.ac.uk','CR123'),
-  (00010006,'Matthew','Daldry','School Office','i.murray@dundee.ac.uk','IDog123');
+  (00010006,'Matthew','Daldry','School Office','m.daldry@dundee.ac.uk','MD123');
 	
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
