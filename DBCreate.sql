@@ -28,6 +28,8 @@ USE `18agileteam8db`;
 DROP TABLE IF EXISTS `USER`;
 
 CREATE TABLE `USER` (
+  `Email` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL,
   `FirstName` varchar(20) NOT NULL,
   `Surname` varchar(20) NOT NULL,
   `Role` varchar(45) DEFAULT NULL,
@@ -37,12 +39,14 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Role`)
+INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`)
 VALUES
-	(00010001,'Liam','Boyle','Admin'),
-	(00010002,'Sebastian','Salek','Lecturer'),
-	(00010003,'Calum','Scott','Examiner'),
-	(00010004,'Iain','Murray','Lecturer');
+	(00010001,'Liam','Boyle','Internal Moderator','l.boyle@dundee.ac.uk','Liam123'),
+	(00010002,'Sebastian','Salek','Internal Moderator','s.salek@dundee.ac.uk','Sebastian567'),
+	(00010003,'Calum','Scott','External Examiner','c.scott@dundee.ac.uk','Calum1'),
+	(00010004,'Iain','Murray','Exam Vetting Comittee','i.murray@dundee.ac.uk','IDog123'),
+  (00010005,'Craig','Ramsey','Local Exam Officer','c.ramsey@dundee.ac.uk','CR123'),
+  (00010006,'Matthew','Daldry','School Office','i.murray@dundee.ac.uk','IDog123');
 	
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
