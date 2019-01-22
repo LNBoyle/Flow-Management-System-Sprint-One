@@ -34,20 +34,24 @@ public class DatabaseConnection {
         }
     }
 
-    public boolean checkUser(String email, String password){
+    public String checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("select UserID from user where Email = '" + email + "' and Password = '" + password + "';");
-            
-            if(reslt.next()){
-                return true;
+            reslt = stmt.executeQuery("SELECT Role FROM user WHERE Email = '" + email + "' AND Password = '" + password + "';");
+           // reslt.next();
+            String role = null;// = reslt.getString(1);
+            while(reslt.next()){
+                role = reslt.getString(1);
+            }
+            if(role != null){
+                return role;
             }else{
-                return false;
+                return null;
             }
         }catch(SQLException exc){
             System.out.println("Error: " + exc);
         }
-        return false;
+        return null;
     } 
     
     //Function that returns the module code for a given exam
