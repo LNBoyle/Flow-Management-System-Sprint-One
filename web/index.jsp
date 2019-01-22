@@ -21,9 +21,6 @@
 
 
 <body>
-
-    <a id="menu-toggle" href="staffUnlock.php" class="btn btn-dark btn-lg toggle"><i class="fa fa-lock"></i></a>
-    
     <!-- Login Form -->
     <div class="container">
         <div class="card card-container">
