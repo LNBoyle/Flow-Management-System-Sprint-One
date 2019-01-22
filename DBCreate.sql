@@ -67,7 +67,7 @@ CREATE TABLE `EXAM` (
   `AuthorID` int(10) DEFAULT NULL,
   `Deadline` date DEFAULT NULL,
   `Status` varchar(20) DEFAULT NULL,
-  `File` blob DEFAULT NULL,
+  `File` longblob DEFAULT NULL,
   `AssignedTo` int(10) DEFAULT NULL,
   PRIMARY KEY (`ExamID`),
   KEY `fk_EXAM_USER1` (`AuthorID`),
