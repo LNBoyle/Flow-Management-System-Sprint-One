@@ -11,11 +11,12 @@ import java.sql.*;
  */
 public class DatabaseConnection {
     
-    public static void main(String[] args) throws SQLException{
-       
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet reslt = null;
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet reslt = null;
+    
+    public void connect()throws SQLException{
+ 
         String password = "8326.at8.6238";
         String username = "18agileteam8";
         String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
@@ -27,8 +28,7 @@ public class DatabaseConnection {
             while(reslt.next()){
                 System.out.println(reslt.getString("FirstName") + ", " + reslt.getString("Surname"));
             }
-        }catch(Exception exc){
-            exc.printStackTrace();
+        }catch(SQLException exc){
         } finally{
             if(reslt !=null){
                 reslt.close();
@@ -42,11 +42,6 @@ public class DatabaseConnection {
                 conn.close();
             }
         }
-    }
-    
-    
-    public static void connect(){
-    
     }  
     
 }
