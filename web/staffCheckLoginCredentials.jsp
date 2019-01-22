@@ -15,14 +15,26 @@
         //testPackage.MyClass.checkStaffLogin(email, password);
         
         LoginCheckClass login = new LoginCheckClass();
-        
-        if(login.checkStaffLogin(email, password) == true){
-            out.println("logged in");
-            %><br><%
-                out.println("Welcome " + email);
-            %><br><%    
+        String role = login.checkStaffLogin(email, password);
+        if(role != null){
+            if(role.equals("Local Exam Officer")){
+                response.sendRedirect("LocalExamOfficerDashboard.jsp");
+            }else if(role.equals("Exam Vetting Comittee")){
+                response.sendRedirect("ExamVettingComitteeDashboard.jsp");
+            }else if(role.equals("Internal Moderator")){
+                response.sendRedirect("InternalModDashboard.jsp");
+            }else if(role.equals("School Office")){
+                response.sendRedirect("SchoolOfficeDashboard.jsp");
+            }else if(role.equals("External Examiner")){
+                response.sendRedirect("ExternalExaminerDashboard.jsp");
+            }
         }else{
-            out.println("not logged in");
+            %>
+            <script>
+                alert("Incorrect Login Credentials");
+                window.location = "index.jsp";
+            </script>
+            <%
         }
         
         %>
