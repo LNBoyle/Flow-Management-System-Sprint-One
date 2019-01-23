@@ -28,6 +28,8 @@ USE `18agileteam8db`;
 DROP TABLE IF EXISTS `USER`;
 
 CREATE TABLE `USER` (
+  `Email` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL,
   `FirstName` varchar(20) NOT NULL,
   `Surname` varchar(20) NOT NULL,
   `Role` varchar(45) DEFAULT NULL,
@@ -37,12 +39,14 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Role`)
+INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`)
 VALUES
-	(00010001,'Liam','Boyle','Admin'),
-	(00010002,'Sebastian','Salek','Lecturer'),
-	(00010003,'Calum','Scott','Examiner'),
-	(00010004,'Iain','Murray','Lecturer');
+	(00010001,'Liam','Boyle','Internal Moderator','l.boyle@dundee.ac.uk','Liam123'),
+	(00010002,'Sebastian','Salek','Internal Moderator','s.salek@dundee.ac.uk','Sebastian567'),
+	(00010003,'Calum','Scott','External Examiner','c.scott@dundee.ac.uk','Calum1'),
+	(00010004,'Iain','Murray','Exam Vetting Comittee','i.murray@dundee.ac.uk','IDog123'),
+  (00010005,'Craig','Ramsey','Local Exam Officer','c.ramsey@dundee.ac.uk','CR123'),
+  (00010006,'Matthew','Daldry','School Office','m.daldry@dundee.ac.uk','MD123');
 	
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
@@ -63,11 +67,13 @@ CREATE TABLE `EXAM` (
   `AuthorID` int(10) DEFAULT NULL,
   `Deadline` date DEFAULT NULL,
   `Status` varchar(20) DEFAULT NULL,
-  `File` blob DEFAULT NULL,
-  `AssignedTo` varchar(40) DEFAULT NULL,
+  `File` longblob DEFAULT NULL,
+  `AssignedTo` int(10) DEFAULT NULL,
   PRIMARY KEY (`ExamID`),
   KEY `fk_EXAM_USER1` (`AuthorID`),
-  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `fk_EXAM_USER2` (`AssignedTo`),
+  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_EXAM_USER2` FOREIGN KEY (`AssignedTo`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `EXAM` WRITE;
@@ -75,7 +81,11 @@ LOCK TABLES `EXAM` WRITE;
 INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCode`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`File`,`AssignedTo`)
 VALUES
 
-	(00000001,'Agile Software Engineering','Science and Engineering','AC310001','2019-01-21',00010002,'2019-01-29','New',NULL,'Calum');
+	(00000001,'Agile Software Engineering','Science and Engineering','AC310001','2019-01-21',00010002,'2019-01-29','New',NULL,00010006),
+  (00000002,'AI and Algorithims','Science and Engineering','AC330001','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006),
+  (00000003,'Multi Paradigm','Science and Engineering','AC320001','2019-01-22',00010004,'2019-01-29','Completed',NULL,00010006),
+  (00000004,'Web Authoring','Science and Engineering','AC350001','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006),
+  (00000005,'Data Structures','Science and Engineering','AC380001','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
