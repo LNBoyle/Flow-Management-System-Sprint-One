@@ -139,21 +139,26 @@ public class DatabaseConnection {
               reslt.beforeFirst();
             }
             CompletedRows = rows;
-            String[][] completedExams = new String[rows][10];
+            String[][] completedExams = new String[rows][14];
             int i = 0;
             while(reslt.next()){
                     completedExams[i][0] = reslt.getString("ExamID");
                     completedExams[i][1] = reslt.getString("Title");
                     completedExams[i][2] = reslt.getString("School");
-                    completedExams[i][3] = reslt.getString("ModuleCode");
-                    completedExams[i][4] = reslt.getString("DateCreated");
-                    completedExams[i][5] = reslt.getString("AuthorID");
-                    completedExams[i][6] = reslt.getString("Deadline");
-                    completedExams[i][7] = reslt.getString("Status");
-                    completedExams[i][8] = reslt.getString("File");
-                    completedExams[i][9] = reslt.getString("AssignedTo");
+                    completedExams[i][3] = reslt.getString("ModuleCoordinator");
+                    completedExams[i][4] = reslt.getString("ModuleCode");
+                    completedExams[i][5] = reslt.getString("ExamType");
+                    completedExams[i][6] = reslt.getString("ExamPeriod");
+                    completedExams[i][7] = reslt.getString("ExamLevel");
+                    completedExams[i][8] = reslt.getString("DateCreated");
+                    completedExams[i][9] = reslt.getString("AuthorID");
+                    completedExams[i][10] = reslt.getString("Deadline");
+                    completedExams[i][11] = reslt.getString("Status");
+                    completedExams[i][12] = reslt.getString("File");
+                    completedExams[i][13] = reslt.getString("AssignedTo");
                     i++;
             }
+            
             if(completedExams != null){
                 return completedExams;
             }else{
