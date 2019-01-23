@@ -147,7 +147,7 @@ VALUES
   ('Internal Moderator',NULL),
   ('External Examiner',NULL),
   ('Exam Vetting Comittee',NULL),
-  ('Exam Setter'NULL);
+  ('Exam Setter',NULL);
 
 /*!40000 ALTER TABLE `DEADLINE` ENABLE KEYS */;
 UNLOCK TABLES;
