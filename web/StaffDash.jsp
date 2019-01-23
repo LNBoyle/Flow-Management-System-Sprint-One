@@ -28,21 +28,21 @@
         
         <%
             if ((request.getParameter("upload") !=null)) {
-                out.print("upload exam files");
+                out.println("upload exam files");
             }
                     
         %>
         
         <%
             if ((request.getParameter("edit") !=null)) {
-                out.print("edit exam files");
+                out.println("edit exam files");
             }
                     
         %>
         
         <%
             if ((request.getParameter("view") !=null)) {
-                out.print("view exam files");
+                out.println("view exam files");
             }
                     
         %>
