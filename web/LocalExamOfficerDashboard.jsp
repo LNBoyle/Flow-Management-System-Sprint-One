@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="adminHome.css">
+        <link href="css/LocalExamOfficer.css" rel="stylesheet" type="text/css" >
         <title>Welcome Local Exam Officer</title>
     </head>
     <body>
