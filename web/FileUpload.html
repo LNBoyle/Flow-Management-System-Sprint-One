@@ -14,8 +14,21 @@ and open the template in the editor.
       Select a file to upload: <br />
       <form action = "uploadServlet" method = "post"
          enctype = "multipart/form-data">
-         <input type = "file" name = "file" size = "50" />
+         <input type = "text" name = "ExamID" size = "50" />
          <br />
+         <input type = "text" name = "Title" size = "50" />
+         <br>
+         <input type = "file" name = "School" size = "50" />
+         <br>
+         <input type = "file" name = "ModuleCode" size = "50" />
+         <br>
+         <input type = "file" name = "DateCreated" size = "50" />
+         <br>
+         <select name="Level of Study">
+             <option value="Undergraduate">Undergraduate</option>
+             <option value="Postgraduate">Postgraduate</option>
+         </select>
+         <br>
          <input type = "submit" value = "Upload File" />
       </form>
    </body>
