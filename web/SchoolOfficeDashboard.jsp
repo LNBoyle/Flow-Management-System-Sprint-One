@@ -12,29 +12,119 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script src="scripts/jquery-1.11.1.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="scripts/SchoolOfficeDashboard.js"></script>
+        <link href="css/SchoolOfficeDashboard.css" rel="stylesheet">
+        <title>School Office</title>
     </head>
     <body>
-         <div class="topnav">
-            <a class="active" href="#">Home</a>
-            <a href="#Lock">Lock</a>
-            <a href="#Back">Back</a>
-            <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
-        </div>
+        <div id="header">
+            <nav class="navbar navbar-light">
+                    <span class="navbar-brand">Welcome..</span>
+            </nav>
+
+            <a id="home" href="SchoolOfficeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
+
+	</div>
         
         <br>
+        
+    <%
+        String[][] completedExams = new String[db.CompletedRows][14];
+        completedExams = db.getCompletedExams();
+    %>
+        
+    <table>
+        <tr>
+            <th class="headerTable">Exam Title</th>
+            <th class="headerTable">School</th>
+            <th hidden>Module Coordinator</th>
+            <th class="headerTable">Module Code</th>
+            <th class="headerTable">Exam Type</th>
+            <th class="headerTable">Exam Sitting</th>
+            <th hidden>Exam Level</th>
+            <th hidden>Date Created</th>
+            <th hidden>Creator ID</th>
+        </tr>
+        <%
+        for(int i=0;i<db.CompletedRows;i++){
+        %>
+            <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
+                <td><%out.print(completedExams[i][1]);%></td>
+                <td><%out.print(completedExams[i][2]);%></td>
+                <td hidden><%out.print(completedExams[i][3]);%></td>
+                <td><%out.print(completedExams[i][4]);%></td>
+                <td><%out.print(completedExams[i][5]);%></td>
+                <td><%out.print(completedExams[i][6]);%></td>
+                <td hidden><%out.print(completedExams[i][7]);%></td>
+                <td hidden><%out.print(completedExams[i][8]);%></td>
+                <td hidden><%out.print(completedExams[i][9]);%></td>
+            </tr>
+        <%
+        }
+        %>
+    </table>
+    
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form method="post" action="">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="modalHeader" class="modal-title">Modal Header</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" name="modalExamTitleHidden" id="modalExamTitleHidden" value = ' ' />								
+                        <input type="hidden" name="modalSchoolHidden" id="modalSchoolHidden" value = ' ' />
+                        <input type="hidden" name="modalModuleCoordinatorHidden" id="modalModuleCoordinatorHidden" value = ' ' />
+                        <input type="hidden" name="modalModuleCodeHidden" id="modalModuleCodeHidden" value = ' ' />
+                        <input type="hidden" name="modalExamTypeHidden" id="modalExamTypeHidden" value = ' ' />
+                        <input type="hidden" name="modalExamSittingHidden" id="modalExamSittingHidden" value = ' ' />
+                        <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
+                        <input type="hidden" name="modalDateCreatedHidden" id="modalDateCreatedHidden" value = ' ' />
+                        <input type="hidden" name="modlaCreatorIDHidden" id="modlaCreatorIDHidden" value = ' ' />
+                        <p id="modalExamTitle">Exam Title</p>
+                        <p id="modalSchool">School</p>
+                        <p id="modalModuleCoordinator">Module Coordinator</p>
+                        <p id="modalModuleCode">Module Code</p>
+                        <p id="modalExamType">Exam Type</p>
+                        <p id="modalExamSitting">Exam Sitting</p>
+                        <p id="modalExamLevel">Exam Level</p>
+                        <p id="modalDateCreated">Date Created</p>
+                        <p id="modlaCreatorID">Creator ID</p>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" name="add_to_cart" class="btn btn-default">Download Exam</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        
+        
+        
+        
         <% 
-            String[][] completedExams = new String[db.CompletedRows][14];
-            completedExams = db.getCompletedExams();
+            //String[][] completedExams = new String[db.CompletedRows][14];
+            //completedExams = db.getCompletedExams();
             //out.println(Arrays.deepToString(db.getCompletedExams()));
             
-            for (int i = 0; i < completedExams.length; i++){
-                    out.print(completedExams[i][1] + " - " + completedExams[i][2] + " - " + completedExams[i][4] + " - "+ completedExams[i][5] + " - "+ completedExams[i][6]);
+           // for (int i = 0; i < completedExams.length; i++){
+                   // out.print(completedExams[i][1] + " - " + completedExams[i][2] + " - " + completedExams[i][4] + " - "+ completedExams[i][5] + " - "+ completedExams[i][6]);
                     
                 %>
                 <br>
                 <%
-            }
+          //  }
             
             
             
