@@ -6,4 +6,4 @@ Please remember to create a new branch and check any commits before committing t
 
 Current items within the repository:
 1) Database Creation File (Not finalised)
-2) Login page for website (Not finalised)
+2) Login page for website *DONE*
