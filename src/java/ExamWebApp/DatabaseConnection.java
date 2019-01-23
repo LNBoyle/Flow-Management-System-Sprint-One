@@ -15,6 +15,7 @@ public class DatabaseConnection {
     private Statement stmt = null;
     private ResultSet reslt = null;
     public int CompletedRows = 0;
+    public int UserRows = 0;
     
     public DatabaseConnection(){
         String password = "8326.at8.6238";
@@ -34,7 +35,45 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
     }
-
+    
+    
+    
+    public String[][] getViewUsers()
+    {
+     try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID,FirstName,Surname,Role,Email FROM user;");
+  
+            int rows = 0;
+            if (reslt.last()) {
+              rows = reslt.getRow();
+              reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] ViewUsers = new String[rows][5];
+            int i = 0;
+            while(reslt.next()){
+                    ViewUsers[i][0] = reslt.getString("UserID");
+                    ViewUsers[i][1] = reslt.getString("FirstName");
+                    ViewUsers[i][2] = reslt.getString("Surname");
+                    ViewUsers[i][3] = reslt.getString("Role");
+                    ViewUsers[i][4] = reslt.getString("Email");
+                    i++;
+            }
+            if(ViewUsers != null){
+                return ViewUsers;
+            }else{
+                return null;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    
+    
+    
+    }
+    
     public String checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
@@ -127,6 +166,38 @@ public class DatabaseConnection {
         }
         return false;
     }
+    
+    
+     public boolean CreateAccount(int UserID, String FirstName,String SurName ,String Role,String Email, String Password)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("INSERT INTO user (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`) VALUES" + UserID + FirstName + SurName + Role + Email + Password + ";");
+            
+            //return true if success, false otherwise
+            if (success != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Catch block for errors with SQL
+        catch(SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
     
     public String[][] getCompletedExams(){
         try{
