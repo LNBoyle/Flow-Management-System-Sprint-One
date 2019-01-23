@@ -20,32 +20,11 @@
         <h1>Hello World!</h1>
         <div>
              <form method=POST">
-                <button class="btn-blue" type="UploadExam" name="upload">Upload New Exam</button>
+                <input type="button" class="btn-blue" value="Upload" name="Upload New Exam" onclick="document.forms[0].action = 'UploadExam.jsp'; return true;" />
+                
                 <button class="btn-blue" type="EditExam" name="edit">Edit Current Exam</button>
                 <button class="btn-blue" type="ViewExam" name="view">View Current Exam</button>
              </form>
-        </div>
-        
-        <%
-            if ((request.getParameter("upload") !=null)) {
-                out.println("upload exam files");
-            }
-                    
-        %>
-        
-        <%
-            if ((request.getParameter("edit") !=null)) {
-                out.println("edit exam files");
-            }
-                    
-        %>
-        
-        <%
-            if ((request.getParameter("view") !=null)) {
-                out.println("view exam files");
-            }
-                    
-        %>
-                    
+        </div>        
     </body>
 </html>
