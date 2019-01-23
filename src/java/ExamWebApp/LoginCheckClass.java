@@ -7,13 +7,13 @@ package ExamWebApp;
 
 public class LoginCheckClass {
 
-    public static boolean checkStaffLogin(String userEmail, String userPassword){
+    public static String checkStaffLogin(String userEmail, String userPassword){
         DatabaseConnection checkStaffdb = new DatabaseConnection();
-        
-        if(checkStaffdb.checkUser(userEmail, userPassword)){
-            return true;
+        String role = checkStaffdb.checkUser(userEmail, userPassword);
+        if(role != null){
+            return role;
         }else{
-            return false;
+            return null;
         }
     }
 }

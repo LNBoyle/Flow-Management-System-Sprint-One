@@ -14,6 +14,7 @@ public class DatabaseConnection {
     private Connection conn = null;
     private Statement stmt = null;
     private ResultSet reslt = null;
+    public int CompletedRows = 0;
     
     public DatabaseConnection(){
         String password = "8326.at8.6238";
@@ -42,20 +43,25 @@ public class DatabaseConnection {
         this.conn = conn;
     }
 
-    public boolean checkUser(String email, String password){
+    
+    public String checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("select UserID from user where Email = '" + email + "' and Password = '" + password + "';");
-            
-            if(reslt.next()){
-                return true;
+            reslt = stmt.executeQuery("SELECT Role FROM user WHERE Email = '" + email + "' AND Password = '" + password + "';");
+           // reslt.next();
+            String role = null;// = reslt.getString(1);
+            while(reslt.next()){
+                role = reslt.getString(1);
+            }
+            if(role != null){
+                return role;
             }else{
-                return false;
+                return null;
             }
         }catch(SQLException exc){
             System.out.println("Error: " + exc);
         }
-        return false;
+        return null;
     } 
     
     //Function that returns the module code for a given exam
@@ -130,4 +136,42 @@ public class DatabaseConnection {
         }
         return false;
     }
+    
+    public String[][] getCompletedExams(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ;");
+            
+            int rows = 0;
+            if (reslt.last()) {
+              rows = reslt.getRow();
+              reslt.beforeFirst();
+            }
+            CompletedRows = rows;
+            String[][] completedExams = new String[rows][10];
+            int i = 0;
+            while(reslt.next()){
+                    completedExams[i][0] = reslt.getString("ExamID");
+                    completedExams[i][1] = reslt.getString("Title");
+                    completedExams[i][2] = reslt.getString("School");
+                    completedExams[i][3] = reslt.getString("ModuleCode");
+                    completedExams[i][4] = reslt.getString("DateCreated");
+                    completedExams[i][5] = reslt.getString("AuthorID");
+                    completedExams[i][6] = reslt.getString("Deadline");
+                    completedExams[i][7] = reslt.getString("Status");
+                    completedExams[i][8] = reslt.getString("File");
+                    completedExams[i][9] = reslt.getString("AssignedTo");
+                    i++;
+            }
+            if(completedExams != null){
+                return completedExams;
+            }else{
+                return null;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    } 
+    
 }
