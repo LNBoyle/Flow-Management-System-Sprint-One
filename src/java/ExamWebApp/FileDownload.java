@@ -27,7 +27,7 @@ public class FileDownload {
 public void download(){
 
 DatabaseConnection db = new DatabaseConnection();
-    String SQL = "SELECT File FROM `EXAM` WHERE `ExamID`=18947"; //Here I mistakenly wrote 'FILANAME' here instead of a 'PICTURE'
+    String SQL = "SELECT File FROM `EXAM` WHERE `ExamID`=18947"; 
 
     Connection conn = db.getConn();
     java.sql.PreparedStatement smt = null;
@@ -46,8 +46,9 @@ DatabaseConnection db = new DatabaseConnection();
         smt = conn.prepareStatement(SQL);
   
         rs = smt.executeQuery();
-
-        output = new FileOutputStream(new File("/Users/lboyl/Downloads/Paedo.docx"));
+String fileName = rs.getString("File");
+        String home = System.getProperty("user.home");
+        output = new FileOutputStream(new File(home+"/Downloads/"+fileName+".docx"));
         System.out.println("Getting file please be patient..");
 
         while (rs.next()) {
@@ -55,13 +56,6 @@ DatabaseConnection db = new DatabaseConnection();
             input = rs.getBinaryStream("File"); //get it from col name
             int r = 0;
 
-/*
-*there I've tried with array but nothing changed..Like this :
-* byte[] buffer = new byte[2048];
-* int r = 0;
-* while((r = input.read(buffer)) != -1){
-*        out.write(buffer,0,r);}
-*/
 
             while ((r = input.read()) != -1) {
                 output.write(r);

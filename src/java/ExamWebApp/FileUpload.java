@@ -55,7 +55,7 @@ public class FileUpload extends HttpServlet {
   
  
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (ExamID, File) values (?, ?)";
+            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode,  File) values (?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);        
             statement.setInt(1,00045003);
             if (inputStream != null) {
@@ -77,7 +77,7 @@ public class FileUpload extends HttpServlet {
             request.setAttribute("Message", message);
              
             // forwards to the message page
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
         
         FileDownload downSyn = new FileDownload();
