@@ -17,8 +17,8 @@
         <title>Staff: Exam Setter</title>
     </head>
     <body>
-        <h1>((NavBar))</h1>
-        <div class="main">
+        <h1>Hello World!</h1>
+        <div>
              <form method=POST">
                 <button class="btn-blue" type="UploadExam" name="upload">Upload New Exam</button>
                 <button class="btn-blue" type="EditExam" name="edit">Edit Current Exam</button>
