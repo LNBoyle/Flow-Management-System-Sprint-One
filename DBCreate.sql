@@ -126,6 +126,30 @@ VALUES
 /*!40000 ALTER TABLE `COMMENT` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+# Dump of table Deadline
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DEADLINE`;
+
+CREATE TABLE `DEADLINE` (
+  `Role` varchar(45) NOT NULL,
+  `Date` date DEFAULT NULL,
+  PRIMARY KEY (`Role`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `DEADLINE` WRITE;
+/*!40000 ALTER TABLE `DEADLINE` DISABLE KEYS */;
+INSERT INTO `DEADLINE` (`Role`,`Date`)
+VALUES
+
+  ('Internal Moderator',NULL),
+  ('External Examiner',NULL),
+  ('Exam Vetting Comittee',NULL);
+
+/*!40000 ALTER TABLE `DEADLINE` ENABLE KEYS */;
+UNLOCK TABLES;
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
