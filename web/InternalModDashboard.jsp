@@ -1,9 +1,3 @@
-<%-- 
-    Document   : InternalModDashboard
-    Created on : 22-Jan-2019, 19:49:08
-    Author     : Sebastian
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
