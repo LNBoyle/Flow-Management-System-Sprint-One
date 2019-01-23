@@ -62,7 +62,11 @@ CREATE TABLE `EXAM` (
   `ExamID` int(10) NOT NULL,
   `Title` varchar(255) DEFAULT NULL,
   `School` varchar(255) DEFAULT NULL,
+  `ModuleCoordinator` varchar(255) DEFAULT NULL,
   `ModuleCode` varchar(12) DEFAULT NULL,
+  `ExamType` varchar(12) DEFAULT NULL,
+  `ExamPeriod` varchar(12) DEFAULT NULL,
+  `ExamLevel` varchar(100) DEFAULT NULL,
   `DateCreated` date DEFAULT NULL,
   `AuthorID` int(10) DEFAULT NULL,
   `Deadline` date DEFAULT NULL,
@@ -78,14 +82,14 @@ CREATE TABLE `EXAM` (
 
 LOCK TABLES `EXAM` WRITE;
 /*!40000 ALTER TABLE `EXAM` DISABLE KEYS */;
-INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCode`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`File`,`AssignedTo`)
+INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`File`,`AssignedTo`)
 VALUES
 
-	(00000001,'Agile Software Engineering','Science and Engineering','AC310001','2019-01-21',00010002,'2019-01-29','New',NULL,00010006),
-  (00000002,'AI and Algorithims','Science and Engineering','AC330001','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006),
-  (00000003,'Multi Paradigm','Science and Engineering','AC320001','2019-01-22',00010004,'2019-01-29','Completed',NULL,00010006),
-  (00000004,'Web Authoring','Science and Engineering','AC350001','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006),
-  (00000005,'Data Structures','Science and Engineering','AC380001','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006);
+	(00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2019-01-21',00010002,'2019-01-29','New',NULL,00010006),
+  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006),
+  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2019-01-22',00010004,'2019-01-29','Completed',NULL,00010006),
+  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006),
+  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
