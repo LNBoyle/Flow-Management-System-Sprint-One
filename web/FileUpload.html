@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+   <head>
+      <title>File Uploading Form</title>
+          <link href="css/CreateExam.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+   </head>
+   
+   <body>
+       <div id="bodyWrapper">
+       <div id="FormDiv">
+      <h3>Create Exam</h3>
+     Please enter details for the exam you wish to create: <br />
+      <form action = "uploadServlet" method = "post"
+         enctype = "multipart/form-data">
+          <label>ExamID: </label>
+         <input type = "text" name = "ExamID" size = "50" />
+         <br />
+           <label>Title: </label>
+         <input type = "text" name = "Title" size = "50" />
+         <br>
+           <label>School: </label>
+           <select name="School">
+             <option value="Science and Engineering">Science and Engineering</option>
+             <option value="Life Sciences">Life Sciences</option>
+         </select>
+            <br>
+              <label>Exam Type: </label>
+         <select name="ExamType">
+             <option value="Online">Online</option>
+             <option value="Paper">Paper</option>
+         </select>
+               <br>
+                 <label>Examination Period: </label>
+          <select name="ExamPeriod">
+             <option value="Main">Main (December/May)</option>
+             <option value="Resit">Resit</option>
+         </select>
+         <br>
+           <label>Module Code: </label>
+         <input type = "text" name = "ModuleCode" size = "50" />
+         <br>
+           <label>Date Created: </label>
+         <input type = "text" name = "DateCreated" size = "50" />
+         <br>
+           <label>Level of Study: </label>
+         <select name="Level of Study">
+             <option value="Undergraduate">Undergraduate</option>
+             <option value="Postgraduate">Postgraduate</option>
+         </select>
+         <br>
+           <label>File: </label>
+         <input type="file" name="file" size="50"/>
+         <br>
+         <input type = "submit" value = "Confirm" />
+      </form>
+       </div>
+       </div>
+   </body>
+   
+</html>

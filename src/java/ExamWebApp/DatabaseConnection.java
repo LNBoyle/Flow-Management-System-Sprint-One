@@ -35,6 +35,18 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
     }
+
+  
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+
+
     
     
     
@@ -73,6 +85,7 @@ public class DatabaseConnection {
     
     
     }
+
     
     public String checkUser(String email, String password){
         try{
