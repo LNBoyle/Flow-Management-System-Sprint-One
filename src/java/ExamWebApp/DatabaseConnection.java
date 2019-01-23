@@ -15,6 +15,7 @@ public class DatabaseConnection {
     private Statement stmt = null;
     private ResultSet reslt = null;
     public int CompletedRows = 0;
+    public int UserRows = 0;
     
     public DatabaseConnection(){
         String password = "8326.at8.6238";
@@ -35,12 +36,54 @@ public class DatabaseConnection {
         }
     }
 
+  
+
     public Connection getConn() {
         return conn;
     }
 
     public void setConn(Connection conn) {
         this.conn = conn;
+    }
+
+
+    
+    
+    
+    public String[][] getViewUsers()
+    {
+     try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID,FirstName,Surname,Role,Email FROM user;");
+  
+            int rows = 0;
+            if (reslt.last()) {
+              rows = reslt.getRow();
+              reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] ViewUsers = new String[rows][5];
+            int i = 0;
+            while(reslt.next()){
+                    ViewUsers[i][0] = reslt.getString("UserID");
+                    ViewUsers[i][1] = reslt.getString("FirstName");
+                    ViewUsers[i][2] = reslt.getString("Surname");
+                    ViewUsers[i][3] = reslt.getString("Role");
+                    ViewUsers[i][4] = reslt.getString("Email");
+                    i++;
+            }
+            if(ViewUsers != null){
+                return ViewUsers;
+            }else{
+                return null;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    
+    
+    
     }
 
     
@@ -110,6 +153,33 @@ public class DatabaseConnection {
         return null;
     }
     
+    //Function that adds a comment to an exam in the database
+    public boolean setComment(int examID, int userID, String newComment)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("INSERT INTO comment (ExamID, UserID, Comment) VALUES ( " + examID + ", " + userID + ", '" + newComment + "');");
+            
+            //return true if success, false otherwise
+            if (success != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Catch block for errors with SQL
+        catch(SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
     //Function that adds a response to a comment in the database
     public boolean setCommentResponse(int commentID, String newResponse)
     {
@@ -137,6 +207,38 @@ public class DatabaseConnection {
         return false;
     }
     
+    
+     public boolean CreateAccount(int UserID, String FirstName,String SurName ,String Role,String Email, String Password)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("INSERT INTO user (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`) VALUES" + UserID + FirstName + SurName + Role + Email + Password + ";");
+            
+            //return true if success, false otherwise
+            if (success != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Catch block for errors with SQL
+        catch(SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
+    
     public String[][] getCompletedExams(){
         try{
             stmt = conn.createStatement();
@@ -148,21 +250,26 @@ public class DatabaseConnection {
               reslt.beforeFirst();
             }
             CompletedRows = rows;
-            String[][] completedExams = new String[rows][10];
+            String[][] completedExams = new String[rows][14];
             int i = 0;
             while(reslt.next()){
                     completedExams[i][0] = reslt.getString("ExamID");
                     completedExams[i][1] = reslt.getString("Title");
                     completedExams[i][2] = reslt.getString("School");
-                    completedExams[i][3] = reslt.getString("ModuleCode");
-                    completedExams[i][4] = reslt.getString("DateCreated");
-                    completedExams[i][5] = reslt.getString("AuthorID");
-                    completedExams[i][6] = reslt.getString("Deadline");
-                    completedExams[i][7] = reslt.getString("Status");
-                    completedExams[i][8] = reslt.getString("File");
-                    completedExams[i][9] = reslt.getString("AssignedTo");
+                    completedExams[i][3] = reslt.getString("ModuleCoordinator");
+                    completedExams[i][4] = reslt.getString("ModuleCode");
+                    completedExams[i][5] = reslt.getString("ExamType");
+                    completedExams[i][6] = reslt.getString("ExamPeriod");
+                    completedExams[i][7] = reslt.getString("ExamLevel");
+                    completedExams[i][8] = reslt.getString("DateCreated");
+                    completedExams[i][9] = reslt.getString("AuthorID");
+                    completedExams[i][10] = reslt.getString("Deadline");
+                    completedExams[i][11] = reslt.getString("Status");
+                    completedExams[i][12] = reslt.getString("File");
+                    completedExams[i][13] = reslt.getString("AssignedTo");
                     i++;
             }
+            
             if(completedExams != null){
                 return completedExams;
             }else{

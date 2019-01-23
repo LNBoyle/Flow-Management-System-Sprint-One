@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+html, body{
+	/*background-color: #4a4c4b;*/
+    background-image: url(../images/back.png);
+    font-family: 'Roboto Condensed', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#body{
+    padding:10px;
+    padding-bottom: 400px;
+}
+
+
+#wrapper {
+
+ min-height:100%;
+ position:relative;
+}
+
+
+/*search bar*/
+
+
+#search{
+	 display: inline;
+}
+
+#submitBtn{
+	display: inline;
+}
+/*forms*/
+
+input[type=submit]{
+
+   
+    background-color: transparent;
+    border-style: solid;
+    border-color: #00afdb;
+    border-width: thick;
+    border-radius: 20px;
+    color: #00afdb;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.5em;
+    transition: 0.4s;
+}
+
+input[type=submit]:hover {
+    background-color: #75dbf4;
+    color: white;
+    border-color: white;
+}
+
+/*Table*/
+table{
+    position:absolute;
+    width: 90%;
+    margin-left: 5%;
+}
+
+table, th, td{
+    border: 2px solid grey;
+    border-collapse: collapse;
+    min-height: 100px;
+}
+
+.clickable-row:hover {
+    border:2.1px solid #00afdb;
+    cursor: pointer;
+}
+
+.headerTable{
+	padding-left: 3px;
+	padding-top: 1px;
+}
+
+/*Modal*/
+#modalHeader{
+	text-align: left;
+}
+
+.modal-body{
+	text-align: right;
+}
+
+.btn-blue:hover,
+.btn-blue:focus,
+.btn-blue:active {
+    cursor: pointer;
+    text-align: center;
+    color: #fff!important;
+    background: #00afdb!important;
+    text-shadow: none;
+}
+
+.btn-blue{
+    
+    letter-spacing: .05em;
+    display: inline-block;
+    margin: 0 0 10px;
+    border: 3px solid #00afdb!important;
+    color: #00afdb!important;
+    text-transform: uppercase;
+    background: 0 0;
+    transition: background 0.5s;
+    
+}
+
+/* Custom Button Styles */
+
+.btn-dark {
+    border-radius: 0;
+    color: #fff!important;
+    background-color: rgba(0,0,0,0.4);
+    
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+    color: #fff!important;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.btn-light {
+    border-radius: 0;
+    color: #333!important;
+    background-color: rgb(255,255,255);
+}
+
+.btn-blue:hover,
+.btn-blue:focus,
+.btn-blue:active {
+    cursor: pointer;
+    text-align: center;
+    color: #fff!important;
+    background: #00afdb!important;
+    text-shadow: none;
+}
+
+.btn-blue{
+    
+    letter-spacing: .05em;
+    display: inline-block;
+    margin: 10 10 10px;
+    border: 3px solid #00afdb!important;
+    color: #00afdb!important;
+    text-transform: uppercase;
+    background: 0 0;
+    transition: background 0.5s;
+    
+}
+
+
+
+/* Navigation Menue */
+
+#home {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    right: 80px;
+    width: 50px;
+}
+
+.navbar{
+    background-color: lightgray;
+    min-height: 6.5%!important;
+    padding-bottom: 9px;
+    border-radius: 0px!important;
+}
+
+#logout {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    right: 145px;
+    width: 50px;
+}
+
+#basket{
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    right: 15px;
+    width: 50px;
+}
+
+.btn:hover{
+    color:#ffffff!important;
+}
+
+.btn-light{
+    background-color: #6c6c6c;
+}
+
+.toggle {
+    margin: 5px 5px 0 0;
+}
+
+.navbar-text{
+    position: fixed;
+    right: 200px;
+    font-size: 1.5em;
+    margin-top: 15px!important;
+    color:white; 
+}
+
+.navbar-brand{
+    font-size: 2em!important;
+    margin-top: 2px!important;
+    color:#00afdb;
+}
+
+
+a {
+  color: #00afdb;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+
+
+a:hover {
+  background-color: #00afdb;
+  color: white;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: black;
+}
+
+.cartItem{
+    color: black;
+    text-align: right;
+}

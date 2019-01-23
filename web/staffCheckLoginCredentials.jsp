@@ -27,6 +27,8 @@
                 response.sendRedirect("SchoolOfficeDashboard.jsp");
             }else if(role.equals("External Examiner")){
                 response.sendRedirect("ExternalExaminerDashboard.jsp");
+            }else if(role.equals("Exam Setter")){
+                response.sendRedirect("StaffDash.jsp");
             }
         }else{
             %>
