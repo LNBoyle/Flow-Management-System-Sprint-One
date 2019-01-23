@@ -140,6 +140,33 @@ public class DatabaseConnection {
         return null;
     }
     
+    //Function that adds a comment to an exam in the database
+    public boolean setComment(int examID, int userID, String newComment)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("INSERT INTO comment (ExamID, UserID, Comment) VALUES ( " + examID + ", " + userID + ", '" + newComment + "');");
+            
+            //return true if success, false otherwise
+            if (success != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Catch block for errors with SQL
+        catch(SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
     //Function that adds a response to a comment in the database
     public boolean setCommentResponse(int commentID, String newResponse)
     {
