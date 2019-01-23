@@ -55,12 +55,13 @@ public class FileUpload extends HttpServlet {
   
  
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode,  File) values (?, ?)";
+            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  File) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);        
             statement.setInt(1,00045003);
+            statement.setString(2,request.getParameter("title"));
             if (inputStream != null) {
                 // fetches input stream of the upload file for the blob column
-                statement.setBlob(2, inputStream);
+                statement.setBlob(9, inputStream);
             }
  
             // sends the statement to the database server
