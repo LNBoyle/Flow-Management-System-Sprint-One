@@ -79,6 +79,9 @@ public class FileUpload extends HttpServlet {
             // forwards to the message page
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
         }
+        
+        FileDownload downSyn = new FileDownload();
+        downSyn.download();
     }
 }
 
