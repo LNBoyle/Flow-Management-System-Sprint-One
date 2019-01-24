@@ -84,7 +84,6 @@ public class DatabaseConnection {
     
     }
 
-    
     public String[] checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
@@ -129,7 +128,7 @@ public class DatabaseConnection {
         return null;
     }
     
-    //Function that returns the comment for a given exam and staff role
+    //Function that returns the comment for a given comment ID.
     public String getExamComment(int commentID)
     {
         //Try block to add the repsonse to the comment
@@ -143,6 +142,39 @@ public class DatabaseConnection {
             {
                 return reslt.getString(1);   
             }            
+        }
+        //Catch block for errors with SQL
+        catch(SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+        //Function that returns all comments for a given exam
+    public String[] getAllExamComment(int examID)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
+            
+            int rows = 0;
+            if (reslt.last()) {
+              rows = reslt.getRow();
+              reslt.beforeFirst();
+            }
+            
+            String[] list = new String[rows];
+            int i = 0;
+            //return string from query
+            while (reslt.next())
+            {
+                list[i] = reslt.getString("Comment"); 
+                i++;
+            }        
+            return list;
         }
         //Catch block for errors with SQL
         catch(SQLException e)
