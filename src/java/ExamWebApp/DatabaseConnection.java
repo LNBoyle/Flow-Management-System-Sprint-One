@@ -286,7 +286,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("TSSign1");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
@@ -335,7 +335,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("IMSign");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
@@ -358,7 +358,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("TSSign2");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
@@ -381,7 +381,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("EVCSign");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
@@ -404,7 +404,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("TSSign3");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
@@ -427,7 +427,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("EESign");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
@@ -450,7 +450,7 @@ public class DatabaseConnection {
                 examProgress[1] = reslt.getInt("TSSignFinal");
                 
             }
-            if(examProgress != 0){
+            if(examProgress != null){
                 return true;
             }else{
                 return false;
