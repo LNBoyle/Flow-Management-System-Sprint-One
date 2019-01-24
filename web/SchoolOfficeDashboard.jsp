@@ -40,6 +40,7 @@
         
     <table>
         <tr>
+            <th hidden>Exam ID</th>
             <th class="headerTable">Exam Title</th>
             <th class="headerTable">School</th>
             <th hidden>Module Coordinator</th>
@@ -54,6 +55,7 @@
         for(int i=0;i<db.CompletedRows;i++){
         %>
             <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
+                <td hidden><%out.print(completedExams[i][0]);%></td>
                 <td><%out.print(completedExams[i][1]);%></td>
                 <td><%out.print(completedExams[i][2]);%></td>
                 <td hidden><%out.print(completedExams[i][3]);%></td>
@@ -74,13 +76,14 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form method="post" action="">
+                <form method="post" action="SchoolOfficeDashboard.jsp">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 id="modalHeader" class="modal-title">Modal Header</h4>
                     </div>
 
                     <div class="modal-body">
+                        <input type="hidden" name="modalExamIDHidden" id="modalExamIDHidden" value = ' ' />
                         <input type="hidden" name="modalExamTitleHidden" id="modalExamTitleHidden" value = ' ' />								
                         <input type="hidden" name="modalSchoolHidden" id="modalSchoolHidden" value = ' ' />
                         <input type="hidden" name="modalModuleCoordinatorHidden" id="modalModuleCoordinatorHidden" value = ' ' />
@@ -89,7 +92,8 @@
                         <input type="hidden" name="modalExamSittingHidden" id="modalExamSittingHidden" value = ' ' />
                         <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
                         <input type="hidden" name="modalDateCreatedHidden" id="modalDateCreatedHidden" value = ' ' />
-                        <input type="hidden" name="modlaCreatorIDHidden" id="modlaCreatorIDHidden" value = ' ' />
+                        <input type="hidden" name="modalCreatorIDHidden" id="modlaCreatorIDHidden" value = ' ' />
+                        <p id="modalExamID" name="examid">Exam ID</p>
                         <p id="modalExamTitle">Exam Title</p>
                         <p id="modalSchool">School</p>
                         <p id="modalModuleCoordinator">Module Coordinator</p>
@@ -98,19 +102,34 @@
                         <p id="modalExamSitting">Exam Sitting</p>
                         <p id="modalExamLevel">Exam Level</p>
                         <p id="modalDateCreated">Date Created</p>
-                        <p id="modlaCreatorID">Creator ID</p>
+                        <p id="modalCreatorID">Creator ID</p>
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="submit" name="add_to_cart" class="btn btn-default">Download Exam</button>
+                        <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-        
-        
+        <%
+            FileDownload download = new FileDownload();
+            if ((request.getParameter("modalExamIDHidden") != null))
+            {
+                String dowloadExamID = request.getParameter("modalExamIDHidden");
+            
+                if (download.download("10023002") == true)
+                {
+                    System.out.println("Success!");
+                    %><script>alert("Exam Successfully Downloaded - You find the downloaded exam in your downloads folder")</script><%
+                }
+                else
+                {
+                   System.out.println("Failure!");
+                }
+            }
+        %>
         
         
         <% 
