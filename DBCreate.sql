@@ -185,11 +185,11 @@ VALUES
  /*!40000 ALTER TABLE `SIGNATURES` ENABLE KEYS */; 
 UNLOCK TABLES;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `18agileteam8`@`%` 
-    SQL SECURITY DEFINER
-VIEW `assignedroles` AS
+# Dump of view assignedroles
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `assignedroles`;
+CREATE VIEW `assignedroles` AS
     SELECT 
         a.`ExamID` AS `ExamID`,
         b.`UserID` AS `UserID`,
