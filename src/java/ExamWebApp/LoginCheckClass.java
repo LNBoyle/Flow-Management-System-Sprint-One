@@ -8,7 +8,6 @@ package ExamWebApp;
 public class LoginCheckClass {
     public static String userID = null;
     public static String userRole = null;
-    public static int examID = 0;
     
     public String checkStaffLogin(String userEmail, String userPassword){
         DatabaseConnection checkStaffdb = new DatabaseConnection();
@@ -20,15 +19,5 @@ public class LoginCheckClass {
         }else{
             return null;
         }
-    }
-    
-    public int getExamView()
-    {
-        return examID;
-    }
-    
-    public void setExamView(int newID)
-    {
-        examID = newID;
     }
 }
