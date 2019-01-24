@@ -23,17 +23,20 @@
         <h1><center>Assign Exams</center></h1>
         
         
-  <form>
-            
-            
-  Type of Examiner:<br>
-  <input type="text" name="forename" value="">
+  <form method ="POST" action ="Assignexam.jsp">
+      
+  
+  Examiner ID:<br>
+  <input type="text" name="examinerid" value="">
+  <br>         
+   Firstname:<br>
+  <input type="text" name="firstname" value="">
   <br>
-  Forename of Examiner:<br>
-  <input type="text" name="forename" value="">
-  <br>
-  Surname of Examiner:<br>
+  Surname:<br>
   <input type="text" name="Surname" value="">
+  <br>          
+  Type of Examiner:<br>
+  <input type="text" name="typeofexaminer" value="">
   <br>
   Name of Exam:<br>
   <input type="text" name="examname" value="">
@@ -41,7 +44,7 @@
    Exam Number:<br>
   <input type="text" name="examnumber" value="">
   <br> <br>
-  <button type="button" onclick="alert('Exam Assigned')">Assign</button>
+  <button type="submit" name ="exam" onclick="alert('Exam Assigned')">Assign</button>
   </form> 
         
 
