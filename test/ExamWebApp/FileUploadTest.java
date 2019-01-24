@@ -47,7 +47,7 @@ public class FileUploadTest {
         System.out.println("doPost");
         HttpServletRequest request = null;
         HttpServletResponse response = null;
-        FileUpload instance = new FileUpload();
+        CreateExam instance = new CreateExam();
         instance.doPost(request, response);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
