@@ -193,18 +193,20 @@ public class DatabaseConnectionTest {
     @Test
     public void testCreateAccount() {
         System.out.println("CreateAccount");
-        String UserID = "";
-        String FirstName = "";
-        String SurName = "";
-        String Role = "";
-        String Email = "";
-        String Password = "";
+        String UserID = "00010001";
+        String FirstName = "test";
+        String SurName = "ing";
+        String Role = "tester";
+        String Email = "test@test.test";
+        String Password = "test";
         DatabaseConnection instance = new DatabaseConnection();
         boolean expResult = false;
         boolean result = instance.CreateAccount(UserID, FirstName, SurName, Role, Email, Password);
-        assertEquals(expResult, result);
+        if (!(result == expResult))
+        {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+        }
     }
 
     /**
