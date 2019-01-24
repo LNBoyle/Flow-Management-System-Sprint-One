@@ -264,7 +264,7 @@ public class DatabaseConnection {
                     completedExams[i][9] = reslt.getString("AuthorID");
                     completedExams[i][10] = reslt.getString("Deadline");
                     completedExams[i][11] = reslt.getString("Status");
-                    completedExams[i][12] = reslt.getString("File");
+                    completedExams[i][12] = reslt.getString("ExamPaper");
                     completedExams[i][13] = reslt.getString("AssignedTo");
                     i++;
             }

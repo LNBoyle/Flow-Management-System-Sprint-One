@@ -59,7 +59,7 @@ public class FileUpload extends HttpServlet {
  SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
  String creationDate = formatter.format(date);
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  File) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
             PreparedStatement statement = conn.prepareStatement(sql);        
             statement.setInt(1,10023002);
             statement.setString(2,request.getParameter("Title"));

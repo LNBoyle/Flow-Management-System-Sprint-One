@@ -28,7 +28,7 @@ public boolean download(String examID){
 
 DatabaseConnection db = new DatabaseConnection();
 
-    String SQL = "SELECT File,Title,ModuleCode FROM exam WHERE ExamID= '" + examID + "';"; 
+    String SQL = "SELECT ExamPaper,Title,ModuleCode FROM exam WHERE ExamID= '" + examID + "';"; 
 
 
     Connection conn = db.getConn();
@@ -60,7 +60,7 @@ DatabaseConnection db = new DatabaseConnection();
         
 
 
-            input = result.getBinaryStream("File"); //get it from col name
+            input = result.getBinaryStream("ExamPaper"); //get it from col name
             int r = 0;
 
 
