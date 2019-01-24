@@ -43,7 +43,7 @@
         </div>  
         
        <% 
-           String[][] exam = db.getExamList("Str");      
+           String[][] exam = db.getExamList("Iain Murray");      
        %>
        <div>
             <table border="2">
