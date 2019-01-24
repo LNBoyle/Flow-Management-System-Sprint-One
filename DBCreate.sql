@@ -159,15 +159,15 @@ DROP TABLE IF EXISTS `SIGNATURES`;
 
 CREATE TABLE `SIGNATURES` (
   `ExamID` int(11) NOT NULL,
-  `TSID` int(11) NOT NULL,
+  `TSID` int(11) = (SELECT `UserID` FROM `USER` WHERE `role` = "Exam Setter"),
   `TSSign1` tinyint(4) DEFAULT NULL,
-  `IMID` int(11) NOT NULL,
+  `IMID` int(11) = (SELECT `UserID` FROM `USER` WHERE `role` = "Internal Moderator"),
   `IMSign` tinyint(4) DEFAULT NULL,
   `TSSign2` tinyint(4) DEFAULT NULL,
-  `EVCID` int(11) NOT NULL,
+  `EVCID` int(11) = (SELECT `UserID` FROM `USER` WHERE `role` = "Exam Vetting Committee"),
   `EVCSign` tinyint(4) DEFAULT NULL,
   `TSSign3` tinyint(4) DEFAULT NULL,
-  `EEID` int(11) NOT NULL,
+  `EEID` int(11) = (SELECT `UserID` FROM `USER` WHERE `role` = "External Examiner"),
   `EESign` tinyint(4) DEFAULT NULL,
   `TSSignFinal` tinyint(4) DEFAULT NULL,
   KEY `ExamID_idx` (`ExamID`),
@@ -176,36 +176,16 @@ CREATE TABLE `SIGNATURES` (
 
 LOCK TABLES `SIGNATURES` WRITE;
 /*!40000 ALTER TABLE `SIGNATURES` DISABLE KEYS */;
-INSERT INTO `SIGNATURES` (`ExamID`,`TSID`,`TSSign1`,`IMID`,`IMSign`,`TSSign2`,`EVCID`,`EVCSign`,`TSSign3`,`EVCID`,`EESign`,`TSSignFinal`)
+INSERT INTO `SIGNATURES` (`ExamID`,`TSSign1`,`IMSign`,`TSSign2`,`EVCSign`,`TSSign3`,`EESign`,`TSSignFinal`)
 VALUES
 
 
- (00000001,00010002,NULL,00010001,NULL,NULL,00010004,NULL,NULL,00010003,NULL,NULL);
+ (00000001,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
   
  /*!40000 ALTER TABLE `SIGNATURES` ENABLE KEYS */; 
 UNLOCK TABLES;
 
-# Dump of view assignedroles
-# ------------------------------------------------------------
 
-DROP VIEW IF EXISTS `assignedroles`;
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `18agileteam8`@`%` 
-    SQL SECURITY DEFINER
-VIEW `assignedroles` AS
-    SELECT 
-        `a`.`ExamID` AS `ExamID`,
-        `b`.`UserID` AS `UserID`,
-        `b`.`FirstName` AS `FirstName`,
-        `b`.`Surname` AS `Surname`,
-        `b`.`Role` AS `Role`
-    FROM
-        (`exam` `a`
-        JOIN `user` `b`)
-    WHERE
-        ((`a`.`AuthorID` = `b`.`UserID`)
-            OR (`a`.`AssignedTo` = `b`.`UserID`))
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
