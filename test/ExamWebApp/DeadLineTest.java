@@ -5,8 +5,6 @@
  */
 package ExamWebApp;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,11 +14,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author callumscott
+ * @author Jordan
  */
-public class FileUploadTest {
+public class DeadLineTest {
     
-    public FileUploadTest() {
+    public DeadLineTest() {
     }
     
     @BeforeClass
@@ -40,15 +38,15 @@ public class FileUploadTest {
     }
 
     /**
-     * Test of doPost method, of class FileUpload.
+     * Test of deadline method, of class DeadLine.
      */
     @Test
-    public void testDoPost() throws Exception {
-        System.out.println("doPost");
-        HttpServletRequest request = null;
-        HttpServletResponse response = null;
-        CreateExam instance = new CreateExam();
-        instance.doPost(request, response);
+    public void testDeadline() {
+        System.out.println("deadline");
+        DeadLine instance = new DeadLine();
+        String expResult = "";
+        String result = instance.deadline();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

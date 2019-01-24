@@ -42,46 +42,40 @@
         </div>  
         
        <% 
-           String[][] exam = db.getExamList("Iain Murray");      
+           String[][] comment = db.getExamList("Iain Murray");      
        %>
        <div>
             <table border="2">
                 <tr>
                     <td>Exam ID</td>
                     <td>Title</td>
-                    <td>Module Coordinator</td>
-                    <td>Module Code</td>
+                    <td>Comment</td>
                 </tr>
                 <%
                     int i = 0;
-                    for(i=0; i < exam.length; i++)
+                    for(i=0; i < comment.length; i++)
                     {
                         %>
                         <tr>
                             <td> 
                             <% 
-                                out.println(exam[i][0]); 
+                                out.println(comment[i][0]); 
                                 %> 
                             </td>
                             <td>
                             <% 
-                                out.println(exam[i][1]); 
+                                out.println(comment[i][1]); 
                                 %> 
                             </td>
                             <td>
                             <% 
-                                out.println(exam[i][2]); 
-                                %> 
-                            </td>
-                            <td>
-                            <% 
-                                out.println(exam[i][3]); 
+                                out.println(comment[i][2]); 
                                 %> 
                             </td>
                             
                             <td>
-                                <form action="commentExam.jsp" method="POST">
-                                    <button type = "submit" name = "commentExam" value =<% out.print(exam[i][0]); %>> Comment</button>
+                                <form action="commentRespond.jsp" method="POST">
+                                    <button type = "submit" name = "respondComment" value =<% out.print(comment[i][0]); %>> Respond</button>
                                  </form> 
                             </td>
                         </tr>
