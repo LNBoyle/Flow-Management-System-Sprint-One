@@ -87,7 +87,7 @@ public class DatabaseConnection {
     public String[] checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "';");
+            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "'");
            // reslt.next();
            String[] userAccount = new String[2];
             while(reslt.next()){
@@ -520,7 +520,7 @@ public class DatabaseConnection {
                     completedExams[i][9] = reslt.getString("AuthorID");
                     completedExams[i][10] = reslt.getString("Deadline");
                     completedExams[i][11] = reslt.getString("Status");
-                    completedExams[i][12] = reslt.getString("File");
+                    completedExams[i][12] = reslt.getString("ExamPaper");
                     completedExams[i][13] = reslt.getString("AssignedTo");
                     i++;
             }
@@ -534,8 +534,33 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
         return null;
-    } 
+    }
     
+    
+
+    public String deadline(String role){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Date FROM deadline WHERE Role = '"+ role +"' ;");
+            
+            String deadlineDate = null;
+            
+            reslt.next();
+                deadlineDate = reslt.getString("Date");
+            
+            
+            if(deadlineDate != null){
+                return deadlineDate;
+            }else{
+                return null;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
+
+  
     public String[][] getExamList(String ModuleCoordinator)
 {
 	try
@@ -584,4 +609,7 @@ public class DatabaseConnection {
 	return null;
 }
     
+
 }
+
+ 
