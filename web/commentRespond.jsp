@@ -8,10 +8,14 @@
         <title>EFMS</title>
     </head>
     <body>
+        <%
+           String strid = request.getParameter("respondComment");
+           int id = Integer.parseInt(strid);
+        %>
         <%-- Fetch and print exam name and the associated comment --%>
         <h1>
-            Exam: <% out.print(db.getExamModule(1)); %> <br>
-            Comment: <% out.print(db.getExamComment(1)); %> <br>
+            Exam: <% out.print(db.getExamModule(id)); %> <br>
+            Comment: <% out.print(db.getExamComment(id)); %> <br>
             <%-- Form for user to input response to comment and button to sign their response --%>
             <form method = "POST">
                 Your Response: <input type = "textarea" name = "response" size = 150px required> <br>

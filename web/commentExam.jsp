@@ -8,31 +8,18 @@
         <title>EFMS</title>
     </head>
     <body>
-        Exam: <% out.print(db.getExamModule(1)); %> <br>
+        
+        <%
+           String strid = request.getParameter("commentExam");
+           int id = Integer.parseInt(strid);
+        %>
+        
+        Exam: <% out.print(db.getExamModule(id)); %> <br>
         <%-- Form for user to input comment and button to sign it --%>
             <form method = "POST">
                 Your Comment: <input type = "textarea" name = "comment" size = 150px required> <br>
+                <input type="file" name="ExamPaper" size="50"/> <br>
                 <button type = "submit" name = "commentSubmit"> Sign & Submit</button>
             </form>
-            
-        <%-- Check response on submit and update the database. Tell user if successful. --%>
-        <%
-            if ((request.getParameter("commentSubmit") != null))
-            {
-                if ((db.setComment(1, 1, request.getParameter("comment"))) == true)
-                {
-                    out.println("Success!");
-                    out.println(
-                            "<form method = 'POST' action = 'index.jsp'>"
-                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
-                            + "</form>"
-                    );
-                }
-                else
-                {
-                    out.println("Failure!");
-                }
-            }
-        %>
     </body>
 </html>

@@ -17,6 +17,7 @@ public class DatabaseConnection {
     private ResultSet reslt = null;
     public int CompletedRows = 0;
     public int UserRows = 0;
+    public int CompletedRowss = 0;
     
     public DatabaseConnection(){
         String password = "8326.at8.6238";
@@ -308,6 +309,7 @@ public class DatabaseConnection {
     
     
     }
+
     public boolean checkTSSignature1(){
         try{
             stmt = conn.createStatement();
@@ -494,6 +496,7 @@ public class DatabaseConnection {
         return false;
         
     }
+
     
     public String[][] getCompletedExams(){
         try{
@@ -567,7 +570,7 @@ public class DatabaseConnection {
 	try
 	{
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT Title FROM exam WHERE ModuleCoordinator = " + ModuleCoordinator + ";");
+            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
 
             int row = 0;
             if (rs.last())
@@ -575,25 +578,15 @@ public class DatabaseConnection {
                     row = rs.getRow();
                     rs.beforeFirst();
             }
-            CompletedRows = row;
-            String[][] staffExams = new String[row][14];
+            CompletedRowss = row;
+            String[][] staffExams = new String[row][4];
             int j = 0;
             while(rs.next())
             {
-                    staffExams[j][0] = reslt.getString("ExamID");
-                    staffExams[j][1] = reslt.getString("Title");
-                    staffExams[j][2] = reslt.getString("School");
-                    staffExams[j][3] = reslt.getString("ModuleCoordinator");
-                    staffExams[j][4] = reslt.getString("ModuleCode");
-                    staffExams[j][5] = reslt.getString("ExamType");
-                    staffExams[j][6] = reslt.getString("ExamPeriod");
-                    staffExams[j][7] = reslt.getString("ExamLevel");
-                    staffExams[j][8] = reslt.getString("DateCreated");
-                    staffExams[j][9] = reslt.getString("AuthorID");
-                    staffExams[j][10] = reslt.getString("Deadline");
-                    staffExams[j][11] = reslt.getString("Status");
-                    staffExams[j][12] = reslt.getString("File");
-                    staffExams[j][13] = reslt.getString("AssignedTo");
+                    staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                    staffExams[j][1] = rs.getString("Title");
+                    staffExams[j][2] = ModuleCoordinator;
+                    staffExams[j][3] = rs.getString("ModuleCode");
                     j++;
             }
             if(staffExams != null)
