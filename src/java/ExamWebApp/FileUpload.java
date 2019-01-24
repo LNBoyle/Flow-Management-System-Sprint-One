@@ -61,20 +61,19 @@ public class FileUpload extends HttpServlet {
  SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
  String creationDate = formatter.format(date);
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+            String sql = "INSERT INTO EXAM (Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ? )";
             PreparedStatement statement = conn.prepareStatement(sql);        
-            statement.setInt(1,10023002);
-            statement.setString(2,request.getParameter("Title"));
-            statement.setString(3,request.getParameter("School"));
-            statement.setString(4,request.getParameter("ModuleCode"));
-            statement.setString(5,request.getParameter("ExamType"));
-            statement.setString(6,request.getParameter("ExamPeriod"));
-            statement.setString(7,request.getParameter("ExamLevel"));
-             statement.setString(8,creationDate);
+            statement.setString(1,request.getParameter("Title"));
+            statement.setString(2,request.getParameter("School"));
+            statement.setString(3,request.getParameter("ModuleCode"));
+            statement.setString(4,request.getParameter("ExamType"));
+            statement.setString(5,request.getParameter("ExamPeriod"));
+            statement.setString(6,request.getParameter("ExamLevel"));
+             statement.setString(7,creationDate);
             if (examPaperStream != null) {
                 // fetches input stream of the upload file for the blob column
-                statement.setBlob(9, examPaperStream);
-                statement.setBlob(10, examSolutionStream);
+                statement.setBlob(8, examPaperStream);
+                statement.setBlob(9, examSolutionStream);
             }
  
             // sends the statement to the database server
