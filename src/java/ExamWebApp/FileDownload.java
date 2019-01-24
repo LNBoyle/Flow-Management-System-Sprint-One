@@ -27,7 +27,7 @@ public class FileDownload {
 public void download(){
 
 DatabaseConnection db = new DatabaseConnection();
-    String SQL = "SELECT File FROM `EXAM` WHERE `ExamID`=18947"; 
+    String SQL = "SELECT Title, File FROM `EXAM` WHERE `ExamID`=10023002"; 
 
     Connection conn = db.getConn();
     java.sql.PreparedStatement smt = null;
@@ -46,12 +46,13 @@ DatabaseConnection db = new DatabaseConnection();
         smt = conn.prepareStatement(SQL);
   
         rs = smt.executeQuery();
-String fileName = rs.getString("File");
+       while (rs.next()) {
+        String fileName = rs.getString("Title");
         String home = System.getProperty("user.home");
-        output = new FileOutputStream(new File(home+"/Downloads/"+fileName+".docx"));
+        output = new FileOutputStream(new File(home + "/Downloads/"+fileName+".docx"));
         System.out.println("Getting file please be patient..");
 
-        while (rs.next()) {
+       
 
             input = rs.getBinaryStream("File"); //get it from col name
             int r = 0;

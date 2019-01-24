@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -53,12 +55,20 @@ public class FileUpload extends HttpServlet {
         try {
             // connects to the database
   
- 
+ Date date = new Date();
+ SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+ String creationDate = formatter.format(date);
             // constructs SQL statement
             String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  File) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);        
-            statement.setInt(1,00045003);
-            statement.setString(2,request.getParameter("title"));
+            statement.setInt(1,10023002);
+            statement.setString(2,request.getParameter("Title"));
+            statement.setString(3,request.getParameter("School"));
+            statement.setString(4,request.getParameter("ModuleCode"));
+            statement.setString(5,request.getParameter("ExamType"));
+            statement.setString(6,request.getParameter("ExamPeriod"));
+            statement.setString(7,request.getParameter("ExamLevel"));
+             statement.setString(8,creationDate);
             if (inputStream != null) {
                 // fetches input stream of the upload file for the blob column
                 statement.setBlob(9, inputStream);
