@@ -20,7 +20,7 @@ and open the template in the editor.
      Please enter details for the exam you wish to create: <br />
       <form action = "uploadServlet" method = "post"
          enctype = "multipart/form-data">
-          <label>ExamID: </label>
+          <label>Exam ID: </label>
          <input type = "text" name = "ExamID" size = "50" />
          <br />
            <label>Title: </label>
@@ -56,8 +56,12 @@ and open the template in the editor.
              <option value="Postgraduate">Postgraduate</option>
          </select>
          <br>
-           <label>File: </label>
-         <input type="file" name="file" size="50"/>
+           <label>Exam Paper: </label>
+         <input type="file" name="ExamPaper" size="50"/>
+         <br>
+            <br>
+           <label>Exam Solution: </label>
+         <input type="file" name="ExamSolution" size="50"/>
          <br>
          <input type = "submit" value = "Confirm" />
       </form>

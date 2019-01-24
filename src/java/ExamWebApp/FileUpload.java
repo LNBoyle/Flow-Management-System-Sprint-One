@@ -35,18 +35,20 @@ public class FileUpload extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         // gets values of text fields
          
-        InputStream inputStream = null; // input stream of the upload file
-         
+        InputStream examPaperStream = null; // input stream of the upload file
+        InputStream examSolutionStream = null;
         // obtains the upload file part in this multipart request
-        Part filePart = request.getPart("file");
-        if (filePart != null) {
+        Part examPart = request.getPart("ExamPaper");
+        Part solutionPart = request.getPart("ExamSolution");
+        if (examPart != null) {
             // prints out some information for debugging
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
+            System.out.println(examPart.getName());
+            System.out.println(examPart.getSize());
+            System.out.println(examPart.getContentType());
              
             // obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
+            examPaperStream = examPart.getInputStream();
+            examSolutionStream = solutionPart.getInputStream();
         }
                DatabaseConnection db = new DatabaseConnection();
         Connection conn = db.getConn(); // connection to the database
@@ -69,9 +71,10 @@ public class FileUpload extends HttpServlet {
             statement.setString(6,request.getParameter("ExamPeriod"));
             statement.setString(7,request.getParameter("ExamLevel"));
              statement.setString(8,creationDate);
-            if (inputStream != null) {
+            if (examPaperStream != null) {
                 // fetches input stream of the upload file for the blob column
-                statement.setBlob(9, inputStream);
+                statement.setBlob(9, examPaperStream);
+                statement.setBlob(10, examSolutionStream);
             }
  
             // sends the statement to the database server
