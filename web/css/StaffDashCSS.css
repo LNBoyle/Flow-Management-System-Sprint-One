@@ -1,0 +1,70 @@
+/* 
+    Created on : 23-Jan-2019, 16:46:23
+    Author     : Jordan
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/back.png);
+    
+}
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+
+.btn-blue:hover,
+.btn-blue:focus,
+.btn-blue:active {
+    cursor: pointer;
+    text-align: center;
+    color: #fff!important;
+    background: #00afdb!important;
+    text-shadow: none;
+}
+
+.btn-blue{
+    
+    letter-spacing: .05em;
+    display: inline-block;
+    margin: 0 0 10px;
+    border: 3px solid #00afdb!important;
+    color: #00afdb!important;
+    text-transform: uppercase;
+    background: 0 0;
+    transition: background 0.5s;
+    padding: 0 0!important;
+}
+
+/* Custom Button Styles */
+
+.btn-dark {
+    border-radius: 0;
+    color: #fff!important;
+    background-color: rgba(0,0,0,0.4);
+    
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+    color: #fff!important;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.btn-light {
+    border-radius: 0;
+    color: #333!important;
+    background-color: rgb(255,255,255);
+}
+
+.main {
+    float: left;
+    padding: 20px;
+}
+
