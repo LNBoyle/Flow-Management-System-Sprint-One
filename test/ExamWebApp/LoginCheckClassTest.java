@@ -44,13 +44,15 @@ public class LoginCheckClassTest {
     public void testCheckStaffLogin() {
         LoginCheckClass login = new LoginCheckClass();
         System.out.println("checkStaffLogin");
-        String userEmail = "";
-        String userPassword = "";
-        String expResult = "";
+        String userEmail = "l.boyle@dundee.ac.uk";
+        String userPassword = "Liam123";
+        String expResult = "Internal Moderator";
         String result = login.checkStaffLogin(userEmail, userPassword);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        if (!result.equals(expResult))
+        {
+            fail("Returned role is not same as expected.");
+        }
     }
     
 }
