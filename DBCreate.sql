@@ -114,9 +114,6 @@ CREATE TABLE `COMMENT` (
   CONSTRAINT `fk_COMMENT_USER1` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-
-
 LOCK TABLES `COMMENT` WRITE;
 /*!40000 ALTER TABLE `COMMENT` DISABLE KEYS */;
 INSERT INTO `COMMENT` (`CommentID`,`ExamID`,`UserID`,`Comment`)
@@ -136,7 +133,7 @@ DROP TABLE IF EXISTS `DEADLINE`;
 
 CREATE TABLE `DEADLINE` (
   `Role` varchar(45) NOT NULL,
-  `Date` date DEFAULT NULL,
+  `Date` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`Role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -145,13 +142,70 @@ LOCK TABLES `DEADLINE` WRITE;
 INSERT INTO `DEADLINE` (`Role`,`Date`)
 VALUES
 
-  ('Internal Moderator',NULL),
-  ('External Examiner',NULL),
-  ('Exam Vetting Comittee',NULL),
-  ('Exam Setter',NULL);
+  ('Internal Moderator','10-12-19'),
+  ('External Examiner','18-4-19'),
+  ('Exam Vetting Comittee','12-9-19'),
+  ('Exam Setter','24-5-19');
 
 /*!40000 ALTER TABLE `DEADLINE` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+
+# Dump of table Signatures
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SIGNATURES`;
+
+CREATE TABLE `SIGNATURES` (
+  `ExamID` int(11) NOT NULL,
+  `TSID` int(11) NOT NULL,
+  `TSSign1` tinyint(4) DEFAULT NULL,
+  `IMID` int(11) NOT NULL,
+  `IMSign` tinyint(4) DEFAULT NULL,
+  `TSSign2` tinyint(4) DEFAULT NULL,
+  `EVCID` int(11) NOT NULL,
+  `EVCSign` tinyint(4) DEFAULT NULL,
+  `TSSign3` tinyint(4) DEFAULT NULL,
+  `EEID` int(11) NOT NULL,
+  `EESign` tinyint(4) DEFAULT NULL,
+  `TSSignFinal` tinyint(4) DEFAULT NULL,
+  KEY `ExamID_idx` (`ExamID`),
+  CONSTRAINT `ExamID` FOREIGN KEY (`ExamID`) REFERENCES `exam` (`ExamID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `SIGNATURES` WRITE;
+/*!40000 ALTER TABLE `SIGNATURES` DISABLE KEYS */;
+INSERT INTO `SIGNATURES` (`ExamID`,`TSID`,`TSSign1`,`IMID`,`IMSign`,`TSSign2`,`EVCID`,`EVCSign`,`TSSign3`,`EVCID`,`EESign`,`TSSignFinal`)
+VALUES
+
+
+ (00000001,00010002,NULL,00010001,NULL,NULL,00010004,NULL,NULL,00010003,NULL,NULL);
+  
+ /*!40000 ALTER TABLE `SIGNATURES` ENABLE KEYS */; 
+UNLOCK TABLES;
+
+# Dump of view assignedroles
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `assignedroles`;
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `18agileteam8`@`%` 
+    SQL SECURITY DEFINER
+VIEW `assignedroles` AS
+    SELECT 
+        `a`.`ExamID` AS `ExamID`,
+        `b`.`UserID` AS `UserID`,
+        `b`.`FirstName` AS `FirstName`,
+        `b`.`Surname` AS `Surname`,
+        `b`.`Role` AS `Role`
+    FROM
+        (`exam` `a`
+        JOIN `user` `b`)
+    WHERE
+        ((`a`.`AuthorID` = `b`.`UserID`)
+            OR (`a`.`AssignedTo` = `b`.`UserID`))
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -160,3 +214,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  
