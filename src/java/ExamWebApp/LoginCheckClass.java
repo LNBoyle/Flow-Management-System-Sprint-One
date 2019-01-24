@@ -6,12 +6,16 @@
 package ExamWebApp;
 
 public class LoginCheckClass {
-
-    public static String checkStaffLogin(String userEmail, String userPassword){
+    public static String userID = null;
+    public static String userRole = null;
+    
+    public String checkStaffLogin(String userEmail, String userPassword){
         DatabaseConnection checkStaffdb = new DatabaseConnection();
-        String role = checkStaffdb.checkUser(userEmail, userPassword);
-        if(role != null){
-            return role;
+        String[] userAccount = checkStaffdb.checkUser(userEmail, userPassword);
+        if(userAccount != null){
+            userID = userAccount[1];
+            userRole = userAccount[0];
+            return userAccount[0];
         }else{
             return null;
         }

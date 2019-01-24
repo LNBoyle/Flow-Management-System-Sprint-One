@@ -42,11 +42,12 @@ public class LoginCheckClassTest {
      */
     @Test
     public void testCheckStaffLogin() {
+        LoginCheckClass login = new LoginCheckClass();
         System.out.println("checkStaffLogin");
         String userEmail = "";
         String userPassword = "";
         String expResult = "";
-        String result = LoginCheckClass.checkStaffLogin(userEmail, userPassword);
+        String result = login.checkStaffLogin(userEmail, userPassword);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

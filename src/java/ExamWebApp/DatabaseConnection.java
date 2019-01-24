@@ -45,9 +45,7 @@ public class DatabaseConnection {
     public void setConn(Connection conn) {
         this.conn = conn;
     }
-
-
-    
+ 
     
     
     public String[][] getViewUsers()
@@ -87,17 +85,18 @@ public class DatabaseConnection {
     }
 
     
-    public String checkUser(String email, String password){
+    public String[] checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Role FROM user WHERE Email = '" + email + "' AND Password = '" + password + "';");
+            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "';");
            // reslt.next();
-            String role = null;// = reslt.getString(1);
+           String[] userAccount = new String[2];
             while(reslt.next()){
-                role = reslt.getString(1);
+                userAccount[0] = reslt.getString("Role");
+                userAccount[1] = reslt.getString("UserID");
             }
-            if(role != null){
-                return role;
+            if(userAccount != null){
+                return userAccount;
             }else{
                 return null;
             }
