@@ -88,7 +88,7 @@ public class DatabaseConnection {
     public String[] checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "';");
+            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "'");
            // reslt.next();
            String[] userAccount = new String[2];
             while(reslt.next()){
