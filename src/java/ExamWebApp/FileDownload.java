@@ -27,7 +27,9 @@ public class FileDownload {
 public boolean download(String examID){
 
 DatabaseConnection db = new DatabaseConnection();
+
     String SQL = "SELECT File,Title,ModuleCode FROM exam WHERE ExamID= '" + examID + "';"; 
+
 
     Connection conn = db.getConn();
     java.sql.PreparedStatement smt = null;
@@ -46,6 +48,7 @@ DatabaseConnection db = new DatabaseConnection();
         smt = conn.prepareStatement(SQL);
   
         rs = smt.executeQuery();
+
         while (rs.next()) {
         String fileName = rs.getString("ModuleCode") + "-" + rs.getString("Title");
         
@@ -55,6 +58,7 @@ DatabaseConnection db = new DatabaseConnection();
         System.out.println("Getting file please be patient..");
 
         
+
 
             input = rs.getBinaryStream("File"); //get it from col name
             int r = 0;
