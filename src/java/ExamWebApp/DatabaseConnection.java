@@ -606,24 +606,35 @@ public class DatabaseConnection {
     
     public String[][] getExamLists()
 {    ResultSet rs;
+ResultSet externalExaminer =null;
+ResultSet vettingCommittee=null;
+ResultSet internalModerator=null;
 	try
 	{
             stmt = conn.createStatement();
-            
+            Statement external = conn.createStatement();
+            Statement internal = conn.createStatement();
+            Statement vetting = conn.createStatement();
             switch (LoginCheckClass.userRole) {
                 case "Internal Moderator":
                     {
-                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,ExternalExaminer,ExamVettingComittee FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
-                        break;
+                       rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,ExternalExaminer,ExamVettingComittee FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                       externalExaminer = external.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" +rs.getInt("ExternalExaminer") +"' ;");
+                       vettingCommittee = vetting.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" +rs.getInt("ExamVettingComittee") +"' ;");
+                       break;
                     }
                 case "External Examiner":
                     {
                         rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModerator,ExamVettingComittee FROM exam WHERE ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
+                       internalModerator = internal.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" +rs.getString("InternalModerator") +"' ;");
+                       vettingCommittee = vetting.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" +rs.getString("ExamVettingComittee") +"' ;");
                         break;
                     }
                 case "Exam Vetting Comittee":
                     {
                         rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModeraor,ExternalExaminer FROM exam WHERE ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
+                       internalModerator = internal.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" +rs.getString("InternalModerator") +"' ;");
+                       externalExaminer = external.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" +rs.getString("ExternalExaminer") +"' ;");
                         break;
                     }
                 default:
@@ -651,8 +662,8 @@ public class DatabaseConnection {
                         staffExams[j][1] = rs.getString("Title");
                         staffExams[j][2] = rs.getString("ModuleCode");
                         staffExams[j][3] = rs.getString("ModuleCoordinator");
-                        staffExams[j][4] = rs.getString("ExternalExaminer");
-                        staffExams[j][5] = rs.getString("ExamVettingComittee");
+                        staffExams[j][4] = externalExaminer.getString("FirstName") + " " + externalExaminer.getString("Surname");
+                        staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
                         break;
                     }
                 case "External Examiner":
@@ -661,8 +672,8 @@ public class DatabaseConnection {
                     staffExams[j][1] = rs.getString("Title");
                     staffExams[j][2] = rs.getString("ModuleCode");
                     staffExams[j][3] = rs.getString("ModuleCoordinator");
-                    staffExams[j][4] = rs.getString("InternalModerator");
-                    staffExams[j][5] = rs.getString("ExamVettingComittee");
+                    staffExams[j][4] = internalModerator.getString("FirstName") + " " + internalModerator.getString("Surname");
+                    staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
                         break;
                     }
                 case "Exam Vetting Comittee":
@@ -671,8 +682,8 @@ public class DatabaseConnection {
                     staffExams[j][1] = rs.getString("Title");
                     staffExams[j][2] = rs.getString("ModuleCode");
                     staffExams[j][3] = rs.getString("ModuleCoordinator");
-                    staffExams[j][4] = rs.getString("InternalModerator");
-                    staffExams[j][5] = rs.getString("ExternalExaminer");
+                    staffExams[j][4] = internalModerator.getString("FirstName") + " " + internalModerator.getString("Surname");
+                    staffExams[j][5] = externalExaminer.getString("FirstName") + " " + externalExaminer.getString("Surname");
                         break;
                     }
                 default:
