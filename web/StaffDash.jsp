@@ -4,6 +4,7 @@
     Author     : Jordan
 --%>
 
+<%@page import="ExamWebApp.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,21 @@
             <a href="#Lock">Lock</a>
             <a href="#Back">Back</a>
             <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
+            <br>
+            
+            
+            <%
+                
+            LoginCheckClass loggedin = new LoginCheckClass();
+            out.print(loggedin.userID);
+            
+            %>
+            <br>
+            <%
+                
+            out.print(loggedin.userRole);
+            
+            %>
         </div>
     </body>
 </html>
