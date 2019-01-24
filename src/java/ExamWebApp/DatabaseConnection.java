@@ -603,6 +603,68 @@ public class DatabaseConnection {
 	return null;
 }
     
+    
+    public String[][] getExamLists()
+{    ResultSet rs;
+	try
+	{
+            stmt = conn.createStatement();
+            
+            switch (LoginCheckClass.userRole) {
+                case "Internal Moderator":
+                    {
+                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                        break;
+                    }
+                case "External Examiner":
+                    {
+                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator FROM exam WHERE ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
+                        break;
+                    }
+                case "Exam Vetting Comittee":
+                    {
+                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator FROM exam WHERE ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
+                        break;
+                    }
+                default:
+                    return null;
+            }
+            
+            
+            //ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
+
+            int row = 0;
+            if (rs.last())
+            {
+                    row = rs.getRow();
+                    rs.beforeFirst();
+            }
+            CompletedRowss = row;
+            String[][] staffExams = new String[row][4];
+            int j = 0;
+            while(rs.next())
+            {
+                    staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                    staffExams[j][1] = rs.getString("Title");
+                    staffExams[j][2] = rs.getString("ModuleCode");
+                    staffExams[j][3] = rs.getString("ModuleCoordinator");
+                    j++;
+            }
+            if(staffExams != null)
+            {
+                    return staffExams;
+            } else {
+                    System.out.println("The return is Null");
+            }
+	}
+	catch(SQLException e)
+	{
+		System.out.println("Error: " + e);
+	}
+	return null;
+}
+    
+    
 
 }
 
