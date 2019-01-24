@@ -41,14 +41,14 @@ LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
 INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`)
 VALUES
-	(00010001,'Liam','Boyle','Internal Moderator','l.boyle@dundee.ac.uk','Liam123'),
-	(00010002,'Sebastian','Salek','Internal Moderator','s.salek@dundee.ac.uk','Sebastian567'),
-	(00010003,'Calum','Scott','External Examiner','c.scott@dundee.ac.uk','Calum1'),
-	(00010004,'Iain','Murray','Exam Vetting Comittee','i.murray@dundee.ac.uk','IDog123'),
+  (00010001,'Liam','Boyle','Internal Moderator','l.boyle@dundee.ac.uk','Liam123'),
+  (00010002,'Sebastian','Salek','Internal Moderator','s.salek@dundee.ac.uk','Sebastian567'),
+  (00010003,'Calum','Scott','External Examiner','c.scott@dundee.ac.uk','Calum1'),
+  (00010004,'Iain','Murray','Exam Vetting Comittee','i.murray@dundee.ac.uk','IDog123'),
   (00010005,'Craig','Ramsey','Local Exam Officer','c.ramsey@dundee.ac.uk','CR123'),
   (00010006,'Matthew','Daldry','School Office','m.daldry@dundee.ac.uk','MD123'),
   (00010007,'Jordan','Mckilligan','Exam Setter','j.mckilligan@dundee.ac.uk','JM123');
-	
+  
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -72,8 +72,9 @@ CREATE TABLE `EXAM` (
   `AuthorID` int(10) DEFAULT NULL,
   `Deadline` date DEFAULT NULL,
   `Status` varchar(20) DEFAULT NULL,
-  `File` longblob DEFAULT NULL,
+  `ExamPaper` longblob DEFAULT NULL,
   `AssignedTo` int(10) DEFAULT NULL,
+  `SolutionsPaper` longblob DEFAULT NULL,
   PRIMARY KEY (`ExamID`),
   KEY `fk_EXAM_USER1` (`AuthorID`),
   KEY `fk_EXAM_USER2` (`AssignedTo`),
@@ -83,14 +84,14 @@ CREATE TABLE `EXAM` (
 
 LOCK TABLES `EXAM` WRITE;
 /*!40000 ALTER TABLE `EXAM` DISABLE KEYS */;
-INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`File`,`AssignedTo`)
+INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`ExamPaper`,`AssignedTo`,`SolutionsPaper`)
 VALUES
 
-	(00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2019-01-21',00010002,'2019-01-29','New',NULL,00010006),
-  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006),
-  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2019-01-22',00010004,'2019-01-29','Completed',NULL,00010006),
-  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006),
-  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006);
+  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2019-01-21',00010002,'2019-01-29','New',NULL,00010006,NULL),
+  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006,NULL),
+  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2019-01-22',00010004,'2019-01-29','Completed',NULL,00010006,NULL),
+  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006,NULL),
+  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006,NULL);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -113,16 +114,13 @@ CREATE TABLE `COMMENT` (
   CONSTRAINT `fk_COMMENT_USER1` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-
-
 LOCK TABLES `COMMENT` WRITE;
 /*!40000 ALTER TABLE `COMMENT` DISABLE KEYS */;
 INSERT INTO `COMMENT` (`CommentID`,`ExamID`,`UserID`,`Comment`)
 VALUES
 
-	(00000001,00000001,00010003,'Looks Good!');
-	
+  (00000001,00000001,00010003,'Looks Good!');
+  
 
 /*!40000 ALTER TABLE `COMMENT` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -135,7 +133,7 @@ DROP TABLE IF EXISTS `DEADLINE`;
 
 CREATE TABLE `DEADLINE` (
   `Role` varchar(45) NOT NULL,
-  `Date` date DEFAULT NULL,
+  `Date` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`Role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -144,13 +142,70 @@ LOCK TABLES `DEADLINE` WRITE;
 INSERT INTO `DEADLINE` (`Role`,`Date`)
 VALUES
 
-  ('Internal Moderator',NULL),
-  ('External Examiner',NULL),
-  ('Exam Vetting Comittee',NULL),
-  ('Exam Setter',NULL);
+  ('Internal Moderator','10-12-19'),
+  ('External Examiner','18-4-19'),
+  ('Exam Vetting Comittee','12-9-19'),
+  ('Exam Setter','24-5-19');
 
 /*!40000 ALTER TABLE `DEADLINE` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+
+# Dump of table Signatures
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SIGNATURES`;
+
+CREATE TABLE `SIGNATURES` (
+  `ExamID` int(11) NOT NULL,
+  `TSID` int(11) NOT NULL,
+  `TSSign1` tinyint(4) DEFAULT NULL,
+  `IMID` int(11) NOT NULL,
+  `IMSign` tinyint(4) DEFAULT NULL,
+  `TSSign2` tinyint(4) DEFAULT NULL,
+  `EVCID` int(11) NOT NULL,
+  `EVCSign` tinyint(4) DEFAULT NULL,
+  `TSSign3` tinyint(4) DEFAULT NULL,
+  `EEID` int(11) NOT NULL,
+  `EESign` tinyint(4) DEFAULT NULL,
+  `TSSignFinal` tinyint(4) DEFAULT NULL,
+  KEY `ExamID_idx` (`ExamID`),
+  CONSTRAINT `ExamID` FOREIGN KEY (`ExamID`) REFERENCES `exam` (`ExamID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `SIGNATURES` WRITE;
+/*!40000 ALTER TABLE `SIGNATURES` DISABLE KEYS */;
+INSERT INTO `SIGNATURES` (`ExamID`,`TSID`,`TSSign1`,`IMID`,`IMSign`,`TSSign2`,`EVCID`,`EVCSign`,`TSSign3`,`EVCID`,`EESign`,`TSSignFinal`)
+VALUES
+
+
+ (00000001,00010002,NULL,00010001,NULL,NULL,00010004,NULL,NULL,00010003,NULL,NULL);
+  
+ /*!40000 ALTER TABLE `SIGNATURES` ENABLE KEYS */; 
+UNLOCK TABLES;
+
+# Dump of view assignedroles
+# ------------------------------------------------------------
+
+DROP VIEW IF EXISTS `assignedroles`;
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `18agileteam8`@`%` 
+    SQL SECURITY DEFINER
+VIEW `assignedroles` AS
+    SELECT 
+        `a`.`ExamID` AS `ExamID`,
+        `b`.`UserID` AS `UserID`,
+        `b`.`FirstName` AS `FirstName`,
+        `b`.`Surname` AS `Surname`,
+        `b`.`Role` AS `Role`
+    FROM
+        (`exam` `a`
+        JOIN `user` `b`)
+    WHERE
+        ((`a`.`AuthorID` = `b`.`UserID`)
+            OR (`a`.`AssignedTo` = `b`.`UserID`))
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -159,3 +214,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  

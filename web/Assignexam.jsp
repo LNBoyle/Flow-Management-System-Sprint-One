@@ -12,6 +12,14 @@
         <title>Assign Exam</title>
     </head>
     <body>
+        
+        <div class="topnav">
+            <a class="active" </a>
+       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Home" />
+       <input type="button" onclick="location.href='index.jsp';" value="Lock" />
+       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Back" />
+            <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
+        </div>
         <h1><center>Assign Exams</center></h1>
         
         
@@ -36,7 +44,25 @@
   <button type="button" onclick="alert('Exam Assigned')">Assign</button>
   </form> 
         
-        
+
       
     </body>
+    
+    
+    
+        <%
+            if ((request.getParameter("Home") != null)) {
+        %>
+       <jsp:forward page="LocalExamOfficerDashboard.jsp"></jsp:forward>
+        <%
+            }
+        %>
+        
+            <%
+            if ((request.getParameter("Lock") != null)) {
+        %>
+       <jsp:forward page="index.jsp"></jsp:forward>
+        <%
+            }
+        %>
 </html>
