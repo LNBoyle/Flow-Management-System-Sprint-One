@@ -82,7 +82,7 @@ public class FileUpload extends HttpServlet {
         }
         
         FileDownload downSyn = new FileDownload();
-        downSyn.download();
+        downSyn.download("1");
     }
 }
 
