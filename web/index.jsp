@@ -10,8 +10,8 @@
     <meta name="author" content="Team 5">
 
     <link href="css/staffLogin.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 
 
@@ -39,6 +39,7 @@
                     <button class="btn btn-blue btn-lg" type="submit" name="submit" value="submit">Sign in</button>
                 </div>
             </form>
+            
             
         </div>
     </div>
