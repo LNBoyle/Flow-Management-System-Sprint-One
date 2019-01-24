@@ -10,7 +10,7 @@ package ExamWebApp;
  * @author lboyl
  */
 
-    import java.io.File;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,10 +24,10 @@ public class FileDownload {
 
 
 
-public void download(){
+public boolean download(String examID){
 
 DatabaseConnection db = new DatabaseConnection();
-    String SQL = "SELECT File FROM `EXAM` WHERE `ExamID`=18947"; 
+    String SQL = "SELECT File,Title,ModuleCode FROM exam WHERE ExamID= '" + examID + "';"; 
 
     Connection conn = db.getConn();
     java.sql.PreparedStatement smt = null;
@@ -46,12 +46,15 @@ DatabaseConnection db = new DatabaseConnection();
         smt = conn.prepareStatement(SQL);
   
         rs = smt.executeQuery();
-String fileName = rs.getString("File");
+        while (rs.next()) {
+        String fileName = rs.getString("ModuleCode") + "-" + rs.getString("Title");
+        
         String home = System.getProperty("user.home");
-        output = new FileOutputStream(new File(home+"/Downloads/"+fileName+".docx"));
+        System.out.println(home);
+        output = new FileOutputStream(new File(home + "/Downloads/" + fileName +".docx"));
         System.out.println("Getting file please be patient..");
 
-        while (rs.next()) {
+        
 
             input = rs.getBinaryStream("File"); //get it from col name
             int r = 0;
@@ -63,19 +66,24 @@ String fileName = rs.getString("File");
             }
         }
         System.out.println("File writing complete !");
+        return true;
 
     } catch (ClassNotFoundException e) {
         System.err.println("Class not found!");
         e.printStackTrace();
+        return false;
     } catch (SQLException e) {
         System.err.println("Connection failed!");   
         e.printStackTrace();
+        return false;
     } catch (FileNotFoundException e) {
         System.err.println("File not found!");
         e.printStackTrace();
+        return false;
     } catch (IOException e) {
         System.err.println("File writing error..!");
         e.printStackTrace();
+        return false;
     }finally {
         if(rs != null){
             try {
@@ -92,6 +100,7 @@ String fileName = rs.getString("File");
             }
 
         }
+        
     }
 
 }
