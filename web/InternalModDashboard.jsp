@@ -1,3 +1,4 @@
+<%@page import="ExamWebApp.DeadLine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,5 +13,12 @@
             <a href="#Back">Back</a>
             <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
         </div>
+        
+        <%
+            DeadLine deadline = new DeadLine();
+            out.print("Your Deadline to complete your exams is: " + deadline.deadline());
+            
+            %>
+        
     </body>
 </html>

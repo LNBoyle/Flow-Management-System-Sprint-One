@@ -18,7 +18,6 @@
         <title>Staff: Exam Setter</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
         <div>
              <form method=POST">
                 <input type="button" class="btn-blue" value="Upload New Exam" name="Upload New Exam" onclick="openPage('UploadExam.jsp')" />
@@ -33,20 +32,13 @@
             <a href="#Back">Back</a>
             <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
             <br>
-            
-            
+            <br>
             <%
-                
-            LoginCheckClass loggedin = new LoginCheckClass();
-            out.print(loggedin.userID);
+            DeadLine deadline = new DeadLine();
+            out.print("Your Deadline to complete your exams is: " + deadline.deadline());
             
             %>
             <br>
-            <%
-                
-            out.print(loggedin.userRole);
-            
-            %>
         </div>
     </body>
     

@@ -46,7 +46,12 @@
 
         <div class="NotificationBox" style="float:right;background-color: lightgrey;width:500px;height:300px; border:black;padding: 25px;margin: 25px;"> </div>
 
-
+<br>
+            <%
+            DeadLine deadline = new DeadLine();
+            out.print("Your Deadline to complete your exams is: " + deadline.deadline());
+            
+            %>
 
         
         
