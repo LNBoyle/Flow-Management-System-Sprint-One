@@ -207,7 +207,7 @@ public class DatabaseConnection {
     }
     
     
-     public boolean CreateAccount(int UserID, String FirstName,String SurName ,String Role,String Email, String Password)
+     public boolean CreateAccount(String UserID, String FirstName,String SurName ,String Role,String Email, String Password)
     {
         //Try block to add the repsonse to the comment
         try
