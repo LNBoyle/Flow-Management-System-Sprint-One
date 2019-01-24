@@ -21,7 +21,7 @@
         <h1>Hello World!</h1>
         <div>
              <form method=POST">
-                <input type="button" class="btn-blue" value="Upload New Exam" name="Upload New Exam" onclick="openPage('UploadExam.jsp')" />
+                <input type="button" class="btn-blue" value="Upload New Exam" name="Upload New Exam" onclick="openPage('FileUpload.html')" />
                 
                 <button class="btn-blue" type="EditExam" name="edit">Edit Current Exam</button>
                 <button class="btn-blue" type="ViewExam" name="view">View Current Exam</button>
