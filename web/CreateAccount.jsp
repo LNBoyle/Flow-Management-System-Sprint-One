@@ -21,51 +21,81 @@
         <h1>Create a new account</h1>
         
 
-  <form> 
+  <div>
+         
+  <Form method="POST">
   UserId:    
-  <input type="Int" name="userid" value="">
-  First name:<br>
-  <input type="text" name="first" value="">
+  <input type="text" name="userid" value=" ">
+  First name:
+  <br>
+  <input type="text" name="firstname" value=" ">
   <br>
   Surname of Examiner:<br>
-  <input type="text" name="surname" value="">
+  <input type="text" name="surname" value=" ">
   <br>
   Role:<br>
-  <input type="text" name="role" value="">
+  <input type="text" name="role" value=" ">
   <br>
   Email:<br>
-  <input type="text" name="email" value="">
+  <input type="text" name="email" value=" ">
   <br>
   Password:<br>
-  <input type="password" name="password" value="">
+  <input type="password" name="password" value=" ">
   <br> <br>
-  <button type="button" name="create"  onclick="alert('Account Created')">Create</button>
-  </form> 
-        
-    <% 
-      String u, f, s, r, e, p = " "; 
+  <input type="submit" value="Create" name="Create"  >
+    </Form>
+
+  </div> 
       
-        u = request.getParameter("userid");     
-        f = request.getParameter("firstname");
-        s = request.getParameter("surname");
-        r = request.getParameter("role");
-        e = request.getParameter("email");
-        p = request.getParameter("password");
-        
-
-    db.CreateAccount(u,f,s,r,e,p);
-    
-    if (db.CreateAccount()) == true 
-    {
-    
-    %>
-        alert('Account Created')
-     <%   
-    }
-
    
-    %>
+    <% 
         
+        
+        
+
+                
+        if ((request.getParameter("Create") != null)) 
+        {  
+       
+
+         
+        String u = "";
+        String f = "";
+        String s = "";
+        String r = "";  
+        String e = "";
+        String p = "";
+        
+        u = request.getParameter("userid");     
+        out.print(u);
+        f = request.getParameter("firstname");
+        out.print(f);
+        s = request.getParameter("surname");
+        out.print(s);
+        r = request.getParameter("role");
+        out.print(r);
+        e = request.getParameter("email");
+        out.print(e);
+        p = request.getParameter("password");
+        out.print(p);
+    
+
+        int UserID = 0;   
+        UserID = Integer.parseInt(u);    
+        
+       db.CreateAccount(UserID, f, s, r, e, p); 
+       
+     if (db.CreateAccount(UserID, f, s, r, e, p) == true){
+                out.println("This shit is done");
+     }
+
+     
+     
+     
+         }
+    %>
+ 
+      
         
     </body>
 </html>

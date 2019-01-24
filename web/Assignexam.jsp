@@ -48,21 +48,5 @@
       
     </body>
     
-    
-    
-        <%
-            if ((request.getParameter("Home") != null)) {
-        %>
-       <jsp:forward page="LocalExamOfficerDashboard.jsp"></jsp:forward>
-        <%
-            }
-        %>
-        
-            <%
-            if ((request.getParameter("Lock") != null)) {
-        %>
-       <jsp:forward page="index.jsp"></jsp:forward>
-        <%
-            }
-        %>
+
 </html>

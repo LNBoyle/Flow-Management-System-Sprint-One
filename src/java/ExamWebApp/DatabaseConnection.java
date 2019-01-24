@@ -207,13 +207,16 @@ public class DatabaseConnection {
     }
     
     
-     public boolean CreateAccount(String UserID, String FirstName,String SurName ,String Role,String Email, String Password)
+     public boolean CreateAccount(int UserID, String FirstName,String SurName ,String Role,String Email, String Password)
     {
+       
+        
         //Try block to add the repsonse to the comment
         try
         {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO user (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`) VALUES" + UserID + FirstName + SurName + Role + Email + Password + ";");
+            int success = stmt.executeUpdate("INSERT INTO user " + "VALUES " + "("UserID","FirstName","SurName","Role","Email","Password";)";
+
             
             //return true if success, false otherwise
             if (success != 0)
