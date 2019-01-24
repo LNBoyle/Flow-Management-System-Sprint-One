@@ -17,6 +17,7 @@ public class DatabaseConnection {
     private ResultSet reslt = null;
     public int CompletedRows = 0;
     public int UserRows = 0;
+    public int CompletedRowss = 0;
     
     public DatabaseConnection(){
         String password = "8326.at8.6238";
@@ -308,6 +309,194 @@ public class DatabaseConnection {
     
     
     }
+
+    public boolean checkTSSignature1(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("TSSign1");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+    
+    public boolean setTSSignature1(int commentID, String newResponse)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("UPDATE comment SET Response = '" + newResponse + "' WHERE CommentID = " + commentID + ";");
+            
+            //return true if success, false otherwise
+            if (success != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Catch block for errors with SQL
+        catch(SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    public boolean checkIMSignature(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("IMSign");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+    
+    public boolean checkTSSignature2(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("TSSign2");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+    
+    public boolean CheckEVCSignature(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("EVCSign");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+    
+    public boolean CheckTSSignature3(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("TSSign3");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+    
+    public boolean CheckEESignature(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("EESign");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+    
+    public boolean CheckTSSignatureFinal(){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID,TSSign1 FROM signatures;");
+        
+           int[] examProgress = new int[2];
+            while(reslt.next()){
+                examProgress[0] = reslt.getInt("ExamID");
+                examProgress[1] = reslt.getInt("TSSignFinal");
+                
+            }
+            if(examProgress != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException exc){
+            System.out.println("Error: " + exc);
+        }
+        return false;
+        
+    }
+
     
     public String[][] getCompletedExams(){
         try{
@@ -381,7 +570,7 @@ public class DatabaseConnection {
 	try
 	{
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT Title FROM exam WHERE ModuleCoordinator = " + ModuleCoordinator + ";");
+            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
 
             int row = 0;
             if (rs.last())
@@ -389,25 +578,15 @@ public class DatabaseConnection {
                     row = rs.getRow();
                     rs.beforeFirst();
             }
-            CompletedRows = row;
-            String[][] staffExams = new String[row][14];
+            CompletedRowss = row;
+            String[][] staffExams = new String[row][4];
             int j = 0;
             while(rs.next())
             {
-                    staffExams[j][0] = reslt.getString("ExamID");
-                    staffExams[j][1] = reslt.getString("Title");
-                    staffExams[j][2] = reslt.getString("School");
-                    staffExams[j][3] = reslt.getString("ModuleCoordinator");
-                    staffExams[j][4] = reslt.getString("ModuleCode");
-                    staffExams[j][5] = reslt.getString("ExamType");
-                    staffExams[j][6] = reslt.getString("ExamPeriod");
-                    staffExams[j][7] = reslt.getString("ExamLevel");
-                    staffExams[j][8] = reslt.getString("DateCreated");
-                    staffExams[j][9] = reslt.getString("AuthorID");
-                    staffExams[j][10] = reslt.getString("Deadline");
-                    staffExams[j][11] = reslt.getString("Status");
-                    staffExams[j][12] = reslt.getString("File");
-                    staffExams[j][13] = reslt.getString("AssignedTo");
+                    staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                    staffExams[j][1] = rs.getString("Title");
+                    staffExams[j][2] = ModuleCoordinator;
+                    staffExams[j][3] = rs.getString("ModuleCode");
                     j++;
             }
             if(staffExams != null)

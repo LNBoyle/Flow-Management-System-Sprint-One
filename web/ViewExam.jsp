@@ -55,33 +55,33 @@
                 </tr>
                 <%
                     int i = 0;
-                    if (exam != null)
+                    for(i=0; i < exam.length; i++)
                     {
                         %>
                         <tr>
                             <td> 
                             <% 
-                                System.out.println(exam[i][0]); 
+                                out.println(exam[i][0]); 
                                 %> 
                             </td>
                             <td>
                             <% 
-                                System.out.println(exam[i][1]); 
+                                out.println(exam[i][1]); 
                                 %> 
                             </td>
                             <td>
                             <% 
-                                System.out.println(exam[i][3]); 
+                                out.println(exam[i][2]); 
                                 %> 
                             </td>
                             <td>
                             <% 
-                                System.out.println(exam[i][4]); 
+                                out.println(exam[i][3]); 
                                 %> 
                             </td>
                         </tr>
                         <%
-                            i++;
+                            
                     }
                    %>
 

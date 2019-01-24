@@ -60,7 +60,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `EXAM`;
 
 CREATE TABLE `EXAM` (
-  `ExamID` int(10) NOT NULL,
+  `ExamID` int(10) NOT NULL AUTO_INCREMENT,
   `Title` varchar(255) DEFAULT NULL,
   `School` varchar(255) DEFAULT NULL,
   `ModuleCoordinator` varchar(255) DEFAULT NULL,
