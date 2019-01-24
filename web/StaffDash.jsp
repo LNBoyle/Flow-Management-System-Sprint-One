@@ -18,17 +18,8 @@
         <title>Staff: Exam Setter</title>
     </head>
 
-    <body>
-        <div>
-             <form method=POST">
-                <input type="button" class="btn-blue" value="Upload New Exam" name="Upload New Exam" onclick="openPage('UploadExam.jsp')" />
-                
-                <button class="btn-blue" type="EditExam" name="edit">Edit Current Exam</button>
-                <button class="btn-blue" type="ViewExam" name="view">View Current Exam</button>
-             </form>
-        </div>        
+    <body>     
        
-
         <div class="topnav">
             <a class="active" href="#">Home</a>
             <a href="#Lock">Lock</a>

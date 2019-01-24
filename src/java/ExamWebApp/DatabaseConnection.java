@@ -309,6 +309,7 @@ public class DatabaseConnection {
     
     
     }
+
     public boolean checkTSSignature1(){
         try{
             stmt = conn.createStatement();
@@ -495,6 +496,7 @@ public class DatabaseConnection {
         return false;
         
     }
+
     
     public String[][] getCompletedExams(){
         try{
