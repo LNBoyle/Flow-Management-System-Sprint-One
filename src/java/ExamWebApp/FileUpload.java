@@ -35,18 +35,20 @@ public class FileUpload extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         // gets values of text fields
          
-        InputStream inputStream = null; // input stream of the upload file
-         
+        InputStream examPaperStream = null; // input stream of the upload file
+        InputStream examSolutionStream = null;
         // obtains the upload file part in this multipart request
-        Part filePart = request.getPart("file");
-        if (filePart != null) {
+        Part examPart = request.getPart("ExamPaper");
+        Part solutionPart = request.getPart("ExamSolution");
+        if (examPart != null) {
             // prints out some information for debugging
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
+            System.out.println(examPart.getName());
+            System.out.println(examPart.getSize());
+            System.out.println(examPart.getContentType());
              
             // obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
+            examPaperStream = examPart.getInputStream();
+            examSolutionStream = solutionPart.getInputStream();
         }
                DatabaseConnection db = new DatabaseConnection();
         Connection conn = db.getConn(); // connection to the database
@@ -59,19 +61,19 @@ public class FileUpload extends HttpServlet {
  SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
  String creationDate = formatter.format(date);
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (ExamID, Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  File) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO EXAM (Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ? )";
             PreparedStatement statement = conn.prepareStatement(sql);        
-            statement.setInt(1,10023002);
-            statement.setString(2,request.getParameter("Title"));
-            statement.setString(3,request.getParameter("School"));
-            statement.setString(4,request.getParameter("ModuleCode"));
-            statement.setString(5,request.getParameter("ExamType"));
-            statement.setString(6,request.getParameter("ExamPeriod"));
-            statement.setString(7,request.getParameter("ExamLevel"));
-             statement.setString(8,creationDate);
-            if (inputStream != null) {
+            statement.setString(1,request.getParameter("Title"));
+            statement.setString(2,request.getParameter("School"));
+            statement.setString(3,request.getParameter("ModuleCode"));
+            statement.setString(4,request.getParameter("ExamType"));
+            statement.setString(5,request.getParameter("ExamPeriod"));
+            statement.setString(6,request.getParameter("ExamLevel"));
+             statement.setString(7,creationDate);
+            if (examPaperStream != null) {
                 // fetches input stream of the upload file for the blob column
-                statement.setBlob(9, inputStream);
+                statement.setBlob(8, examPaperStream);
+                statement.setBlob(9, examSolutionStream);
             }
  
             // sends the statement to the database server
@@ -91,8 +93,7 @@ public class FileUpload extends HttpServlet {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
         
-        FileDownload downSyn = new FileDownload();
-        downSyn.download("1");
+     
     }
 }
 
