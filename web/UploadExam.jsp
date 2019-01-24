@@ -1,9 +1,3 @@
-<%-- 
-    Document   : UploadExam
-    Created on : 23-Jan-2019, 21:30:01
-    Author     : Jordan
---%>
-
 <%@page import="java.util.Arrays"%>
 <%@page import="ExamWebApp.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
