@@ -91,8 +91,7 @@ public class FileUpload extends HttpServlet {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
         
-        FileDownload downSyn = new FileDownload();
-        downSyn.download("1");
+     
     }
 }
 

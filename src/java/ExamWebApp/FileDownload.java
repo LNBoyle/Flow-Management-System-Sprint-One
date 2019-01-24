@@ -32,10 +32,10 @@ DatabaseConnection db = new DatabaseConnection();
 
 
     Connection conn = db.getConn();
-    java.sql.PreparedStatement smt = null;
+    java.sql.PreparedStatement statement = null;
     InputStream input = null;
     FileOutputStream output = null;
-    ResultSet rs = null;
+    ResultSet result = null;
 
     try {
 
@@ -45,12 +45,12 @@ DatabaseConnection db = new DatabaseConnection();
        
         System.out.println("Connection successful..\nNow creating query...");
 
-        smt = conn.prepareStatement(SQL);
+        statement = conn.prepareStatement(SQL);
   
-        rs = smt.executeQuery();
+        result = statement.executeQuery();
 
-        while (rs.next()) {
-        String fileName = rs.getString("ModuleCode") + "-" + rs.getString("Title");
+        while (result.next()) {
+        String fileName = result.getString("ModuleCode") + "-" + result.getString("Title");
         
         String home = System.getProperty("user.home");
         System.out.println(home);
@@ -60,7 +60,7 @@ DatabaseConnection db = new DatabaseConnection();
         
 
 
-            input = rs.getBinaryStream("File"); //get it from col name
+            input = result.getBinaryStream("File"); //get it from col name
             int r = 0;
 
 
@@ -89,12 +89,12 @@ DatabaseConnection db = new DatabaseConnection();
         e.printStackTrace();
         return false;
     }finally {
-        if(rs != null){
+        if(result != null){
             try {
                 input.close();
                 output.flush();
                 output.close();
-                smt.close();
+                statement.close();
                 conn.close();
             } catch (SQLException e) {
                 System.err.println("Connot close connecton!");
