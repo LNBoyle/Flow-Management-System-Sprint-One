@@ -20,9 +20,9 @@
     </head>
     <body>
         <div class="topnav">
-            <a class="active" href="#">Home</a>
-            <a href="#Lock">Lock</a>
-            <a href="#Back">Back</a>
+            <button type = "Home" name = "Home"> Home</button>
+            <button type = "Lock" name = "Lock"> Lock</button>
+            <button type = "Back" name = "Back"> Back</button>
             <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
         </div>
 
@@ -33,11 +33,13 @@
     
 
         <div class="options" style="font-size:30px;float:left;list-style-type: none;padding: 40px 30px;">
-            <form method = "POST">
-
+    
+   
+        
                 <button type = "ViewAccount" name = "ViewAccount"> View Account Info</button>
                 <li><button type = "CreateAccount" name = "CreateAccount"> Create Account</button></li>
                 <li><button type = "UpdateAccount" name = "UpdateAccount"> Update Account</button></li>
+                <li><button type = "AssignExam" name = "AssignExam">Assign Exam</button></li>
             </form>	
         </div>
 
@@ -72,6 +74,9 @@
         <%
             if ((request.getParameter("CreateAccount") != null)) {
                 
+                  %>
+       <jsp:forward page="CreateAccount.jsp"></jsp:forward>
+        <%
             }
         %>
 
@@ -80,7 +85,16 @@
 
             }
         %>
-
+        
+        
+        <%
+            if ((request.getParameter("AssignExam") != null)) {
+       
+        %>
+       <jsp:forward page="Assignexam.jsp"></jsp:forward>
+        <%
+            }
+        %>
 
 
 
