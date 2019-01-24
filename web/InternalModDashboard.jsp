@@ -20,5 +20,16 @@
             
             %>
         
+            <form method=POST">                
+                <input type="button" class="btn-blue" value="View Exam" name="View Exam" onclick="openPage('ViewExam.jsp')" />
+             </form>
+            
+            <script type="text/javascript">
+            function openPage(pageName)
+            {
+                window.location.href = pageName;
+            }
+            </script>
+            
     </body>
 </html>

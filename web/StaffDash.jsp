@@ -17,7 +17,6 @@
         <link rel=stylesheet" type="text/css" href="StaffDashCSS.css">
         <title>Staff: Exam Setter</title>
     </head>
-
     <body>     
        
         <div class="topnav">
@@ -42,8 +41,10 @@
                 <input type="button" class="btn-blue" value="Upload New Exam" name="Upload New Exam" onclick="openPage('FileUpload.html')" />
                 
                 <button class="btn-blue" type="EditExam" name="edit">Edit Current Exam</button>
-                <input type="button" class="btn-blue" value="View Exam" name="View Exam" onclick="openPage('ViewExam.jsp')" />
+                <input type="button" class="btn-blue" value="View Exam" name="View Exam" onclick="openPage('ViewComments.jsp')" />
              </form>
+            
+            
         </div>     
 
     </body>
