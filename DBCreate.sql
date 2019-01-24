@@ -133,7 +133,7 @@ DROP TABLE IF EXISTS `DEADLINE`;
 
 CREATE TABLE `DEADLINE` (
   `Role` varchar(45) NOT NULL,
-  `Date` varchar(7) DEFAULT NULL,
+  `Date` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`Role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
