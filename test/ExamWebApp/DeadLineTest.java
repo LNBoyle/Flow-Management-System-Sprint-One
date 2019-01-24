@@ -12,10 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Jordan
- */
 public class DeadLineTest {
     
     public DeadLineTest() {
@@ -42,13 +38,22 @@ public class DeadLineTest {
      */
     @Test
     public void testDeadline() {
+        //internal moderator login
+        String userEmail = "l.boyle@dundee.ac.uk" ;
+        String userPassword = "Liam123";
+        LoginCheckClass login=new LoginCheckClass();
+        login.checkStaffLogin(userEmail,userPassword);
+        
         System.out.println("deadline");
-        DeadLine instance = new DeadLine();
-        String expResult = "";
-        String result = instance.deadline();
+        DeadLine deadline = new DeadLine();
+        String expResult = "10-12-19";
+        String result = deadline.deadline();
         assertEquals(expResult, result);
+        if (!(result.equals(expResult)))
+        {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+        }
     }
     
 }
