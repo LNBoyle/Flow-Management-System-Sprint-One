@@ -284,42 +284,42 @@ public class DatabaseConnection {
 {
 	try
 	{
-		stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT Title FROM exam WHERE ModuleCoordinator = " + ModuleCoordinator + ";");
-		
-		int row = 0;
-		if (rs.last())
-		{
-			row = rs.getRow();
-			rs.beforeFirst();
-		}
-		CompletedRows = row;
-		String[][] staffExams = new String[row][14];
-		int j = 0;
-		while(rs.next())
-		{
-			staffExams[j][0] = reslt.getString("ExamID");
-			staffExams[j][1] = reslt.getString("Title");
-			staffExams[j][2] = reslt.getString("School");
-			staffExams[j][3] = reslt.getString("ModuleCoordinator");
-			staffExams[j][4] = reslt.getString("ModuleCode");
-			staffExams[j][5] = reslt.getString("ExamType");
-			staffExams[j][6] = reslt.getString("ExamPeriod");
-			staffExams[j][7] = reslt.getString("ExamLevel");
-			staffExams[j][8] = reslt.getString("DateCreated");
-			staffExams[j][9] = reslt.getString("AuthorID");
-			staffExams[j][10] = reslt.getString("Deadline");
-			staffExams[j][11] = reslt.getString("Status");
-			staffExams[j][12] = reslt.getString("File");
-			staffExams[j][13] = reslt.getString("AssignedTo");
-			j++;
-		}
-		if(staffExams != null)
-		{
-			return staffExams;
-		} else {
-			System.out.println("The return is Null");
-		}
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT Title FROM exam WHERE ModuleCoordinator = " + ModuleCoordinator + ";");
+
+            int row = 0;
+            if (rs.last())
+            {
+                    row = rs.getRow();
+                    rs.beforeFirst();
+            }
+            CompletedRows = row;
+            String[][] staffExams = new String[row][14];
+            int j = 0;
+            while(rs.next())
+            {
+                    staffExams[j][0] = reslt.getString("ExamID");
+                    staffExams[j][1] = reslt.getString("Title");
+                    staffExams[j][2] = reslt.getString("School");
+                    staffExams[j][3] = reslt.getString("ModuleCoordinator");
+                    staffExams[j][4] = reslt.getString("ModuleCode");
+                    staffExams[j][5] = reslt.getString("ExamType");
+                    staffExams[j][6] = reslt.getString("ExamPeriod");
+                    staffExams[j][7] = reslt.getString("ExamLevel");
+                    staffExams[j][8] = reslt.getString("DateCreated");
+                    staffExams[j][9] = reslt.getString("AuthorID");
+                    staffExams[j][10] = reslt.getString("Deadline");
+                    staffExams[j][11] = reslt.getString("Status");
+                    staffExams[j][12] = reslt.getString("File");
+                    staffExams[j][13] = reslt.getString("AssignedTo");
+                    j++;
+            }
+            if(staffExams != null)
+            {
+                    return staffExams;
+            } else {
+                    System.out.println("The return is Null");
+            }
 	}
 	catch(SQLException e)
 	{
