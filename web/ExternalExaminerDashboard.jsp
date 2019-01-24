@@ -11,7 +11,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script src="scripts/jquery-1.11.1.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="scripts/SchoolOfficeDashboard.js"></script>
+        <link href="css/SchoolOfficeDashboard.css" rel="stylesheet">
+        <title>External Examiner Dashboard</title>
     </head>
     <body>
          <div id="header">
