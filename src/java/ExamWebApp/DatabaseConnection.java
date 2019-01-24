@@ -318,7 +318,7 @@ public class DatabaseConnection {
 		{
 			return staffExams;
 		} else {
-			return null;
+			System.out.println("The return is Null");
 		}
 	}
 	catch(SQLException e)
