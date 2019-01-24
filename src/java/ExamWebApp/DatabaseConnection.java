@@ -613,17 +613,17 @@ public class DatabaseConnection {
             switch (LoginCheckClass.userRole) {
                 case "Internal Moderator":
                     {
-                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,ExternalExaminer,ExamVettingComittee FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
                         break;
                     }
                 case "External Examiner":
                     {
-                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator FROM exam WHERE ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
+                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModerator,ExamVettingComittee FROM exam WHERE ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
                         break;
                     }
                 case "Exam Vetting Comittee":
                     {
-                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator FROM exam WHERE ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
+                        rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModeraor,ExternalExaminer FROM exam WHERE ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
                         break;
                     }
                 default:
@@ -640,14 +640,44 @@ public class DatabaseConnection {
                     rs.beforeFirst();
             }
             CompletedRowss = row;
-            String[][] staffExams = new String[row][4];
+            String[][] staffExams = new String[row][6];
             int j = 0;
             while(rs.next())
             {
+                switch (LoginCheckClass.userRole) {
+                case "Internal Moderator":
+                    {
+                        staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                        staffExams[j][1] = rs.getString("Title");
+                        staffExams[j][2] = rs.getString("ModuleCode");
+                        staffExams[j][3] = rs.getString("ModuleCoordinator");
+                        staffExams[j][4] = rs.getString("ExternalExaminer");
+                        staffExams[j][5] = rs.getString("ExamVettingComittee");
+                        break;
+                    }
+                case "External Examiner":
+                    {
                     staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
                     staffExams[j][1] = rs.getString("Title");
                     staffExams[j][2] = rs.getString("ModuleCode");
                     staffExams[j][3] = rs.getString("ModuleCoordinator");
+                    staffExams[j][4] = rs.getString("InternalModerator");
+                    staffExams[j][5] = rs.getString("ExamVettingComittee");
+                        break;
+                    }
+                case "Exam Vetting Comittee":
+                    {
+                    staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                    staffExams[j][1] = rs.getString("Title");
+                    staffExams[j][2] = rs.getString("ModuleCode");
+                    staffExams[j][3] = rs.getString("ModuleCoordinator");
+                    staffExams[j][4] = rs.getString("InternalModerator");
+                    staffExams[j][5] = rs.getString("ExternalExaminer");
+                        break;
+                    }
+                default:
+                    return null;
+                }
                     j++;
             }
             if(staffExams != null)

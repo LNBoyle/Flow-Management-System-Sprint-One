@@ -44,6 +44,8 @@
             <th class="headerTable">Exam Title</th>
             <th class="headerTable">Module Code</th>
             <th class="headerTable">Module Coordinator</th>
+            <th class="headerTable">External Examiner</th>
+            <th class="headerTable">Exam Vetting Comittee</th>
         </tr>
         <%
         for(int i=0;i<exam.length;i++){
@@ -53,6 +55,8 @@
                 <td><%out.print(exam[i][1]);%></td>
                 <td><%out.print(exam[i][2]);%></td>
                 <td><%out.print(exam[i][3]);%></td>
+                <td><%out.print(exam[i][4]);%></td>
+                <td><%out.print(exam[i][5]);%></td>
             </tr>
         <%
         }
