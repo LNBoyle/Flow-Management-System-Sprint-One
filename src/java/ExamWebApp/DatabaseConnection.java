@@ -1,5 +1,4 @@
 
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -611,55 +610,55 @@ public class DatabaseConnection {
                         staffExams[j][1] = rs.getString("Title");
                         staffExams[j][2] = rs.getString("ModuleCode");
                         staffExams[j][3] = rs.getString("ModuleCoordinator");
-                        if (rs.getString("ExternalExaminer") != null) {
+                        if(rs.getString("ExternalExaminer")!=null){
                             staffExams[j][4] = externalExaminer.getString("FirstName") + " " + externalExaminer.getString("Surname");
-                        } else {
-                            staffExams[j][4] = "N/A";
+                        }else{
+                            staffExams[j][4] = "Not Assigned";
                         }
-                        if (rs.getString("ExamVettingComittee") != null) {
-                            staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
-                        } else {
-                            staffExams[j][5] = "N/A";
+                          if(rs.getString("ExamVettingComittee")!=null){
+                             staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
+                        }else{
+                            staffExams[j][5] = "Not Assigned";
                         }
-
+                      
                         break;
                     }
                     case "External Examiner": {
                         internalModerator.next();
-                        vettingCommittee.next();
+                           vettingCommittee.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
                         staffExams[j][1] = rs.getString("Title");
                         staffExams[j][2] = rs.getString("ModuleCode");
                         staffExams[j][3] = rs.getString("ModuleCoordinator");
-                        if (rs.getString("InternalModerator") != null) {
+                           if(rs.getString("InternalModerator")!=null){
                             staffExams[j][4] = internalModerator.getString("FirstName") + " " + internalModerator.getString("Surname");
-                        } else {
-                            staffExams[j][4] = "N/A";
+                        }else{
+                            staffExams[j][4] = "Not Assigned";
                         }
-                        if (rs.getString("ExamVettingComittee") != null) {
-                            staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
-                        } else {
-                            staffExams[j][5] = "N/A";
+                           if(rs.getString("ExamVettingComittee")!=null){
+                             staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
+                        }else{
+                            staffExams[j][5] = "Not Assigned";
                         }
                         break;
                     }
                     case "Exam Vetting Comittee": {
-                        internalModerator.next();
-                        externalExaminer.next();
+                           internalModerator.next();
+                            externalExaminer.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
                         staffExams[j][1] = rs.getString("Title");
                         staffExams[j][2] = rs.getString("ModuleCode");
                         staffExams[j][3] = rs.getString("ModuleCoordinator");
-                        if (rs.getString("InternalModerator") != null) {
+                          if(rs.getString("InternalModerator")!=null){
                             staffExams[j][4] = internalModerator.getString("FirstName") + " " + internalModerator.getString("Surname");
-                        } else {
-                            staffExams[j][4] = "N/A";
+                        }else{
+                            staffExams[j][4] = "Not Assigned";
                         }
-
-                        if (rs.getString("ExternalExaminer") != null) {
+                   
+                       if(rs.getString("ExternalExaminer")!=null){
                             staffExams[j][5] = externalExaminer.getString("FirstName") + " " + externalExaminer.getString("Surname");
-                        } else {
-                            staffExams[j][5] = "N/A";
+                        }else{
+                            staffExams[j][5] = "Not Assigned";
                         }
                         break;
                     }
@@ -680,4 +679,3 @@ public class DatabaseConnection {
     }
 
 }
-
