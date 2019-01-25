@@ -22,5 +22,5 @@ function myFunction() {
 }
 
 function getRow(x) {
-  window.location.href="InternalModDashboard.jsp?exid=" + x;
+  window.location.href="ExternalExaminerDashboard.jsp?exid=" + x;
 }

@@ -29,10 +29,10 @@
         
         <%
             DeadLine deadline = new DeadLine();
+            %><center><h2> <%
             out.print("Your Deadline to complete your exams is: " + deadline.deadline());
-            
+            %></h2></center> <%
             %>
-
             <br>
              <%
             DatabaseConnection db = new DatabaseConnection();
