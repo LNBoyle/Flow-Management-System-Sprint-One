@@ -13,7 +13,32 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
     </head>
-    
+    <body>
+           <div id="header">
+            <nav class="navbar navbar-light">
+                    <span class="navbar-brand">Welcome..</span>
+            </nav>
+      <%
+                if(LoginCheckClass.userRole.equals("Exam Vetting Comittee")){
+                %>    
+                <a id="back" href="ExamVettingComitteeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+                <a id="home" href="ExamVettingComitteeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+                <%
+                }else if(LoginCheckClass.userRole.equals("External Examiner")){
+                %>
+                <a id="back" href="ExternalExaminerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+                <a id="home" href="ExternalExaminerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+                <%
+                }else if(LoginCheckClass.userRole.equals("Internal Moderator")){
+                %>
+                <a id="back" href="InternalModDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+                <a id="home" href="InternalModDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+                <%
+                }
+            %>
+                  <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
+
+	</div>
            <%
                
            DatabaseConnection db = new DatabaseConnection();
@@ -37,5 +62,5 @@
                 }
             
         %>
-   
+    </body>
 </html>

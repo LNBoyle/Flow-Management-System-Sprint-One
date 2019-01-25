@@ -77,6 +77,7 @@
         %>
     
     <%
+        if(request.getParameter("DownloadExam")!=null){
             FileDownload download = new FileDownload();
             if ((request.getParameter("modalExamIDHidden") != null))
             {
@@ -92,6 +93,7 @@
                    System.out.println("Failure!");
                 }
             }
+}
         %>
     </body>
 </html>

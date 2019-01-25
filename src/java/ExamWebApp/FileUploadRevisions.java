@@ -43,7 +43,7 @@ public class FileUploadRevisions extends HttpServlet {
         // obtains the upload file part in this multipart request
         Part examPart = request.getPart("ExamPaper");
         Part solutionPart = request.getPart("ExamSolution");
-        if (examPart != null && solutionPart==null) {
+        if (examPart != null && solutionPart == null) {
             // obtains input stream of the upload file
             examPaperStream = examPart.getInputStream();
 
@@ -74,11 +74,23 @@ public class FileUploadRevisions extends HttpServlet {
                 request.setAttribute("Message", message);
 
                 // forwards to the message page
-                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                switch (LoginCheckClass.userRole) {
+                    case "Exam Vetting Comittee":
+                        getServletContext().getRequestDispatcher("/ExamVettingComitteeDashboard.jsp").forward(request, response);
+                        break;
+                    case "External Examiner":
+                        getServletContext().getRequestDispatcher("/ExternalExaminerDashboard.jsp").forward(request, response);
+                        break;
+                    case "Internal Moderator":
+                        getServletContext().getRequestDispatcher("/InternalModDashboard.jsp").forward(request, response);
+                        break;
+                    default:
+                        break;
+                }
             }
 
-        } else if(solutionPart!=null && examPart == null){
-             // obtains input stream of the upload file
+        } else if (solutionPart != null && examPart == null) {
+            // obtains input stream of the upload file
             examSolutionStream = solutionPart.getInputStream();
 
             DatabaseConnection db = new DatabaseConnection();
@@ -108,12 +120,24 @@ public class FileUploadRevisions extends HttpServlet {
                 request.setAttribute("Message", message);
 
                 // forwards to the message page
-                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                switch (LoginCheckClass.userRole) {
+                    case "Exam Vetting Comittee":
+                        getServletContext().getRequestDispatcher("/ExamVettingComitteeDashboard.jsp").forward(request, response);
+                        break;
+                    case "External Examiner":
+                        getServletContext().getRequestDispatcher("/ExternalExaminerDashboard.jsp").forward(request, response);
+                        break;
+                    case "Internal Moderator":
+                        getServletContext().getRequestDispatcher("/InternalModDashboard.jsp").forward(request, response);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }else if(examPart != null && solutionPart != null){
+        } else if (examPart != null && solutionPart != null) {
             examSolutionStream = solutionPart.getInputStream();
-examPaperStream = examPart.getInputStream();
-            
+            examPaperStream = examPart.getInputStream();
+
             DatabaseConnection db = new DatabaseConnection();
             Connection conn = db.getConn(); // connection to the database
             String message = null;  // message will be sent back to client
@@ -127,7 +151,7 @@ examPaperStream = examPart.getInputStream();
                 if (examSolutionStream != null && examPaperStream != null) {
                     // fetches input stream of the upload file for the blob column
                     statement.setBlob(1, examSolutionStream);
-                    statement.setBlob(2,examPaperStream);
+                    statement.setBlob(2, examPaperStream);
                 }
                 // sends the statement to the database server
                 int row = statement.executeUpdate();
@@ -140,14 +164,37 @@ examPaperStream = examPart.getInputStream();
 
                 // sets the message in request scope
                 request.setAttribute("Message", message);
-
+                switch (LoginCheckClass.userRole) {
+                    case "Exam Vetting Comittee":
+                        getServletContext().getRequestDispatcher("/ExamVettingComitteeDashboard.jsp").forward(request, response);
+                        break;
                 // forwards to the message page
-                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-            }
-        } else{
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-        }
-        }
+                    case "External Examiner":
+                        getServletContext().getRequestDispatcher("/ExternalExaminerDashboard.jsp").forward(request, response);
+                        break;
+                    case "Internal Moderator":
+                        getServletContext().getRequestDispatcher("/InternalModDashboard.jsp").forward(request, response);
+                        break;
+                    default:
+                        break;
+                }
 
+            }
+        } else {
+            switch (LoginCheckClass.userRole) {
+                case "Exam Vetting Comittee":
+                    getServletContext().getRequestDispatcher("/ExamVettingComitteeDashboard.jsp").forward(request, response);
+                    break;
+                case "External Examiner":
+                    getServletContext().getRequestDispatcher("/ExternalExaminerDashboard.jsp").forward(request, response);
+                    break;
+                case "Internal Moderator":
+                    getServletContext().getRequestDispatcher("/InternalModDashboard.jsp").forward(request, response);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
+}
