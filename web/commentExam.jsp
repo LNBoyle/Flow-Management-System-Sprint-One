@@ -31,33 +31,16 @@
     <center>
         Exam: <% out.print(db.getExamModule(id)); %> <br>
         <div id="commentArea">
-            <form method = "POST"  action="">
+            <form method = "POST"  action="CommentAndFileHandler.jsp" >
                 Your Comment: <input type = "textarea" name = "comment" size = 150px required> <br>
                 <br>
-              
-                <input type="file" name="ExamPaper" size="50"/> <br>
+                <input type="hidden" name="hiddenID" value="<% out.print(id); %>"/>
+
                 <br>
                 <button type = "submit" name = "commentSubmit"> Sign & Submit</button>
             </form>
         </div>
         </center>
-    <%
-            if ((request.getParameter("commentSubmit") != null))
-            {
-                if ((db.setComment(id, Integer.parseInt(LoginCheckClass.userID),request.getParameter("comment"))) == true)
-                {
-                    out.println("Success!");
-                    out.println(
-                            "<form method = 'POST' action = 'revisionServlet'>"
-                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
-                            + "</form>"
-                    );
-                }
-                else
-                {
-                    out.println("Failure!");
-                }
-            }
-        %>
+ 
     </body>
 </html>
