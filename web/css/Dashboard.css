@@ -276,3 +276,11 @@ a:hover {
     width: 90%;
     margin-left: 5%;
 }
+
+#bodyWrapper{
+text-align: center;    
+}
+
+#FormDiv{
+   display: inline-block;
+}
