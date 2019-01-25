@@ -35,7 +35,11 @@ and open the template in the editor.
                 <a id="back" href="InternalModDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
                 <a id="home" href="InternalModDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
                 <%
-                }
+                }else{%>
+  <a id="back" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+                <a id="home" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+                <%
+}
             %>
             <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
 
@@ -48,41 +52,41 @@ and open the template in the editor.
          enctype = "multipart/form-data">
          <br />
            <label>Title: </label>
-         <input type = "text" name = "Title" size = "50" />
+         <input type = "text" name = "Title" size = "50" required/>
          <br>
            <label>School: </label>
-           <select name="School">
+           <select name="School" required>
              <option value="Science and Engineering">Science and Engineering</option>
              <option value="Life Sciences">Life Sciences</option>
          </select>
             <br>
               <label>Exam Type: </label>
-         <select name="ExamType">
+         <select name="ExamType"required>
              <option value="Online">Online</option>
              <option value="Paper">Paper</option>
          </select>
                <br>
               <label>Examination Period: </label>
-          <select name="ExamPeriod">
+          <select name="ExamPeriod"required>
              <option value="Main">Main (December/May)</option>
              <option value="Resit">Resit</option>
          </select>
          <br>
            <label>Module Code: </label>
-         <input type = "text" name = "ModuleCode" size = "50" />
+         <input type = "text" name = "ModuleCode" size = "50" required/>
          <br>
            <label>Level of Study: </label>
-         <select name="ExamLevel">
+         <select name="ExamLevel"required>
              <option value="Undergraduate">Undergraduate</option>
              <option value="Postgraduate">Postgraduate</option>
          </select>
          <br>
            <label>Exam Paper: </label>
-         <input type="file" name="ExamPaper" size="50"/>
+         <input type="file" name="ExamPaper" size="50" required/>
          <br>
             <br>
            <label>Exam Solution: </label>
-         <input type="file" name="ExamSolution" size="50"/>
+           <input type="file" name="ExamSolution" size="50" required/>
          <br>
          <input type = "submit"  value = "Confirm" />
       </form>
