@@ -6,6 +6,7 @@ function alerting(x){
 	document.getElementById("modalModuleCode").innerHTML ="Module Code: " + x.cells[2].innerHTML;
 	document.getElementById("modalModuleCoordinator").innerHTML ="Module Coordinator: " + x.cells[3].innerHTML;
 	
+        document.getElementById('ExamIDHidden').value = x.cells[0].innerHTML;
         document.getElementById('modalExamIDHidden').value = x.cells[0].innerHTML;
 	document.getElementById('modalExamTitleHidden').value = x.cells[1].innerHTML;
 	document.getElementById('modalModuleCodeHidden').value = x.cells[2].innerHTML;

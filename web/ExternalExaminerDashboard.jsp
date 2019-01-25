@@ -98,8 +98,13 @@
                     <div class="modal-footer">
                         <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                    
                 </form>
+                <form method="post" action="commentExam.jsp">
+                     <input type="hidden" name="ExamIDHidden" id="ExamIDHidden" value = ' ' />
+                 <button type ="submit" name ="commentExam" >Comment and Upload</button>
+                </form>  
+                </div>
             </div>
         </div>
     </div>
