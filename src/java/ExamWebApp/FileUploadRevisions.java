@@ -22,7 +22,7 @@ import javax.servlet.http.Part;
  *
  * @author lboyl
  */
-@WebServlet("/uploadServlet")
+@WebServlet("/revisionServlet")
 @MultipartConfig(maxFileSize = 16177215)
 public class FileUploadRevisions extends HttpServlet {
 
