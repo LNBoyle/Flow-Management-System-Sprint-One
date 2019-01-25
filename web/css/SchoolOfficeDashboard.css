@@ -262,3 +262,9 @@ a:hover {
 .fa-chevron-left:hover{
     color: #4365e2;
 }
+
+#commentArea{
+    position: absolute;
+    width: 90%;
+    margin-left: 5%;
+}

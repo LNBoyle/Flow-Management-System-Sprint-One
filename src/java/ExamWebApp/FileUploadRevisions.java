@@ -54,7 +54,7 @@ public class FileUploadRevisions extends HttpServlet {
 
         try {
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (ExamPaper) values (?)";
+            String sql = "INSERT INTO EXAM (ExamPaper) values (?) WHERE ExamID = ";
             PreparedStatement statement = conn.prepareStatement(sql);
 
             if (examPaperStream != null) {
