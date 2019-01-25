@@ -613,12 +613,12 @@ public class DatabaseConnection {
                         if(rs.getString("ExternalExaminer")!=null){
                             staffExams[j][4] = externalExaminer.getString("FirstName") + " " + externalExaminer.getString("Surname");
                         }else{
-                            staffExams[j][4] = "N/A";
+                            staffExams[j][4] = "Not Assigned";
                         }
                           if(rs.getString("ExamVettingComittee")!=null){
                              staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
                         }else{
-                            staffExams[j][5] = "N/A";
+                            staffExams[j][5] = "Not Assigned";
                         }
                       
                         break;
@@ -633,12 +633,12 @@ public class DatabaseConnection {
                            if(rs.getString("InternalModerator")!=null){
                             staffExams[j][4] = internalModerator.getString("FirstName") + " " + internalModerator.getString("Surname");
                         }else{
-                            staffExams[j][4] = "N/A";
+                            staffExams[j][4] = "Not Assigned";
                         }
                            if(rs.getString("ExamVettingComittee")!=null){
                              staffExams[j][5] = vettingCommittee.getString("FirstName") + " " + vettingCommittee.getString("Surname");
                         }else{
-                            staffExams[j][5] = "N/A";
+                            staffExams[j][5] = "Not Assigned";
                         }
                         break;
                     }
@@ -652,13 +652,13 @@ public class DatabaseConnection {
                           if(rs.getString("InternalModerator")!=null){
                             staffExams[j][4] = internalModerator.getString("FirstName") + " " + internalModerator.getString("Surname");
                         }else{
-                            staffExams[j][4] = "N/A";
+                            staffExams[j][4] = "Not Assigned";
                         }
                    
                        if(rs.getString("ExternalExaminer")!=null){
                             staffExams[j][5] = externalExaminer.getString("FirstName") + " " + externalExaminer.getString("Surname");
                         }else{
-                            staffExams[j][5] = "N/A";
+                            staffExams[j][5] = "Not Assigned";
                         }
                         break;
                     }

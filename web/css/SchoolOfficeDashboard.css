@@ -39,10 +39,10 @@ input[type=submit]{
    
     background-color: transparent;
     border-style: solid;
-    border-color: #00afdb;
+    border-color: #4365e2;
     border-width: thick;
     border-radius: 20px;
-    color: #00afdb;
+    color: #4365e2;
     font-weight: bold;
     padding: 10px;
     font-size: 1.5em;
@@ -69,7 +69,7 @@ table, th, td{
 }
 
 .clickable-row:hover {
-    border:2.1px solid #00afdb;
+    border:2.1px solid #4365e2;
     cursor: pointer;
 }
 
@@ -93,7 +93,7 @@ table, th, td{
     cursor: pointer;
     text-align: center;
     color: #fff!important;
-    background: #00afdb!important;
+    background: white!important;
     text-shadow: none;
 }
 
@@ -102,8 +102,8 @@ table, th, td{
     letter-spacing: .05em;
     display: inline-block;
     margin: 0 0 10px;
-    border: 3px solid #00afdb!important;
-    color: #00afdb!important;
+    border: 3px solid white!important;
+    color: white!important;
     text-transform: uppercase;
     background: 0 0;
     transition: background 0.5s;
@@ -138,7 +138,7 @@ table, th, td{
     cursor: pointer;
     text-align: center;
     color: #fff!important;
-    background: #00afdb!important;
+    background: white!important;
     text-shadow: none;
 }
 
@@ -147,8 +147,8 @@ table, th, td{
     letter-spacing: .05em;
     display: inline-block;
     margin: 10 10 10px;
-    border: 3px solid #00afdb!important;
-    color: #00afdb!important;
+    border: 3px solid white!important;
+    color: white!important;
     text-transform: uppercase;
     background: 0 0;
     transition: background 0.5s;
@@ -164,11 +164,20 @@ table, th, td{
     position: fixed;
     top: 0;
     right: 80px;
+    /*width: 50px;*/
+}
+
+
+#back{
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    right: 145px;
     width: 50px;
 }
 
 .navbar{
-    background-color: lightgray;
+    background-color: #4365e2;
     min-height: 6.5%!important;
     padding-bottom: 9px;
     border-radius: 0px!important;
@@ -178,7 +187,7 @@ table, th, td{
     z-index: 1;
     position: fixed;
     top: 0;
-    right: 145px;
+    right: 20px;
     width: 50px;
 }
 
@@ -213,12 +222,12 @@ table, th, td{
 .navbar-brand{
     font-size: 2em!important;
     margin-top: 2px!important;
-    color:#00afdb;
+    color:white;
 }
 
 
 a {
-  color: #00afdb;
+  color: white;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
@@ -228,7 +237,7 @@ a {
 
 
 a:hover {
-  background-color: #00afdb;
+  background-color: white;
   color: white;
 }
 
@@ -240,4 +249,16 @@ a:hover {
 .cartItem{
     color: black;
     text-align: right;
+}
+
+.fa-lock:hover{
+    color: #4365e2;
+}
+
+.fa-home:hover{
+    color: #4365e2;
+}
+
+.fa-chevron-left:hover{
+    color: #4365e2;
 }

@@ -18,13 +18,15 @@
 	<script src="scripts/SchoolOfficeDashboard.js"></script>
         <link href="css/SchoolOfficeDashboard.css" rel="stylesheet">
         <title>Exam Vetting Comittee Dashboard</title>
+        <link rel="icon" type="image/ico" href="https://cdn.dundee.ac.uk/media/dundeewebsite/themes/brandnewhope/img/favicons/apple-icon-57x57.png" />
     </head>
     <body>
         <div id="header">
             <nav class="navbar navbar-light">
                     <span class="navbar-brand">Welcome..</span>
             </nav>
-
+            
+            <a id="back" href="" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
             <a id="home" href="SchoolOfficeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
             <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
 

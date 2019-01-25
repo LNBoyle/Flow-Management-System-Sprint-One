@@ -81,6 +81,9 @@
                             
                             <td>
                                 <form action="commentExam.jsp" method="POST">
+                                    <button type ="hidden" style="display: none;" </button>
+                                 </form> 
+                                <form action="commentExam.jsp" method="POST">
                                     <button type = "submit" name = "commentExam" value =<% out.print(exam[i][0]); %>> Comment</button>
                                  </form> 
                             </td>
