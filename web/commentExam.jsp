@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="css/SchoolOfficeDashboard.css" rel="stylesheet">
+        <link href="css/Dashboard.css" rel="stylesheet">
         <title>Feedback</title>
     </head>
     <body>
@@ -15,6 +15,14 @@
             <nav class="navbar navbar-light">
                     <span class="navbar-brand">Welcome..</span>
             </nav>
+            <!–– 
+                REFRACTORED CODE this jsp used to be 3 different jsp's and
+                 due to the functionality only having very minor differences
+                 they have been combined together into 1 and then the differences,
+                 combined and only the specific functionality will run depending
+                 on what type of user is logged in.
+            -->
+             
             <%
                 if(LoginCheckClass.userRole.equals("Exam Vetting Comittee")){
                 %>    
@@ -23,8 +31,8 @@
                 <%
                 }else if(LoginCheckClass.userRole.equals("External Examiner")){
                 %>
-                <a id="back" href="ExternalExaminer.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
-                <a id="home" href="ExternalExaminer.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+                <a id="back" href="ExternalExaminerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+                <a id="home" href="ExternalExaminerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
                 <%
                 }else if(LoginCheckClass.userRole.equals("Internal Moderator")){
                 %>
