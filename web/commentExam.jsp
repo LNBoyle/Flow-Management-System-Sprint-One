@@ -15,6 +15,14 @@
             <nav class="navbar navbar-light">
                     <span class="navbar-brand">Welcome..</span>
             </nav>
+            <!–– REFRACTORED CODE this jsp used to be 3 different jsp's and
+                 due to the functionality only having very minor differences
+                 they have been combined together into 1 and then the differences,
+                 combined and only the specific functionality will run depending
+                 on what type of user is logged in.
+            -->
+             
+             
             <%
                 if(LoginCheckClass.userRole.equals("Exam Vetting Comittee")){
                 %>    
