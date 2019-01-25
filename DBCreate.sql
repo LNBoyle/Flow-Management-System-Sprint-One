@@ -112,7 +112,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `COMMENT`;
 
 CREATE TABLE `COMMENT` (
-  `CommentID` int(20) NOT NULL,
+  `CommentID` int(20) NOT NULL AUTO_INCREMENT,
   `ExamID` int(10) DEFAULT NULL,
   `UserID` int(10) DEFAULT NULL,
   `Comment` varchar(255) not null,
