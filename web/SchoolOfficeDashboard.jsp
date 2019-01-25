@@ -81,7 +81,7 @@
                 <form method="post" action="SchoolOfficeDashboard.jsp">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 id="modalHeader" class="modal-title">Modal Header</h4>
+                        <h4 id="modalHeader" class="modal-title">Exam Details</h4>
                     </div>
 
                     <div class="modal-body">
@@ -121,7 +121,7 @@
             {
                 String dowloadExamID = request.getParameter("modalExamIDHidden");
             
-                if (download.download("10023002") == true)
+                if (download.download(dowloadExamID) == true)
                 {
                     System.out.println("Success!");
                     %><script>alert("Exam Successfully Downloaded - You find the downloaded exam in your downloads folder")</script><%

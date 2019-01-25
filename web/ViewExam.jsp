@@ -12,18 +12,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>View Exam</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="scripts/SchoolOfficeDashboard.js"></script>
+        <link href="css/SchoolOfficeDashboard.css" rel="stylesheet">
+        <title>View Exams</title>
+        <link rel="icon" type="image/ico" href="https://cdn.dundee.ac.uk/media/dundeewebsite/themes/brandnewhope/img/favicons/apple-icon-57x57.png" />
     </head>
     <body>
     </body>
     <form method="POST">
         
-        <div class="topnav">
-            <a class="active" href="#">Home</a>
-            <a href="#Lock">Lock</a>
-            <a href="#Back">Back</a>
-            <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
+        <div id="header">
+            <nav class="navbar navbar-light">
+                    <span class="navbar-brand">Welcome..</span>
+            </nav>
+            <a id="back" href="" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="home" href="SchoolOfficeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
+
+	</div>
             <br>
             
             
