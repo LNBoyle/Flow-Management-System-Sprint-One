@@ -27,7 +27,7 @@
         <%
             if ((request.getParameter("responseSubmit") != null))
             {
-                if ((db.setCommentResponse(1, request.getParameter("response"))) == true)
+                if ((db.setCommentResponse(id, request.getParameter("response"))) == true)
                 {
                     out.println("Success!");
                     out.println(
