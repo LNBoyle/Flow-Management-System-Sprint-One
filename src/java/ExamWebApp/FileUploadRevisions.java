@@ -39,44 +39,115 @@ public class FileUploadRevisions extends HttpServlet {
         // gets values of text fields
 
         InputStream examPaperStream = null; // input stream of the upload file
-
+        InputStream examSolutionStream = null;
         // obtains the upload file part in this multipart request
         Part examPart = request.getPart("ExamPaper");
-
-        if (examPart != null) {
+        Part solutionPart = request.getPart("ExamSolution");
+        if (examPart != null && solutionPart==null) {
             // obtains input stream of the upload file
             examPaperStream = examPart.getInputStream();
 
-        }
-        DatabaseConnection db = new DatabaseConnection();
-        Connection conn = db.getConn(); // connection to the database
-        String message = null;  // message will be sent back to client
+            DatabaseConnection db = new DatabaseConnection();
+            Connection conn = db.getConn(); // connection to the database
+            String message = null;  // message will be sent back to client
 
-        try {
-            // constructs SQL statement
+            try {
+                // constructs SQL statement
+
+                String sql = "update exam set ExamPaper = ? where ExamID = " + request.getParameter("hiddenID");
+                PreparedStatement statement = conn.prepareStatement(sql);
+
+                if (examPaperStream != null) {
+                    // fetches input stream of the upload file for the blob column
+                    statement.setBlob(1, examPaperStream);
+                }
+                // sends the statement to the database server
+                int row = statement.executeUpdate();
+                if (row > 0) {
+                    message = "File uploaded and saved into database";
+                }
+            } catch (SQLException ex) {
+                message = "ERROR: " + ex.getMessage();
+            } finally {
+
+                // sets the message in request scope
+                request.setAttribute("Message", message);
+
+                // forwards to the message page
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            }
+
+        } else if(solutionPart!=null && examPart == null){
+             // obtains input stream of the upload file
+            examSolutionStream = solutionPart.getInputStream();
+
+            DatabaseConnection db = new DatabaseConnection();
+            Connection conn = db.getConn(); // connection to the database
+            String message = null;  // message will be sent back to client
+
+            try {
+                // constructs SQL statement
+
+                String sql = "update exam set SolutionsPaper = ? where ExamID = " + request.getParameter("hiddenID");
+                PreparedStatement statement = conn.prepareStatement(sql);
+
+                if (examSolutionStream != null) {
+                    // fetches input stream of the upload file for the blob column
+                    statement.setBlob(1, examSolutionStream);
+                }
+                // sends the statement to the database server
+                int row = statement.executeUpdate();
+                if (row > 0) {
+                    message = "File uploaded and saved into database";
+                }
+            } catch (SQLException ex) {
+                message = "ERROR: " + ex.getMessage();
+            } finally {
+
+                // sets the message in request scope
+                request.setAttribute("Message", message);
+
+                // forwards to the message page
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            }
+        }else if(examPart != null && solutionPart != null){
+            examSolutionStream = solutionPart.getInputStream();
+examPaperStream = examPart.getInputStream();
             
-            String sql = "update exam set ExamPaper = ? where ExamID = " + request.getParameter("hiddenID");
-            PreparedStatement statement = conn.prepareStatement(sql);
+            DatabaseConnection db = new DatabaseConnection();
+            Connection conn = db.getConn(); // connection to the database
+            String message = null;  // message will be sent back to client
 
-            if (examPaperStream != null) {
-                // fetches input stream of the upload file for the blob column
-                statement.setBlob(1, examPaperStream);
+            try {
+                // constructs SQL statement
+
+                String sql = "update exam set SolutionsPaper = ?, ExamPaper = ?  where ExamID = " + request.getParameter("hiddenID");
+                PreparedStatement statement = conn.prepareStatement(sql);
+
+                if (examSolutionStream != null && examPaperStream != null) {
+                    // fetches input stream of the upload file for the blob column
+                    statement.setBlob(1, examSolutionStream);
+                    statement.setBlob(2,examPaperStream);
+                }
+                // sends the statement to the database server
+                int row = statement.executeUpdate();
+                if (row > 0) {
+                    message = "File uploaded and saved into database";
+                }
+            } catch (SQLException ex) {
+                message = "ERROR: " + ex.getMessage();
+            } finally {
+
+                // sets the message in request scope
+                request.setAttribute("Message", message);
+
+                // forwards to the message page
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
-            // sends the statement to the database server
-            int row = statement.executeUpdate();
-            if (row > 0) {
-                message = "File uploaded and saved into database";
-            }
-        } catch (SQLException ex) {
-            message = "ERROR: " + ex.getMessage();
-        } finally {
-
-            // sets the message in request scope
-            request.setAttribute("Message", message);
-
-            // forwards to the message page
+        } else{
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
         }
 
     }
-}
+
