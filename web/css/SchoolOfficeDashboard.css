@@ -92,7 +92,7 @@ table, th, td{
 .btn-blue:active {
     cursor: pointer;
     text-align: center;
-    color: #fff!important;
+    color: #4365e2!important;
     background: white!important;
     text-shadow: none;
 }
@@ -122,7 +122,7 @@ table, th, td{
 .btn-dark:hover,
 .btn-dark:focus,
 .btn-dark:active {
-    color: #fff!important;
+    color: #4365e2!important;
     background-color: rgba(0,0,0,0.7);
 }
 
@@ -137,7 +137,7 @@ table, th, td{
 .btn-blue:active {
     cursor: pointer;
     text-align: center;
-    color: #fff!important;
+    color: #4365e2!important;
     background: white!important;
     text-shadow: none;
 }
@@ -200,7 +200,7 @@ table, th, td{
 }
 
 .btn:hover{
-    color:#ffffff!important;
+    color:#4365e2!important;
 }
 
 .btn-light{
@@ -237,8 +237,8 @@ a {
 
 
 a:hover {
-  background-color: white;
-  color: white;
+  background-color: #4365e2;
+  color: #4365e2;
 }
 
 .active {
