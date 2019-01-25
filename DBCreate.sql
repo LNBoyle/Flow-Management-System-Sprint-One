@@ -115,7 +115,7 @@ CREATE TABLE `COMMENT` (
   `CommentID` int(20) NOT NULL AUTO_INCREMENT,
   `ExamID` int(10) DEFAULT NULL,
   `UserID` int(10) DEFAULT NULL,
-  `Comment` varchar(255) not null,
+  `Comment` varchar(1000) not null,
   PRIMARY KEY (`CommentID`),
   KEY `fk_COMMENT_EXAM1` (`ExamID`),
   KEY `fk_COMMENT_USER1` (`UserID`),
