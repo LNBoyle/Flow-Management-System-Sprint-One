@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="css/SchoolOfficeDashboard.css" rel="stylesheet">
+        <link href="css/Dashboard.css" rel="stylesheet">
         <title>Feedback</title>
     </head>
     <body>

@@ -1,3 +1,12 @@
+/*REFRACTORED CODE
+ * 
+ * Initially we have 3 separate javascript files which did a very similar functionality
+ * so we refectored them into one js file which is then just called by the corresponding
+ * jsp's and then they can use which ever function(s) they need
+ * 
+ */
+
+
 var rowSelected = null;
 
 function alerting(x){
@@ -23,5 +32,5 @@ function myFunction() {
 }
 
 function getRow(x) {
-  window.location.href="ExternalExaminerDashboard.jsp?exid=" + x;
+  window.location.href="InternalModDashboard.jsp?exid=" + x;
 }

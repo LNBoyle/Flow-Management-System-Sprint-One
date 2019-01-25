@@ -1,3 +1,11 @@
+/*REFRACTORED CODE
+ * 
+ * Initially we had 3 separate css files which had similar stylings
+ * so we refectored them into one css file which is then just called by the corresponding
+ * jsp's and then they can use which ever styings that they need
+ * 
+ */
+
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
 html, body{
