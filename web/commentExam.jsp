@@ -5,12 +5,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>EFMS</title>
+        <title>Feedback</title>
     </head>
     <body>
         
         <%
-           String strid = request.getParameter("commentExam");
+           String strid = request.getParameter("ExamIDHidden");
            int id = Integer.parseInt(strid);
         %>
         
