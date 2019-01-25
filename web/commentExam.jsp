@@ -23,7 +23,6 @@
                  on what type of user is logged in.
             -->
              
-             
             <%
                 if(LoginCheckClass.userRole.equals("Exam Vetting Comittee")){
                 %>    
