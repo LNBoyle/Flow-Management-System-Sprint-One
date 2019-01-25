@@ -39,33 +39,6 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test of getConn method, of class DatabaseConnection.
-     */
-    @Test
-    public void testGetConn() {
-        System.out.println("getConn");
-        DatabaseConnection instance = new DatabaseConnection();
-        Connection expResult = null;
-        Connection result = instance.getConn();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setConn method, of class DatabaseConnection.
-     */
-    @Test
-    public void testSetConn() {
-        System.out.println("setConn");
-        Connection conn = null;
-        DatabaseConnection instance = new DatabaseConnection();
-        instance.setConn(conn);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getViewUsers method, of class DatabaseConnection.
      */
     @Test
