@@ -211,13 +211,13 @@ public class DatabaseConnection {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO user (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`) VALUES" + UserID + FirstName + SurName + Role + Email + Password + ";");
-
+            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Role, Email, Password) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Role + "', '" + Email + "', '" + Password + "');");
+                System.out.println("tis done");
             //return true if success, false otherwise
-            if (success != 0) {
-                return true;
-            } else {
+            if (success == 0) {
                 return false;
+            } else {
+                return true;
             }
         } //Catch block for errors with SQL
         catch (SQLException e) {
