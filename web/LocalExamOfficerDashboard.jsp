@@ -28,9 +28,11 @@
 
 
        <br><input type="button" onclick="location.href='ViewAccounts.jsp';" value="View Account" /></br>
+       <br><input type="button" onclick="location.href='DeleteAccount.jsp';" value="Delete Account" /></br>
        <br> <input type="button" onclick="location.href='CreateAccount.jsp';" value="Create Account" />  </br> 
        <br> <input type="button" onclick="location.href='Assignexam.jsp';" value="Update Account" /></br>
        <br> <input type="button" onclick="location.href='Assignexam.jsp';" value="Assign Exams" /></br>
+        <br> <input type="button" onclick="location.href='SetDeadline.jsp';" value="Set Deadline" /></br>
                 
        
 
@@ -42,7 +44,7 @@
         </div>
 
 
-        <div class="NotificationBox" style="float:right;background-color: lightgrey;width:500px;height:300px; border:black;padding: 25px;margin: 25px;"> </div>
+       
 
 <br>
             <%
