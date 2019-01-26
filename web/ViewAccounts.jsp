@@ -32,7 +32,7 @@
             { 
                 for (int j = 0; j < ViewUsers[i].length; j++)
                     { 
-                    out.print(ViewUsers[i][j] + " "); 
+                    out.println(ViewUsers[i][j] + " "); 
                     }
              
                 
