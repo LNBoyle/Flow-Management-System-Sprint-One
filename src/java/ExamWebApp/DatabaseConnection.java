@@ -80,7 +80,37 @@ public class DatabaseConnection {
         return null;
 
     }
-
+    
+    
+        public boolean AssignRole(String UserID, boolean es,boolean im,boolean em,boolean evc,boolean so,boolean leo)
+    {
+    
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("UPDATE role SET ExamSetter = '" + es + "', InternalModerator ='"+ im + "', ExternalExaminer = '" + em +"', ExamVettingComittee = '"+ evc + "', SchoolOffice = '"+ so + "', LocalExamOfficer = '"+ leo +"' WHERE UserID = '" + UserID + "';");
+                
+            //return true if success, false otherwise
+            if (success == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+        
+    
+    
+    
+    
+    
+    }
+    
+            
+            
+            
     public String[] checkUser(String email, String password) {
         try {
             stmt = conn.createStatement();
@@ -247,11 +277,11 @@ public class DatabaseConnection {
     }
     
     
-        public boolean UpdateAccount(String UserID, String FirstName, String SurName, String Role, String Email, String Password) {
+        public boolean UpdateAccount(String UserID, String FirstName, String SurName, String Email, String Password) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate(" ");
+            int success = stmt.executeUpdate("UPDATE user SET FirstName = '" + FirstName + "', Surname ='"+ SurName + "', Email = '" + Email +"', Password = '"+ Password + "' WHERE UserID = '" + UserID + "';");
                 
             //return true if success, false otherwise
             if (success == 0) {

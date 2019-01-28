@@ -19,20 +19,20 @@
        <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Back" />
     </head>
     <body>
-        <h1>Create a new account</h1>
+        <h1>Update a new account</h1>
         
 
   <form method = "POST"> 
-  UserId:    
+  User ID of the Account you want to update:  
+  <br>  
   <input type="Int" name="userid" value="">
-  First name:<br>
+  <br>
+  First name:
+  <br>
   <input type="text" name="firstname" value="">
   <br>
-  Surname of Examiner:<br>
+  Surname:<br>
   <input type="text" name="surname" value="">
-  <br>
-  Role:<br>
-  <input type="text" name="role" value="">
   <br>
   Email:<br>
   <input type="text" name="email" value="">
@@ -40,32 +40,30 @@
   Password:<br>
   <input type="password" name="password" value="">
   <br> <br>
-    <button type = "submit" name = "create">create</button>
+    <button type = "submit" name = "Update">Update/Change Account</button>
   </form> 
         
     <% 
-         String u = "123";
-         String f = "Abbas";
-         String s = "Lawal";
-         String r = "InternaL Moderator";
-         String e = "a.lawal@dundee.ac.uk";
-         String p = "AL1234";
+         String u = " ";
+         String f = " ";
+         String s = " ";
+         String e = " ";
+         String p = " ";
         
-     if (request.getParameter("create") != null)
+     if (request.getParameter("Update") != null)
      {
-
+        
         u = request.getParameter("userid");     
-        out.println(u);
+      
         f = request.getParameter("firstname");
-        out.println(f);
+      
         s = request.getParameter("surname");
-        out.println(s);
-        r = request.getParameter("role");
+      
         e = request.getParameter("email");
         p = request.getParameter("password");
         
 
-    db.CreateAccount(u,f,s,r,e,p);
+        db.UpdateAccount(u,f,s,e,p);
     
      }
    
