@@ -58,6 +58,17 @@
             }
         %>
         
+         <%
+            if ((request.getParameter("Back") != null)) {
+        %>
+       <jsp:forward page="LocalExamOfficerDashboard.jsp"></jsp:forward>
+        <%
+            }
+        %>
+        
+        
+        
+        
             <%
             if ((request.getParameter("Lock") != null)) {
         %>

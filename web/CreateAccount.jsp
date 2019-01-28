@@ -30,9 +30,7 @@
   Surname of Examiner:<br>
   <input type="text" name="surname" value="">
   <br>
-  Role:<br>
-  <input type="text" name="role" value="">
-  <br>
+
   Email:<br>
   <input type="text" name="email" value="">
   <br>
@@ -46,7 +44,7 @@
          String u = "123";
          String f = "Abbas";
          String s = "Lawal";
-         String r = "InternaL Moderator";
+
          String e = "a.lawal@dundee.ac.uk";
          String p = "AL1234";
         
@@ -54,17 +52,16 @@
      {
 
         u = request.getParameter("userid");     
-        out.println(u);
+    
         f = request.getParameter("firstname");
-        out.println(f);
+
         s = request.getParameter("surname");
-        out.println(s);
-        r = request.getParameter("role");
+
         e = request.getParameter("email");
         p = request.getParameter("password");
         
 
-    db.CreateAccount(u,f,s,r,e,p);
+    db.CreateAccount(u,f,s,e,p);
     
      }
    

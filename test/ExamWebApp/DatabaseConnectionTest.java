@@ -174,7 +174,7 @@ public class DatabaseConnectionTest {
         String Password = "test";
         DatabaseConnection instance = new DatabaseConnection();
         boolean expResult = false;
-        boolean result = instance.CreateAccount(UserID, FirstName, SurName, Role, Email, Password);
+        boolean result = instance.CreateAccount(UserID, FirstName, SurName, Email, Password);
         if (!(result == expResult))
         {
         // TODO review the generated test code and remove the default call to fail.

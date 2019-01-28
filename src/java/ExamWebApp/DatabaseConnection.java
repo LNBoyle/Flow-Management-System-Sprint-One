@@ -52,7 +52,7 @@ public class DatabaseConnection {
     public String[][] getViewUsers() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID,FirstName,Surname,Role,Email FROM user;");
+            reslt = stmt.executeQuery("SELECT UserID,FirstName,Surname,Email FROM user;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -60,14 +60,13 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
             UserRows = rows;
-            String[][] ViewUsers = new String[rows][5];
+            String[][] ViewUsers = new String[rows][4];
             int i = 0;
             while (reslt.next()) {
                 ViewUsers[i][0] = reslt.getString("UserID");
                 ViewUsers[i][1] = reslt.getString("FirstName");
                 ViewUsers[i][2] = reslt.getString("Surname");
-                ViewUsers[i][3] = reslt.getString("Role");
-                ViewUsers[i][4] = reslt.getString("Email");
+                ViewUsers[i][3] = reslt.getString("Email");
                 i++;
             }
             if (ViewUsers != null) {
@@ -247,11 +246,35 @@ public class DatabaseConnection {
         return false;
     }
     
-    public boolean CreateAccount(String UserID, String FirstName, String SurName, String Role, String Email, String Password) {
+    
+        public boolean UpdateAccount(String UserID, String FirstName, String SurName, String Role, String Email, String Password) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Role, Email, Password) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Role + "', '" + Email + "', '" + Password + "');");
+            int success = stmt.executeUpdate(" ");
+                
+            //return true if success, false otherwise
+            if (success == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
+    public boolean CreateAccount(String UserID, String FirstName, String SurName, String Email, String Password) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Email, Password) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Email + "', '" + Password + "');");
                 
             //return true if success, false otherwise
             if (success == 0) {
