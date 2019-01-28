@@ -22,134 +22,204 @@ CREATE DATABASE `18agileteam8db`;
 
 USE `18agileteam8db`;
 
-# Dump of table USER
+# Dump of table user
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `USER`;
 
 CREATE TABLE `USER` (
+  `UserID` int(10) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `FirstName` varchar(20) NOT NULL,
   `Surname` varchar(20) NOT NULL,
-  `UserID` int(10) not null,
+  `ExamSetter` boolean NOT NULL,
+  `InternalModerator` boolean NOT NULL,
+  `ExternalExaminer` boolean NOT NULL,
+  `ExamVettingComittee` boolean NOT NULL,
+  `SchoolOffice` boolean NOT NULL,
+  `LocalExamOfficer` boolean NOT NULL,
   PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Email`,`Password`)
+INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Email`,`Password`,`ExamSetter`,`InternalModerator`,`ExternalExaminer`,`ExamVettingComittee`,`SchoolOffice`,`LocalExamOfficer`)
 VALUES
-  (00010001,'Liam','Boyle','l.boyle@dundee.ac.uk','Liam123'),
-  (00010002,'Sebastian','Salek','s.salek@dundee.ac.uk','Sebastian567'),
-  (00010003,'Calum','Scott','c.scott@dundee.ac.uk','Calum1'),
-  (00010004,'Iain','Murray','i.murray@dundee.ac.uk','IDog123'),
-  (00010005,'Craig','Ramsey','c.ramsey@dundee.ac.uk','CR123'),
-  (00010006,'Matthew','Daldry','m.daldry@dundee.ac.uk','MD123'),
-  (00010007,'Jordan','Mckilligan','j.mckilligan@dundee.ac.uk','JM123');
+  (00010001,'Liam','Boyle','l.boyle@dundee.ac.uk','Liam123',false,true,false,false,false,false),
+  (00010002,'Sebastian','Salek','s.salek@dundee.ac.uk','Sebastian567',false,true,false,false,false,false),
+  (00010003,'Calum','Scott','c.scott@dundee.ac.uk','Calum1',false,false,true,false,false,false),
+  (00010004,'Iain','Murray','i.murray@dundee.ac.uk','IDog123',false,false,false,true,false,false),
+  (00010005,'Craig','Ramsey','c.ramsey@dundee.ac.uk','CR123',true,true,true,true,true,true),
+  (00010006,'Matthew','Daldry','m.daldry@dundee.ac.uk','MD123',false,false,false,false,true,false),
+  (00010007,'Jordan','Mckilligan','j.mckilligan@dundee.ac.uk','JM123',true,false,false,false,false,false);
   
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-# Dump of table ROLE
+# Dump of table role
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `ROLE`;
 
 CREATE TABLE `ROLE` (
-  `UserID` int(10) not null,
-  `ExamSetter` boolean DEFAULT NULL,
-  `InternalModerator` boolean DEFAULT NULL,
-  `ExternalExaminer` boolean DEFAULT NULL,
-  `ExamVettingComittee` boolean DEFAULT NULL,
-  `SchoolOffice` boolean DEFAULT NULL,
-  `LocalExamOfficer` boolean DEFAULT NULL,
+  `UserID` int(10) NOT NULL,
+  `ExamSetter` boolean NOT NULL,
+  `InternalModerator` boolean NOT NULL,
+  `ExternalExaminer` boolean NOT NULL,
+  `ExamVettingComittee` boolean NOT NULL,
+  `SchoolOffice` boolean NOT NULL,
+  `LocalExamOfficer` boolean NOT NULL,
   PRIMARY KEY (`UserID`),
-  KEY `fk_USERID` (`UserID`),
-  CONSTRAINT `fk_USERID` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `pk_UserID` (`UserID`),
+  CONSTRAINT `pk_UserID` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `ROLE` WRITE;
 /*!40000 ALTER TABLE `ROLE` DISABLE KEYS */;
 INSERT INTO `ROLE` (`UserID`,`ExamSetter`,`InternalModerator`,`ExternalExaminer`,`ExamVettingComittee`,`SchoolOffice`,`LocalExamOfficer`)
 VALUES
-  (00010001,true,true,true,true,true,true),
-  (00010002,true,true,true,true,true,true),
-  (00010003,true,true,true,true,true,true);
+  (00010001,false,true,false,false,false,false),
+  (00010002,false,true,false,false,false,false),
+  (00010003,false,false,true,false,false,false),
+  (00010004,false,false,false,true,false,false),
+  (00010005,true,true,true,true,true,true),
+  (00010006,false,false,false,false,true,false),
+  (00010007,true,false,false,false,false,false);
   
 
 /*!40000 ALTER TABLE `ROLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table EXAM
+# Dump of table AssignedExams
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ASSIGNEDEXAMS`;
+
+CREATE TABLE `ASSIGNEDEXAMS` (
+  `AssignedExamID` int(10) NOT NULL AUTO_INCREMENT,
+  `ModuleCode` varchar(12) NOT NULL,
+  `ExamPeriod` varchar(12) NOT NULL,
+  `ExamLevel` varchar(20) NOT NULL,
+  `ExamSetter` int(10) NOT NULL,
+  `InternalModerator` int(10) NOT NULL,
+  `ExternalExaminer` int(10) NOT NULL,
+  `ExamVettingComittee` int(10) NOT NULL,
+  PRIMARY KEY (`AssignedExamID`),
+  KEY `fk_EXAMSET` (`ExamSetter`),
+  KEY `fk_INTERNALMOD` (`InternalModerator`),
+  KEY `fk_EXTERNALEXAM` (`ExternalExaminer`),
+  KEY `fk_EXAMVETTING` (`ExamVettingComittee`),
+  CONSTRAINT `fk_EXAMSET` FOREIGN KEY (`ExamSetter`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_INTERNALMOD` FOREIGN KEY (`InternalModerator`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_EXTERNALEXAM` FOREIGN KEY (`ExternalExaminer`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_EXAMVETTING` FOREIGN KEY (`ExamVettingComittee`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+LOCK TABLES `ASSIGNEDEXAMS` WRITE;
+/*!40000 ALTER TABLE `ASSIGNEDEXAMS` DISABLE KEYS */;
+INSERT INTO `ASSIGNEDEXAMS` (`AssignedExamID`,`ModuleCode`,`ExamPeriod`,`ExamLevel`,`ExamSetter`,`InternalModerator`,`ExternalExaminer`,`ExamVettingComittee`)
+VALUES
+  (1,'AC310001','Main','Undergraduate',00010007,00010001,00010003,00010004),
+  (2,'AC330001','Main','Undergraduate',00010007,00010001,00010003,00010004),
+  (3,'AC320001','Main','Postgraduate',00010007,00010001,00010003,00010004);
+
+/*!40000 ALTER TABLE `ASSIGNEDEXAMS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# Dump of table Exam
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `EXAM`;
 
 CREATE TABLE `EXAM` (
   `ExamID` int(10) NOT NULL AUTO_INCREMENT,
-  `Title` varchar(255) DEFAULT NULL,
-  `School` varchar(255) DEFAULT NULL,
-  `ModuleCoordinator` varchar(255) DEFAULT NULL,
-  `ModuleCode` varchar(12) DEFAULT NULL,
-  `ExamType` varchar(12) DEFAULT NULL,
-  `ExamPeriod` varchar(12) DEFAULT NULL,
-  `ExamLevel` varchar(100) DEFAULT NULL,
-  `Year` int(4) DEFAULT NULL,
-  `Status` varchar(20) DEFAULT NULL,
+  `Title` varchar(255) NOT NULL,
+  `School` varchar(255) NOT NULL,
+  `ModuleCoordinator` varchar(255) NOT NULL,
+  `ModuleCode` varchar(12) NOT NULL,
+  `ExamType` varchar(12) NOT NULL,
+  `ExamPeriod` varchar(12) NOT NULL,
+  `ExamLevel` varchar(20) NOT NULL,
+  `Semester` varchar(1) NOT NULL,
+  `Year` int(4) NOT NULL,
+  `Status` varchar(20) NOT NULL,
   `ExamPaper` longblob DEFAULT NULL,
   `SolutionsPaper` longblob DEFAULT NULL,
-  PRIMARY KEY (`ExamID`),
-  KEY `fk_EXAM_USER1` (`AuthorID`),
-  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+  PRIMARY KEY (`ExamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `EXAM` WRITE;
 /*!40000 ALTER TABLE `EXAM` DISABLE KEYS */;
-INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`DateCreated`,`AuthorID`,`Deadline`,`Status`,`ExamPaper`,`AssignedTo`,`SolutionsPaper`,`InternalModerator`,`ExternalExaminer`,`ExamVettingComittee`)
+INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`)
 VALUES
 
-  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2019-01-21',00010002,'2019-01-29','New',NULL,00010006,NULL,00010001,00010003,00010004),
-  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','2019-01-22',00010005,'2019-01-29','In Progress',NULL,00010006,NULL,00010001,NULL,00010004),
-  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2019-01-22',00010004,'2019-01-29','Completed',NULL,00010006,NULL,NULL,00010003,NULL),
-  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','2019-01-22',00010003,'2019-01-29','Completed',NULL,00010006,NULL,00010001,00010003,00010004),
-  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2019-01-22',00010001,'2019-01-29','Completed',NULL,00010006,NULL,00010001,00010003,00010004);
+  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL),
+  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL),
+  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2','2019','Completed',NULL,NULL),
+  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','1','2020','Completed',NULL,NULL),
+  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table Comments
+# Dump of table Comment
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `COMMENT`;
 
 CREATE TABLE `COMMENT` (
-  `CommentID` int(20) NOT NULL,
-  `ExamID` int(10) DEFAULT NULL,
-  `UserID` int(10) DEFAULT NULL,
-  `Comment` varchar(255) not null,
+  `CommentID` int(20) NOT NULL AUTO_INCREMENT,
+  `ExamID` int(10) NOT NULL,
+  `UserID` int(10) NOT NULL,
+  `Comment` varchar(1000) NOT NULL,
+  `CommentTimeStamp` varchar(20) NOT NULL,
   PRIMARY KEY (`CommentID`),
   KEY `fk_COMMENT_EXAM1` (`ExamID`),
   KEY `fk_COMMENT_USER1` (`UserID`),
-  CONSTRAINT `fk_COMMENT_EXAM1` FOREIGN KEY (`ExamID`) REFERENCES `EXAM` (`ExamID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_COMMENT_USER1` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `fk_COMMENT_EXAM1` FOREIGN KEY (`ExamID`) REFERENCES `EXAM` (`ExamID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_COMMENT_USER1` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `COMMENT` WRITE;
 /*!40000 ALTER TABLE `COMMENT` DISABLE KEYS */;
-INSERT INTO `COMMENT` (`CommentID`,`ExamID`,`UserID`,`Comment`)
+INSERT INTO `COMMENT` (`CommentID`,`ExamID`,`UserID`,`Comment`,`CommentTimeStamp`)
 VALUES
 
-  (00000001,00000001,00010003,'Looks Good!');
+  (1,00000001,00010001,'Looks Good!','28/01/2019 18:00');
   
 
 /*!40000 ALTER TABLE `COMMENT` ENABLE KEYS */;
 UNLOCK TABLES;
 
+# Dump of table Responce
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `RESPONCE`;
+
+CREATE TABLE `RESPONCE` (
+  `CommentID` int(20) NOT NULL,
+  `Responce` varchar(1000) NOT NULL,
+  `ResponceTimeStamp` varchar(20) NOT NULL,
+  PRIMARY KEY (`CommentID`),
+  KEY `pk_CommentID` (`CommentID`),
+  CONSTRAINT `pk_CommentID` FOREIGN KEY (`CommentID`) REFERENCES `COMMENT` (`CommentID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `RESPONCE` WRITE;
+/*!40000 ALTER TABLE `RESPONCE` DISABLE KEYS */;
+INSERT INTO `RESPONCE` (`CommentID`,`Responce`,`ResponceTimeStamp`)
+VALUES
+
+  (1,'Thanks for the feedback','28/01/2019 20:00');
+  
+
+/*!40000 ALTER TABLE `RESPONCE` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Dump of table Deadline
 # ------------------------------------------------------------
@@ -183,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-  
+ 
