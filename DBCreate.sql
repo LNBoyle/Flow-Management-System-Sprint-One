@@ -32,25 +32,55 @@ CREATE TABLE `USER` (
   `Password` varchar(255) NOT NULL,
   `FirstName` varchar(20) NOT NULL,
   `Surname` varchar(20) NOT NULL,
-  `Role` varchar(45) DEFAULT NULL,
   `UserID` int(10) not null,
   PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`)
+INSERT INTO `USER` (`UserID`,`FirstName`,`Surname`,`Email`,`Password`)
 VALUES
-  (00010001,'Liam','Boyle','Internal Moderator','l.boyle@dundee.ac.uk','Liam123'),
-  (00010002,'Sebastian','Salek','Internal Moderator','s.salek@dundee.ac.uk','Sebastian567'),
-  (00010003,'Calum','Scott','External Examiner','c.scott@dundee.ac.uk','Calum1'),
-  (00010004,'Iain','Murray','Exam Vetting Comittee','i.murray@dundee.ac.uk','IDog123'),
-  (00010005,'Craig','Ramsey','Local Exam Officer','c.ramsey@dundee.ac.uk','CR123'),
-  (00010006,'Matthew','Daldry','School Office','m.daldry@dundee.ac.uk','MD123'),
-  (00010007,'Jordan','Mckilligan','Exam Setter','j.mckilligan@dundee.ac.uk','JM123');
+  (00010001,'Liam','Boyle','l.boyle@dundee.ac.uk','Liam123'),
+  (00010002,'Sebastian','Salek','s.salek@dundee.ac.uk','Sebastian567'),
+  (00010003,'Calum','Scott','c.scott@dundee.ac.uk','Calum1'),
+  (00010004,'Iain','Murray','i.murray@dundee.ac.uk','IDog123'),
+  (00010005,'Craig','Ramsey','c.ramsey@dundee.ac.uk','CR123'),
+  (00010006,'Matthew','Daldry','m.daldry@dundee.ac.uk','MD123'),
+  (00010007,'Jordan','Mckilligan','j.mckilligan@dundee.ac.uk','JM123');
   
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table ROLE
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ROLE`;
+
+CREATE TABLE `ROLE` (
+  `UserID` int(10) not null,
+  `ExamSetter` boolean DEFAULT NULL,
+  `InternalModerator` boolean DEFAULT NULL,
+  `ExternalExaminer` boolean DEFAULT NULL,
+  `ExamVettingComittee` boolean DEFAULT NULL,
+  `SchoolOffice` boolean DEFAULT NULL,
+  `LocalExamOfficer` boolean DEFAULT NULL,
+  PRIMARY KEY (`UserID`),
+  KEY `fk_USERID` (`UserID`),
+  CONSTRAINT `fk_USERID` FOREIGN KEY (`UserID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `ROLE` WRITE;
+/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */;
+INSERT INTO `ROLE` (`UserID`,`ExamSetter`,`InternalModerator`,`ExternalExaminer`,`ExamVettingComittee`,`SchoolOffice`,`LocalExamOfficer`)
+VALUES
+  (00010001,true,true,true,true,true,true),
+  (00010002,true,true,true,true,true,true),
+  (00010003,true,true,true,true,true,true);
+  
+
+/*!40000 ALTER TABLE `ROLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -68,27 +98,13 @@ CREATE TABLE `EXAM` (
   `ExamType` varchar(12) DEFAULT NULL,
   `ExamPeriod` varchar(12) DEFAULT NULL,
   `ExamLevel` varchar(100) DEFAULT NULL,
-  `DateCreated` date DEFAULT NULL,
-  `AuthorID` int(10) DEFAULT NULL,
-  `Deadline` date DEFAULT NULL,
+  `Year` int(4) DEFAULT NULL,
   `Status` varchar(20) DEFAULT NULL,
   `ExamPaper` longblob DEFAULT NULL,
-  `AssignedTo` int(10) DEFAULT NULL,
   `SolutionsPaper` longblob DEFAULT NULL,
-  `InternalModerator` int(10) DEFAULT NULL,
-  `ExternalExaminer` int(10) DEFAULT NULL,
-  `ExamVettingComittee` int(10) DEFAULT NULL,
   PRIMARY KEY (`ExamID`),
   KEY `fk_EXAM_USER1` (`AuthorID`),
-  KEY `fk_EXAM_USER2` (`AssignedTo`),
-  KEY `fk_EXAM_USER3` (`InternalModerator`),
-  KEY `fk_EXAM_USER4` (`ExternalExaminer`),
-  KEY `fk_EXAM_USER5` (`ExamVettingComittee`),
-  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_EXAM_USER2` FOREIGN KEY (`AssignedTo`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_EXAM_USER3` FOREIGN KEY (`InternalModerator`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_EXAM_USER4` FOREIGN KEY (`ExternalExaminer`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_EXAM_USER5` FOREIGN KEY (`ExamVettingComittee`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `fk_EXAM_USER1` FOREIGN KEY (`AuthorID`) REFERENCES `USER` (`UserID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `EXAM` WRITE;
@@ -112,10 +128,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `COMMENT`;
 
 CREATE TABLE `COMMENT` (
-  `CommentID` int(20) NOT NULL AUTO_INCREMENT,
+  `CommentID` int(20) NOT NULL,
   `ExamID` int(10) DEFAULT NULL,
   `UserID` int(10) DEFAULT NULL,
-  `Comment` varchar(1000) not null,
+  `Comment` varchar(255) not null,
   PRIMARY KEY (`CommentID`),
   KEY `fk_COMMENT_EXAM1` (`ExamID`),
   KEY `fk_COMMENT_USER1` (`UserID`),
