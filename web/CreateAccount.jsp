@@ -21,11 +21,11 @@
         <h1>Create a new account</h1>
         
 
-  <form> 
+  <form method = "POST"> 
   UserId:    
   <input type="Int" name="userid" value="">
   First name:<br>
-  <input type="text" name="first" value="">
+  <input type="text" name="firstname" value="">
   <br>
   Surname of Examiner:<br>
   <input type="text" name="surname" value="">
@@ -39,15 +39,26 @@
   Password:<br>
   <input type="password" name="password" value="">
   <br> <br>
-  <button type="button" name="create"  onclick="alert('Account Created')">Create</button>
+    <button type = "submit" name = "create">create</button>
   </form> 
         
     <% 
-      String u, f, s, r, e, p = " "; 
-      
+         String u = "123";
+         String f = "Abbas";
+         String s = "Lawal";
+         String r = "InternaL Moderator";
+         String e = "a.lawal@dundee.ac.uk";
+         String p = "AL1234";
+        
+     if (request.getParameter("create") != null)
+     {
+
         u = request.getParameter("userid");     
+        out.println(u);
         f = request.getParameter("firstname");
+        out.println(f);
         s = request.getParameter("surname");
+        out.println(s);
         r = request.getParameter("role");
         e = request.getParameter("email");
         p = request.getParameter("password");
@@ -55,13 +66,11 @@
 
     db.CreateAccount(u,f,s,r,e,p);
     
-    if (db.CreateAccount()) == true 
-    {
-    
-    %>
-        alert('Account Created')
-     <%   
-    }
+     }
+   
+ 
+
+   
 
    
     %>

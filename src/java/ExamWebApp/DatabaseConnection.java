@@ -207,17 +207,57 @@ public class DatabaseConnection {
         return false;
     }
 
+        
+    public boolean DeleteAccount(String UserID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("DELETE FROM user WHERE UserID = '" + UserID + "';"); 
+                
+            //return true if success, false otherwise
+            if (success == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    
+    public boolean SetDeadline(String Role, String Date) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("UPDATE deadline SET Date = '" + Date + "' WHERE Role = '" + Role + "';"); 
+                
+            //return true if success, false otherwise
+            if (success == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
     public boolean CreateAccount(String UserID, String FirstName, String SurName, String Role, String Email, String Password) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO user (`UserID`,`FirstName`,`Surname`,`Role`,`Email`,`Password`) VALUES" + UserID + FirstName + SurName + Role + Email + Password + ";");
-
+            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Role, Email, Password) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Role + "', '" + Email + "', '" + Password + "');");
+                
             //return true if success, false otherwise
-            if (success != 0) {
-                return true;
-            } else {
+            if (success == 0) {
                 return false;
+            } else {
+                return true;
             }
         } //Catch block for errors with SQL
         catch (SQLException e) {
