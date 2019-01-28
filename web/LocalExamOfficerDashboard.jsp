@@ -32,7 +32,8 @@
        <br> <input type="button" onclick="location.href='CreateAccount.jsp';" value="Create Account" />  </br> 
        <br> <input type="button" onclick="location.href='UpdateAccount.jsp';" value="Update Account" /></br>
        <br> <input type="button" onclick="location.href='Assignexam.jsp';" value="Assign Exams" /></br>
-        <br> <input type="button" onclick="location.href='SetDeadline.jsp';" value="Set Deadline" /></br>
+       <br> <input type="button" onclick="location.href='SetDeadline.jsp';" value="Set Deadline" /></br>
+       <br> <input type="button" onclick="location.href='AssignRole.jsp';" value="Assign Role" /></br>
                 
        
 
