@@ -458,6 +458,28 @@ public class DatabaseConnection {
         }
         return null;
     }
+    
+    public String getName(String id){
+      try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName FROM user WHERE UserID = '" + id + "' ;");
+
+            String name = null;
+
+            reslt.next();
+            name = reslt.getString("FirstName");
+
+            if (name != null) {
+                return name;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
+
 
 }
 
