@@ -29,7 +29,9 @@
 
             <a id="back" href="SchoolOfficeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
             <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
-            <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
+            <form action="Logout.jsp" method="POST">
+                <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
+            </form>
          
 	</div>
         
@@ -50,8 +52,8 @@
             <th class="headerTable">Exam Type</th>
             <th class="headerTable">Exam Sitting</th>
             <th hidden>Exam Level</th>
-            <th hidden>Date Created</th>
-            <th hidden>Creator ID</th>
+            <th hidden>Semester</th>
+            <th hidden>Year</th>
         </tr>
         <%
         for(int i=0;i<db.CompletedRows;i++){
@@ -93,8 +95,8 @@
                         <input type="hidden" name="modalExamTypeHidden" id="modalExamTypeHidden" value = ' ' />
                         <input type="hidden" name="modalExamSittingHidden" id="modalExamSittingHidden" value = ' ' />
                         <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
-                        <input type="hidden" name="modalDateCreatedHidden" id="modalDateCreatedHidden" value = ' ' />
-                        <input type="hidden" name="modalCreatorIDHidden" id="modlaCreatorIDHidden" value = ' ' />
+                        <input type="hidden" name="modalSemesterHidden" id="modalSemesterHidden" value = ' ' />
+                        <input type="hidden" name="modalYearHidden" id="modalYearHidden" value = ' ' />
                         <p id="modalExamID" name="examid">Exam ID</p>
                         <p id="modalExamTitle">Exam Title</p>
                         <p id="modalSchool">School</p>
@@ -103,8 +105,8 @@
                         <p id="modalExamType">Exam Type</p>
                         <p id="modalExamSitting">Exam Sitting</p>
                         <p id="modalExamLevel">Exam Level</p>
-                        <p id="modalDateCreated">Date Created</p>
-                        <p id="modalCreatorID">Creator ID</p>
+                        <p id="modalSemester">Semester</p>
+                        <p id="modalYear">Year</p>
                     </div>
                     
                     <div class="modal-footer">

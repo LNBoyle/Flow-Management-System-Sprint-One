@@ -334,7 +334,7 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
             CompletedRows = rows;
-            String[][] completedExams = new String[rows][14];
+            String[][] completedExams = new String[rows][13];
             int i = 0;
             while (reslt.next()) {
                 completedExams[i][0] = reslt.getString("ExamID");
@@ -345,12 +345,11 @@ public class DatabaseConnection {
                 completedExams[i][5] = reslt.getString("ExamType");
                 completedExams[i][6] = reslt.getString("ExamPeriod");
                 completedExams[i][7] = reslt.getString("ExamLevel");
-                completedExams[i][8] = reslt.getString("DateCreated");
-                completedExams[i][9] = reslt.getString("AuthorID");
-                completedExams[i][10] = reslt.getString("Deadline");
-                completedExams[i][11] = reslt.getString("Status");
-                completedExams[i][12] = reslt.getString("ExamPaper");
-                completedExams[i][13] = reslt.getString("AssignedTo");
+                completedExams[i][8] = reslt.getString("Semester");
+                completedExams[i][9] = reslt.getString("Year");
+                completedExams[i][10] = reslt.getString("Status");
+                completedExams[i][11] = reslt.getString("ExamPaper");
+                completedExams[i][12] = reslt.getString("SolutionsPaper");
                 i++;
             }
 
