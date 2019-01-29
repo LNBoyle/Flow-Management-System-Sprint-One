@@ -6,6 +6,10 @@
 package ExamWebApp;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -108,7 +112,196 @@ public class DatabaseConnectionTest {
         fail("The test case is a prototype.");
         }
     }
+    
+    /**
+     * Test of getAllUnassignedExams method, of class DatabaseConnection.
+     */
+    @Test
+    public void testGetAllUnassignedExams() {
+        System.out.println("getAllUnassignedExams");
+        DatabaseConnection db = new DatabaseConnection();
+        String expCode = "AC350001";
+        int expID = 5;
+        String[][] results = db.getAllUnassignedExams();
+        
+        if (results == null)
+        {
+            fail("Results returned were null. Likely SQL error.");
+        }
+        
+        if (!expCode.equals(results[0][0]))
+        {
+            fail("Incorrect module code. Check database is reset.");
+        }
+        
+        int resultID = Integer.parseInt(results[1][1]);
+        
+        if (expID != resultID)
+        {
+            fail("Incorrect exam ID. Check database is reset.");
+        }
+    }    
+    
+    /**
+     * Test of allocateExams method, of class DatabaseConnection.
+     */
+    @Test
+    public void testAllocateExams() {
+        System.out.println("allocateExams");
+        DatabaseConnection db = new DatabaseConnection();
+        String[] examID = {"5"};
+        int setID = 10007;
+        int intID = 10001;
+        int extID = 10003;
+        int vetID = 10004;
+      
+        Connection conn = null;
+        Statement stmt = null;
+        String password = "8326.at8.6238";
+        String username = "18agileteam8";
+        String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
+        
+        try {
+            conn = DriverManager.getConnection(address, username, password);
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        
+        if (!db.allocateExams(examID, setID, intID, extID, vetID))
+        {
+            fail("Allocation failed. Check SQL and that database is reset.");
+        }
+        //delete what was just added to the database.
+        else
+        {
+            try
+            {
+                stmt = conn.createStatement();
+                stmt.executeUpdate("DELETE FROM assignedexams WHERE AssignedExamID = " + examID[0] + ";");
+            }
+            catch (SQLException e)
+            {    
+                System.out.println("Error: " + e);
+            }
+        }
+    }        
 
+    /**
+     * Test of getAllSetters method, of class DatabaseConnection.
+     */
+    @Test
+    public void testgetAllSetters() {
+        System.out.println("getAllSetters");
+        DatabaseConnection db = new DatabaseConnection();
+        String expFName = "Jordan";
+        int expID = 10007;
+        String[][] results = db.getAllSetters();
+        
+        if (results == null)
+        {
+            fail("Results returned were null. Likely SQL error.");
+        }
+        
+        if (!expFName.equals(results[1][1]))
+        {
+            fail("Incorrect first name. Check database is reset.");
+        }
+        
+        int resultID = Integer.parseInt(results[1][0]);
+        
+        if (expID != resultID)
+        {
+            fail("Incorrect user ID. Check database is reset.");
+        }
+    }       
+    
+    /**
+     * Test of getAllInternalMods method, of class DatabaseConnection.
+     */
+    @Test
+    public void testgetAllInternalMods() {
+        System.out.println("getAllInternalMods");
+        DatabaseConnection db = new DatabaseConnection();
+        String expFName = "Liam";
+        int expID = 10002;
+        String[][] results = db.getAllInternalMods();
+        
+        if (results == null)
+        {
+            fail("Results returned were null. Likely SQL error.");
+        }
+        
+        if (!expFName.equals(results[0][1]))
+        {
+            fail("Incorrect first name. Check database is reset.");
+        }
+        
+        int resultID = Integer.parseInt(results[1][0]);
+        
+        if (expID != resultID)
+        {
+            fail("Incorrect user ID. Check database is reset.");
+        }
+    }        
+    
+    /**
+     * Test of getAllExternalExam method, of class DatabaseConnection.
+     */
+    @Test
+    public void testGetAllExternalExam() {
+        System.out.println("getAllExternalExam");
+        DatabaseConnection db = new DatabaseConnection();
+        String expFName = "Calum";
+        int expID = 10005;
+        String[][] results = db.getAllExternalExam();
+        
+        if (results == null)
+        {
+            fail("Results returned were null. Likely SQL error.");
+        }
+        
+        if (!expFName.equals(results[0][1]))
+        {
+            fail("Incorrect first name. Check database is reset.");
+        }
+        
+        int resultID = Integer.parseInt(results[1][0]);
+        
+        if (expID != resultID)
+        {
+            fail("Incorrect user ID. Check database is reset.");
+        }
+    }
+    
+    /**
+     * Test of getAllExamVets method, of class DatabaseConnection.
+     */
+    @Test
+    public void testGetAllExamVets() {
+        System.out.println("getAllExamVets");
+        DatabaseConnection db = new DatabaseConnection();
+        String expFName = "Craig";
+        int expID = 10004;
+        String[][] results = db.getAllExamVets();
+        
+        if (results == null)
+        {
+            fail("Results returned were null. Likely SQL error.");
+        }
+        
+        if (!expFName.equals(results[1][1]))
+        {
+            fail("Incorrect first name. Check database is reset.");
+        }
+        
+        int resultID = Integer.parseInt(results[0][0]);
+        
+        if (expID != resultID)
+        {
+            fail("Incorrect user ID. Check database is reset.");
+        }
+    }        
+    
     /**
      * Test of getExamComment method, of class DatabaseConnection.
      */
