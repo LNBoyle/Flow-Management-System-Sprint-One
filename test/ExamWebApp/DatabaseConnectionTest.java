@@ -427,7 +427,7 @@ public class DatabaseConnectionTest {
     @Test
     public void testcheckForExternalExamTrue() {
         System.out.println("checkForExternalExam");
-        int userID = 1003;
+        int userID = 10003;
         int examID = 1;
         DatabaseConnection tester = new DatabaseConnection();
         boolean expResult = true;
@@ -446,7 +446,7 @@ public class DatabaseConnectionTest {
     @Test
     public void testcheckForExternalExamFalse() {
         System.out.println("checkForExternalExam");
-        int userID = 1001;
+        int userID = 10001;
         int examID = 1;
         DatabaseConnection tester = new DatabaseConnection();
         boolean expResult = false;

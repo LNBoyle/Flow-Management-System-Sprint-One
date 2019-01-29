@@ -8,6 +8,8 @@
 package ExamWebApp;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -780,7 +782,18 @@ public class DatabaseConnection {
     }
     
     public boolean checkForExternalExam(int examID, int userID){
-        
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT AssignedExamID FROM assignedexams WHERE AssignedExamID = '" + examID + "' AND ExternalExaminer = '" + userID +"' ;");
+            
+            if (reslt.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
         return false;
     }
 
