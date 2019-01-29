@@ -616,28 +616,31 @@ public class DatabaseConnection {
     
     public String[][] getExamLists(String role) {
         ResultSet rs;
+        ResultSet commentCheckResult = null;
         ResultSet externalExaminer = null;
         ResultSet vettingCommittee = null;
         ResultSet internalModerator = null;
         try {
             stmt = conn.createStatement();
+            Statement commentCheck = conn.createStatement();
             Statement external = conn.createStatement();
             Statement internal = conn.createStatement();
             Statement vetting = conn.createStatement();
+
             switch (role) {
                 case "Internal Moderator": {
                     rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
-
+                    commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' AND assignedexams.InternalModerator = comment.userID ;");
                     break;
                 }
                 case "External Examiner": {
-                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
-
+                    rs = stmt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
+                    commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExternalExaminer = comment.userID ;");
                     break;
                 }
                 case "Exam Vetting Comittee": {
-                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
-
+                    rs = stmt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' AND assignedexams.InternalModerator = comment.userID ;");
+                    commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
                     break;
                 }
                 default:
@@ -647,8 +650,13 @@ public class DatabaseConnection {
             //ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
             int row = 0;
             if (rs.last()) {
-                row = rs.getRow();
+                if(commentCheckResult.last()){
+                    row = rs.getRow() - commentCheckResult.getRow();
+                }else{
+                    row = rs.getRow();
+                }
                 rs.beforeFirst();
+                commentCheckResult.beforeFirst();
             }
             CompletedRowss = row;
             String[][] staffExams = new String[row][6];
@@ -679,6 +687,12 @@ public class DatabaseConnection {
 
                 switch (role) {
                     case "Internal Moderator": {
+                        if(commentCheckResult.next()){
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
+                        }
                         externalExaminer.next();
                         vettingCommittee.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
@@ -699,8 +713,14 @@ public class DatabaseConnection {
                         break;
                     }
                     case "External Examiner": {
+                        if(commentCheckResult.next()){
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
+                        }
                         internalModerator.next();
-                           vettingCommittee.next();
+                        vettingCommittee.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
                         staffExams[j][1] = rs.getString("Title");
                         staffExams[j][2] = rs.getString("ModuleCode");
@@ -718,6 +738,12 @@ public class DatabaseConnection {
                         break;
                     }
                     case "Exam Vetting Comittee": {
+                        if(commentCheckResult.next()){
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
+                        }
                            internalModerator.next();
                             externalExaminer.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
