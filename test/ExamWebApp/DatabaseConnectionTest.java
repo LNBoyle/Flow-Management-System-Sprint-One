@@ -420,6 +420,44 @@ public class DatabaseConnectionTest {
             fail("The test case is a prototype.");
         }
     }
+    
+     /**
+     * Test of checkForExternalExam method, of class DatabaseConnection.
+     */
+    @Test
+    public void testcheckForExternalExamTrue() {
+        System.out.println("checkForExternalExam");
+        int userID = 1003;
+        int examID = 1;
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = true;
+        
+        boolean result = tester.checkForExternalExam(examID, userID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+    /**
+     * Test of checkForExternalExam method, of class DatabaseConnection.
+     */
+    @Test
+    public void testcheckForExternalExamFalse() {
+        System.out.println("checkForExternalExam");
+        int userID = 1001;
+        int examID = 1;
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = false;
+        
+        boolean result = tester.checkForExternalExam(examID, userID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
 
     
 }

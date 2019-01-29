@@ -778,6 +778,11 @@ public class DatabaseConnection {
         }
         return null;
     }
+    
+    public boolean checkForExternalExam(int examID, int userID){
+        
+        return false;
+    }
 
 }
 
