@@ -1,10 +1,6 @@
-<%-- 
-    Document   : Assignexam
-    Created on : 23-Jan-2019, 14:51:32
-    Author     : Cyril
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="ExamWebApp.*"%>
+<%DatabaseConnection db = new DatabaseConnection();%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,33 +18,105 @@
         </div>
         <h1><center>Assign Exams</center></h1>
         
-        
-  <form>
+  <form method='POST'>   
             
-            
-  Type of Examiner:<br>
-  <input type="text" name="forename" value="">
+  Exam:<br>
+  <%String[][] examlist = db.getAllUnassignedExams();
+    for (int i = 0; i < examlist.length; i++)
+    {
+        out.print("<input type='checkbox' name='exam' value=" + examlist[i][1] + ">" + examlist[i][0] + "<br>");
+    }
+  %>
   <br>
-  Forename of Examiner:<br>
-  <input type="text" name="forename" value="">
+  Exam Setter:<br>  
+    <select name = "setter">
+    <option value = "0"> Select a name
+    <%String[][] setterlist = db.getAllSetters();
+    for (int i = 0; i < setterlist.length; i++)
+    {
+        out.print("<option value=" + setterlist[i][0] + ">" + setterlist[i][1] + " " + setterlist[i][2] + "<br>");
+    }
+    %>
+  </select>
   <br>
-  Surname of Examiner:<br>
-  <input type="text" name="Surname" value="">
+  Internal Moderator:<br>
+    <select name = "internal">
+    <option value = "0"> Select a name
+    <%String [][] internallist = db.getAllInternalMods();
+    for (int i = 0; i < internallist.length; i++)
+    {
+        out.print("<option value=" + internallist[i][0] + ">" + internallist[i][1] + " " + internallist[i][2] + "<br>");
+    }
+  %>
+    </select>
   <br>
-  Name of Exam:<br>
-  <input type="text" name="examname" value="">
+  External Moderator:<br>
+    <select name = "external">
+    <option value = "0"> Select a name
+    <%String [][] externallist = db.getAllExternalExam();
+    for (int i = 0; i < externallist.length; i++)
+    {
+        out.print("<option value=" + externallist[i][0] + ">" + externallist[i][1] + " " + externallist[i][2] + "<br>");
+    }
+  %>
+    </select>
   <br>
-   Exam Number:<br>
-  <input type="text" name="examnumber" value="">
-  <br> <br>
-  <button type="button" onclick="alert('Exam Assigned')">Assign</button>
+  Exam Vetting Committee:<br>
+    <select name = "vet">
+    <option value = "0"> Select a name
+    <%String [][] vetlist = db.getAllExamVets();
+    for (int i = 0; i < vetlist.length; i++)
+    {
+        out.print("<option value=" + vetlist[i][0] + ">" + vetlist[i][1] + " " + vetlist[i][2] + "<br>");
+    }
+  %>
+    </select>
+  <br>  
+  <button type = "submit" name = "setExam">Set Exams</button>
   </form> 
-        
-
       
-    </body>
+    </body>    
     
-    
+    <%
+    if (request.getParameter("setExam") != null)
+    {
+        String[] selectedExams = request.getParameterValues("exam");
+        int selectedSetter = Integer.parseInt(request.getParameter("setter"));
+        int selectedInternal = Integer.parseInt(request.getParameter("internal"));
+        int selectedExternal = Integer.parseInt(request.getParameter("external"));
+        int selectedVet = Integer.parseInt(request.getParameter("vet"));
+       
+        if (selectedExams == null)
+        {
+           out.print("No exams selected");
+        }
+        else if (selectedSetter == 0 || selectedInternal == 0 || selectedExternal == 0 || selectedVet == 0)
+        {
+           out.print("Select a staff member for each role");
+        }
+        else
+        {       
+            if (db.allocateExams(selectedExams, selectedSetter, selectedInternal, selectedExternal, selectedVet))
+            {
+                out.print("Success. Click to reload page and update the update exam list.");
+                out.println(
+                            "<form method = 'POST' action = 'Assignexam.jsp'>"
+                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
+                            + "</form>"
+                    );
+            }
+            else
+            {
+                out.print("Something went wrong. Click to reload page before trying again.");
+                out.println(
+                            "<form method = 'POST' action = 'Assignexam.jsp'>"
+                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
+                            + "</form>"
+                    );
+            }
+        }
+    }    
+    %>
     
         <%
             if ((request.getParameter("Home") != null)) {
@@ -64,10 +132,7 @@
        <jsp:forward page="LocalExamOfficerDashboard.jsp"></jsp:forward>
         <%
             }
-        %>
-        
-        
-        
+        %>        
         
             <%
             if ((request.getParameter("Lock") != null)) {
