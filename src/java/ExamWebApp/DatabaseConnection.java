@@ -8,9 +8,10 @@
 package ExamWebApp;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.Date;
 /**
  *
  *
@@ -408,9 +409,12 @@ public class DatabaseConnection {
     //Function that adds a comment to an exam in the database
     public boolean setComment(int examID, int userID, String newComment) {
         //Try block to add the repsonse to the comment
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat (" dd/MM/yyyy hh:mm");
+        String timeStamp = ft.format(dNow);
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO comment (ExamID, UserID, Comment) VALUES ( " + examID + ", " + userID + ", '" + newComment + "');");
+            int success = stmt.executeUpdate("INSERT INTO comment (ExamID, UserID, Comment, CommentTimeStamp) VALUES ( " + examID + ", " + userID + ", '" + newComment + "', '" + timeStamp +"');");
 
             //return true if success, false otherwise
             if (success != 0) {
@@ -784,11 +788,27 @@ public class DatabaseConnection {
     public boolean checkForExternalExam(int examID, int userID){
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT AssignedExamID FROM assignedexams WHERE AssignedExamID = '" + examID + "' AND ExternalExaminer = '" + userID +"' ;");
+            reslt = stmt.executeQuery("SELECT AssignedExamID FROM assignedexams WHERE AssignedExamID = " + examID + " AND ExternalExaminer = " + userID +" ;");
             
             if (reslt.next()) {
                 return true;
             } else {
+                return false;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return false;
+    }
+    
+    public boolean markExamCompleted(int examID){
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("UPDATE exam SET status = 'Completed' WHERE ExamID = " + examID + " ;");
+            
+            if(success != 0){
+                return true;
+            }else{
                 return false;
             }
         } catch (SQLException exc) {

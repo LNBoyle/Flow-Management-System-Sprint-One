@@ -24,9 +24,6 @@ import static org.junit.Assert.*;
  */
 public class DatabaseConnectionTest {
     
-    public DatabaseConnectionTest() {
-    }
-    
     @BeforeClass
     public static void setUpClass() {
     }
