@@ -45,7 +45,7 @@
             }
             if(userRoles[4].equals("1")){
                 %>
-            <input type="button" onclick="location.href='SchoolOffice.jsp';" value="School Office" />
+            <input type="button" onclick="location.href='SchoolOfficeDashboard.jsp';" value="School Office" />
                 
             <%
             }

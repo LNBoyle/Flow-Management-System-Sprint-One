@@ -25,5 +25,10 @@ public class LoginCheckClass {
         }
     }
     
+    public void logout(){
+        userID = null;
+        roles = new String[6];
+    }
+    
     
 }

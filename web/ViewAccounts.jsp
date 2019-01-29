@@ -15,12 +15,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Home" />
-       <input type="button" onclick="location.href='index.jsp';" value="Lock" />
-       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Back" />
+        <title>View Accounts</title>
     </head>
     <body>
+        <div id="header">
+            <nav class="navbar navbar-light">
+                <span class="navbar-brand">Welcome..</span>
+            </nav>
+            <a id="back" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <form action="Logout.jsp" method="POST">
+                <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
+            </form>
+        </div>
         
         
                 <%
