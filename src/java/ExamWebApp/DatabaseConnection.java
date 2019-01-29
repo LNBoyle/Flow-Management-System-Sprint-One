@@ -239,7 +239,58 @@ public class DatabaseConnection {
         }
         return false;
     }
+    public String getExamResponse(int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");
 
+            //return string from query
+            if (reslt.next()) {
+                return reslt.getString(1);
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+    public boolean checkExamComment(int commentID){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE CommentID = " + commentID + ";");
+            
+            if (reslt != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    public boolean checkExamResponse(int commentID){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");
+            
+            if (reslt != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
         
     public boolean DeleteAccount(String UserID) {
         //Try block to add the repsonse to the comment
