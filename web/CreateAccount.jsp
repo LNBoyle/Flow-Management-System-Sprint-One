@@ -31,7 +31,9 @@
 
   <form method = "POST"> 
   UserId:    
+  <br>
   <input type="Int" name="userid" value="">
+  <br>
   First name:<br>
   <input type="text" name="firstname" value="">
   <br>
@@ -41,12 +43,39 @@
 
   Email:<br>
   <input type="text" name="email" value="">
+  
+  
+  
+  
+  
+  
   <br>
   Password:<br>
   <input type="password" name="password" value="">
-  <br> <br>
+  <br> 
+  
+    <br>
+  <input type="checkbox" name="ExamSetter" value=""> Exam Setter<br>
+  <input type="checkbox" name="InternalModerator" value="">Internal Moderator<br>
+  <input type="checkbox" name="ExternalExaminer" value=""> External Examiner<br>
+  <input type="checkbox" name="ExamVettingComittee" value="">Exam Vetting Comittee<br>
+  <input type="checkbox" name="SchoolOffice" value="">School Office<br>
+  <input type="checkbox" name="LocalExamOfficer" value="">Local Exam Officer<br>
+  <br> 
+  
+  
+  
+  
+  <br>
     <button type = "submit" name = "create">create</button>
+    
   </form> 
+        
+
+        
+        
+        
+        
         
     <% 
          String u = "123";
@@ -55,6 +84,13 @@
 
          String e = "a.lawal@dundee.ac.uk";
          String p = "AL1234";
+         
+        int esCheck = 0;
+        int imCheck = 0;
+        int emCheck = 0;
+        int evcCheck = 0;
+        int soCheck = 0;
+        int leoCheck = 0;
         
      if (request.getParameter("create") != null)
      {
@@ -68,8 +104,53 @@
         e = request.getParameter("email");
         p = request.getParameter("password");
         
+        
+         if (request.getParameter("ExamSetter") != null)
+         {
+             esCheck = 1;
+             out.print(esCheck);
+         }
+         
+         if (request.getParameter("InternalModerator") != null)
+         {
+             imCheck = 1;
+             out.print(imCheck);
+         }
+         
+         if (request.getParameter("ExternalExaminer") != null)
+         {
+             emCheck = 1;
+             out.print(emCheck);
+         }
+         
+         if (request.getParameter("ExamVettingComittee") != null)
+         {
+             evcCheck = 1;
+             out.print(evcCheck);
+         }
+         
+         
+         if (request.getParameter("SchoolOffice") != null)
+         {
+             soCheck = 1;
+             out.print(soCheck);
+         }
+         
+         if (request.getParameter("LocalExamOfficer") != null)
+         {
+             leoCheck = 1;
+             out.print(leoCheck);
+         }
+        
+        
+        
+        
+        
+        
+      
 
-    db.CreateAccount(u,f,s,e,p);
+        
+    db.CreateAccount(u,f,s,e,p,esCheck, imCheck, emCheck, evcCheck, soCheck, leoCheck);
     
      }
    
