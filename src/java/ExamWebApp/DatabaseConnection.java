@@ -100,37 +100,41 @@ public class DatabaseConnection {
             System.out.println("Error: " + e);
         }
         return false;
-        
-    
-    
-    
-    
-    
     }
     
-            
-            
-            
-    public String[] checkUser(String email, String password) {
-        try {
+    
+    public String[] checkUser(String email, String password){
+        try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "'");
-            // reslt.next();
-            String[] userAccount = new String[2];
-            while (reslt.next()) {
-                userAccount[0] = reslt.getString("Role");
-                userAccount[1] = reslt.getString("UserID");
+            reslt = stmt.executeQuery("SELECT UserID FROM user WHERE Email= '"+ email + "' AND Password = '" + password + "'");
+            String[] userAccount = new String[7];
+            while(reslt.next()){
+                userAccount[0] = reslt.getString("UserID");
             }
-            if (userAccount != null) {
+            if(userAccount[0] != null){
+                stmt = conn.createStatement();
+                reslt = stmt.executeQuery("SELECT ExamSetter, InternalModerator, ExternalExaminer, ExamVettingComittee, SchoolOffice, LocalExamOfficer FROM role WHERE UserID = " + userAccount[0]);
+                while(reslt.next()){
+                    userAccount[1] = reslt.getString("ExamSetter");
+                    userAccount[2] = reslt.getString("InternalModerator");
+                    userAccount[3] = reslt.getString("ExternalExaminer");
+                    userAccount[4] = reslt.getString("ExamVettingComittee");
+                    userAccount[5] = reslt.getString("SchoolOffice");
+                    userAccount[6] = reslt.getString("LocalExamOfficer");
+                }
                 return userAccount;
-            } else {
+            }else{
                 return null;
             }
-        } catch (SQLException exc) {
-            System.out.println("Error: " + exc);
+        }catch(SQLException exc){
+            
         }
         return null;
     }
+
+
+
+
 
     //Function that returns the module code for a given exam
     public String getExamModule(int examID) {
@@ -381,7 +385,7 @@ public class DatabaseConnection {
         }
         return null;
     }
-
+    
     public String[][] getExamList(String ModuleCoordinator) {
         try {
             stmt = conn.createStatement();
@@ -412,8 +416,9 @@ public class DatabaseConnection {
         }
         return null;
     }
-
-    public String[][] getExamLists() {
+    
+    
+    public String[][] getExamLists(String role) {
         ResultSet rs;
         ResultSet externalExaminer = null;
         ResultSet vettingCommittee = null;
@@ -423,19 +428,19 @@ public class DatabaseConnection {
             Statement external = conn.createStatement();
             Statement internal = conn.createStatement();
             Statement vetting = conn.createStatement();
-            switch (LoginCheckClass.userRole) {
+            switch (role) {
                 case "Internal Moderator": {
-                    rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,ExternalExaminer,ExamVettingComittee FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
 
                     break;
                 }
                 case "External Examiner": {
-                    rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModerator,ExamVettingComittee FROM exam WHERE ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
+                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
 
                     break;
                 }
                 case "Exam Vetting Comittee": {
-                    rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModerator,ExternalExaminer FROM exam WHERE ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
+                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
 
                     break;
                 }
@@ -453,7 +458,7 @@ public class DatabaseConnection {
             String[][] staffExams = new String[row][6];
             int j = 0;
             while (rs.next()) {
-                switch (LoginCheckClass.userRole) {
+                switch (role) {
                     case "Internal Moderator": {
 
                         externalExaminer = external.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" + rs.getInt("ExternalExaminer") + "' ;");
@@ -476,7 +481,7 @@ public class DatabaseConnection {
                         return null;
                 }
 
-                switch (LoginCheckClass.userRole) {
+                switch (role) {
                     case "Internal Moderator": {
                         externalExaminer.next();
                         vettingCommittee.next();

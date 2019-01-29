@@ -43,11 +43,6 @@
             
             %>
             <br>
-            <%
-                
-            out.print(loggedin.userRole);
-            
-            %>
         </div>  
         
        <% 
