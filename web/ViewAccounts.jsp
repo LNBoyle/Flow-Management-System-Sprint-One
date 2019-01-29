@@ -32,20 +32,44 @@
         
                 <%
 
-                String[][] ViewUsers = new String[db.UserRows][5];
-                ViewUsers = db.getViewUsers();
-          
-            for (int i = 0; i < ViewUsers.length; i++)
-            { 
-                for (int j = 0; j < ViewUsers[i].length; j++)
-                    { 
-                    out.println(ViewUsers[i][j] + " "); 
-                    }
-             
-                
-            }
-            
-         
+        String[][] ViewUsers = new String[db.UserRows][4];
+        ViewUsers = db.getViewUsers();
       %>
+      
+      
+      <table>
+        <tr>
+           
+            <th class="headerTable">UserID</th>
+            <th class="headerTable">First Name</th>
+            <th class="headerTable">Surname</th>
+            <th class="headerTable">Email</th>
+         
+
+        </tr>
+        <%
+        for(int i=0;i<db.UserRows;i++)
+        {
+        %>
+           <tr class='table-bordered'> 
+             <td <%out.print(ViewUsers[i][0]);%></td>
+             <td><%out.print(ViewUsers[i][1]);%></td>
+             <td><%out.print(ViewUsers[i][2]);%></td>
+             <td><%out.print(ViewUsers[i][3]);%></td>
+
+
+
+            </tr>
+        <%
+        }
+        %>
+    </table>
+      
+      
+      
+      
+      
+      
+      
     </body>
 </html>

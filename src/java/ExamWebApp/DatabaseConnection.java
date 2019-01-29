@@ -82,12 +82,12 @@ public class DatabaseConnection {
     }
     
     
-        public boolean AssignRole(String UserID, boolean es,boolean im,boolean em,boolean evc,boolean so,boolean leo)
+        public boolean AssignRole(String UserID, int es,int im,int em,int evc,int so,int leo)
     {
     
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("UPDATE role SET ExamSetter = '" + es + "', InternalModerator ='"+ im + "', ExternalExaminer = '" + em +"', ExamVettingComittee = '"+ evc + "', SchoolOffice = '"+ so + "', LocalExamOfficer = '"+ leo +"' WHERE UserID = '" + UserID + "';");
+            int success = stmt.executeUpdate("UPDATE user SET ExamSetter = '" + es + "', InternalModerator ='"+ im + "', ExternalExaminer = '" + em +"', ExamVettingComittee = '"+ evc + "', SchoolOffice = '"+ so + "', LocalExamOfficer = '"+ leo +"' WHERE UserID = '" + UserID + "';");
                 
             //return true if success, false otherwise
             if (success == 0) {
@@ -304,11 +304,11 @@ public class DatabaseConnection {
     
     
     
-    public boolean CreateAccount(String UserID, String FirstName, String SurName, String Email, String Password) {
+    public boolean CreateAccount(String UserID, String FirstName, String SurName, String Email, String Password, int es,int im, int em,int evc,int so,int leo) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Email, Password) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Email + "', '" + Password + "');");
+            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Email, Password, ExamSetter, InternalModerator, ExternalExaminer, ExamVettingComittee, SchoolOffice,LocalExamOfficer) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Email + "', '" + Password + "', '" + es + "', '" + im + "', '" + em + "', '" + evc + "', '" + so + "', '" + leo + "');");
                 
             //return true if success, false otherwise
             if (success == 0) {
