@@ -31,7 +31,7 @@
             </div>
             <img id="profile-img" class="profile-img-card" src="images/7176043816_dca8d26950_b.jpg" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" action="staffCheckLoginCredentials.jsp" method="POST">
+            <form class="form-signin" action="HomePage.jsp" method="POST">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
