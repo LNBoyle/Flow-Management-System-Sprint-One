@@ -386,6 +386,38 @@ public class DatabaseConnection {
         return null;
     }
     
+    public String[][] getExamList(String ModuleCoordinator) {
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
+
+            int row = 0;
+            if (rs.last()) {
+                row = rs.getRow();
+                rs.beforeFirst();
+            }
+            CompletedRowss = row;
+            String[][] staffExams = new String[row][4];
+            int j = 0;
+            while (rs.next()) {
+                staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                staffExams[j][1] = rs.getString("Title");
+                staffExams[j][2] = ModuleCoordinator;
+                staffExams[j][3] = rs.getString("ModuleCode");
+                j++;
+            }
+            if (staffExams != null) {
+                return staffExams;
+            } else {
+                System.out.println("The return is Null");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+    
     public String[][] getExamLists(String role) {
         ResultSet rs;
         ResultSet externalExaminer = null;

@@ -46,7 +46,7 @@
         </div>  
         
        <% 
-           String[][] exam = db.getExamLists("Exam Setter");      
+           String[][] exam = db.getExamList("Iain Murray");      
        %>
        <div>
             <table border="2">
