@@ -19,12 +19,16 @@
         <title>Welcome Local Exam Officer</title>
     </head>
     
-        <div class="topnav">
-       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Home" />
-       <input type="button" onclick="location.href='index.jsp';" value="Lock" />
-           
-            <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
-        </div>
+         <div id="header">
+            <nav class="navbar navbar-light">
+                    <span class="navbar-brand">Welcome..</span>
+            </nav>
+            
+            <a id="back" href="LocalExamOfficerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
+
+	</div>
 
 
        <br><input type="button" onclick="location.href='ViewAccounts.jsp';" value="View Account" /></br>
@@ -48,11 +52,6 @@
        
 
 <br>
-            <%
-            DeadLine deadline = new DeadLine();
-            out.print("Your Deadline to complete your exams is: " + deadline.deadline());
-            
-            %>
 
         
         

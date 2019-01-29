@@ -235,21 +235,5 @@ public class DatabaseConnectionTest {
         }
     }
 
-    /**
-     * Test of getExamList method, of class DatabaseConnection.
-     */
-    @Test
-    public void testGetExamList() {
-        System.out.println("getExamList");
-        String ModuleCoordinator = "Iain Murray";
-        DatabaseConnection getExam = new DatabaseConnection();
-        String expResult = "Iain Murray";
-        String[][] result = getExam.getExamList(ModuleCoordinator);
-        if (!(result[0][2].equals(expResult)))
-        {
-        // TODO review the generated test code and remove the default call to fail.
-            fail("The test case is a prototype.");
-        }
-    }
     
 }

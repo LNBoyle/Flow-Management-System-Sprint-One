@@ -43,15 +43,10 @@
             
             %>
             <br>
-            <%
-                
-            out.print(loggedin.userRole);
-            
-            %>
         </div>  
         
        <% 
-           String[][] exam = db.getExamList("Iain Murray");      
+           String[][] exam = db.getExamLists("Exam Setter");      
        %>
        <div>
             <table border="2">

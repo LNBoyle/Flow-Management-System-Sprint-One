@@ -17,11 +17,42 @@
         LoginCheckClass login = new LoginCheckClass();
         if(login.checkStaffLogin(userEmail, userPassword)){
             String[] userRoles = LoginCheckClass.roles;
-            %>
-            <script>
-                window.location = "InternalModDashboard.jsp";
-            </script>
+            if(userRoles[0].equals("1")){
+                %>
+            <input type="button" onclick="location.href='StaffDash.jsp';" value="Exam Setter" />
+                
             <%
+            }
+            if(userRoles[1].equals("1")){
+                %>
+           <input type="button" onclick="location.href='InternalModDashboard.jsp';" value="Internal Mod" />
+                
+            <%
+            }
+            if(userRoles[2].equals("1")){
+                %>
+            
+                <input type="button" onclick="location.href='ExternalExaminerDashboard.jsp';" value="External Examiner" />
+            <%
+            }
+            if(userRoles[3].equals("1")){
+                %>
+            
+                <input type="button" onclick="location.href='ExamVettingComitteeDashboard.jsp';" value="Exam Vetting Comittee" />
+            <%
+            }
+            if(userRoles[4].equals("1")){
+                %>
+            <input type="button" onclick="location.href='SchoolOffice.jsp';" value="School Office" />
+                
+            <%
+            }
+            if(userRoles[5].equals("1")){
+                %>
+           <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Local Exam Officer" />
+                
+            <%
+            }
         }else{
             %>
             <script>
