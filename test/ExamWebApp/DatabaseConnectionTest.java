@@ -6,6 +6,7 @@
 package ExamWebApp;
 
 import java.sql.Connection;
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -58,18 +59,37 @@ public class DatabaseConnectionTest {
      * Test of checkUser method, of class DatabaseConnection.
      */
     @Test
-    public void testCheckUser() {
-        System.out.println("checkUser");
-        String email = "j.mckilligan@dundee.ac.uk";
-        String password = "JM123";
-        DatabaseConnection instance = new DatabaseConnection();
-        String expResult = "Exam Setter";
-        String[] result = instance.checkUser(email, password);
-        if (!(result[0].equals(expResult)))
-        {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCheckUserTrue() {
+        DatabaseConnection dbConnect = new DatabaseConnection();
+        System.out.println("CheckStaffLogin Correct Login Credentials");
+        String email = "l.boyle@dundee.ac.uk";
+        String password = "Liam123";
+        String[] expResult = {"10001","0","1","0","0","0","0"};
+        
+        String[] result = dbConnect.checkUser(email, password);
+        
+        if(!Arrays.equals(expResult, result)){
+            fail("Error somthing went wrong");
         }
+    }
+    
+    /**
+     * Test of checkUser method, of class DatabaseConnection.
+     */
+    @Test
+    public void testCheckUserFalse() {
+        DatabaseConnection dbConnect = new DatabaseConnection();
+        System.out.println("CheckStaffLogin Incorrect Login Credentials");
+        String email = "test.user@dundee.ac.uk";
+        String password = "Tested123";
+        String[] expResult = null;
+        
+        String[] result = dbConnect.checkUser(email, password);
+        
+        if(!Arrays.equals(expResult, result)){
+            fail("Error somthing went wrong");
+        }
+        
     }
 
     /**

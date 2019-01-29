@@ -35,7 +35,7 @@ public class DeadLineTest {
 
     /**
      * Test of deadline method, of class DeadLine.
-     */
+     
     @Test
     public void testDeadline() {
         //internal moderator login
@@ -55,5 +55,5 @@ public class DeadLineTest {
         fail("The test case is a prototype.");
         }
     }
-    
+    */
 }
