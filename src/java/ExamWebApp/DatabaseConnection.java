@@ -626,8 +626,9 @@ public class DatabaseConnection {
         ResultSet externalExaminer = null;
         ResultSet vettingCommittee = null;
         ResultSet internalModerator = null;
+        String userID = LoginCheckClass.userID; 
         try {
-            stmt = conn.createStatement();
+            Statement satemnt = conn.createStatement();
             Statement commentCheck = conn.createStatement();
             Statement external = conn.createStatement();
             Statement internal = conn.createStatement();
@@ -635,18 +636,18 @@ public class DatabaseConnection {
 
             switch (role) {
                 case "Internal Moderator": {
-                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                    rs = satemnt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
                     commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' AND assignedexams.InternalModerator = comment.userID ;");
                     break;
                 }
                 case "External Examiner": {
-                    rs = stmt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
+                    rs = satemnt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
                     commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExternalExaminer = comment.userID ;");
                     break;
                 }
                 case "Exam Vetting Comittee": {
-                    rs = stmt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' AND assignedexams.InternalModerator = comment.userID ;");
-                    commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
+                    rs = satemnt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + userID + "' AND assignedexams.InternalModerator = comment.userID ;");
+                    commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
                     break;
                 }
                 default:
@@ -724,6 +725,9 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
+                        }else{
+                            j--;
+                            break;
                         }
                         internalModerator.next();
                         vettingCommittee.next();
@@ -749,6 +753,9 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
+                        }else{
+                            j--;
+                            break;
                         }
                            internalModerator.next();
                             externalExaminer.next();
@@ -822,7 +829,7 @@ public class DatabaseConnection {
         Statement commentexamstmt = null;
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT exam.* FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = " + LoginCheckClass.userID + " ;");
+            reslt = stmt.executeQuery("SELECT exam.* FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = " + LoginCheckClass.userID + " AND exam.status != 'Completed' ;");
             
             int row = 0;
             if (reslt.last()) {
