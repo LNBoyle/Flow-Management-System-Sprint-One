@@ -61,24 +61,26 @@
                     {
                         %>
                     <tr>
-                        <% 
-                                out.println(comment[i][0]); 
-                                %> 
-                    </tr>
-                    <tr>
-                        <% 
-                                out.println(comment[i][1]); 
-                                %> 
-                    </tr>
-                    <tr>
-                        <% 
-                                out.println(comment[i][3]); 
-                                %> 
-                    </tr>
-                    <tr>
-                        <% 
-                                out.println(comment[i][4]); 
-                                %> 
+                        <td>
+                            <% 
+                                    out.println(comment[i][0]); 
+                                    %> 
+                        </td>
+                        <td>
+                            <% 
+                                    out.println(comment[i][1]); 
+                                    %> 
+                        </td>
+                        <td>
+                            <% 
+                                    out.println(comment[i][3]); 
+                                    %> 
+                        </td>
+                        <td>
+                            <% 
+                                    out.println(comment[i][4]); 
+                                    %> 
+                        </td>
                     </tr>
                     <%
                         }
