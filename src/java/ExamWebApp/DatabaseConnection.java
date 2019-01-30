@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -379,11 +377,11 @@ public class DatabaseConnection {
     }
     
     //Function that returns all comments for a given exam
-    public String[] getAllExamComment(int examID) {
+    public String[][] getAllExamComment(int examID) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
+            reslt = stmt.executeQuery("SELECT * FROM comment WHERE examID = " + examID + ";");
 
             int rows = 0;
             if (reslt.last()) {
@@ -391,14 +389,22 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
 
-            String[] list = new String[rows];
+            String[][] list = new String[rows][6];
             int i = 0;
             //return string from query
             while (reslt.next()) {
-                list[i] = reslt.getString("Comment");
+                list[i][0] = reslt.getString("CommentID");
+                list[i][1] = reslt.getString("ExamID");
+                list[i][2] = reslt.getString("UserID");
+                list[i][3] = reslt.getString("Comment");
+                list[i][4] = reslt.getString("CommentTimeStamp");
                 i++;
             }
-            return list;
+            if (list != null){
+                return list;
+            } else {
+                return null;
+            }
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
@@ -628,7 +634,7 @@ public class DatabaseConnection {
         ResultSet internalModerator = null;
         String userID = LoginCheckClass.userID; 
         try {
-            Statement statement = conn.createStatement();
+            Statement satemnt = conn.createStatement();
             Statement commentCheck = conn.createStatement();
             Statement external = conn.createStatement();
             Statement internal = conn.createStatement();
@@ -636,17 +642,17 @@ public class DatabaseConnection {
 
             switch (role) {
                 case "Internal Moderator": {
-                    rs = statement.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee,exam.ExamPaper FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                    rs = satemnt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
                     commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' AND assignedexams.InternalModerator = comment.userID ;");
                     break;
                 }
                 case "External Examiner": {
-                    rs = statement.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee,exam.ExamPaper FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
+                    rs = satemnt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
                     commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' AND assignedexams.ExternalExaminer = comment.userID ;");
                     break;
                 }
                 case "Exam Vetting Comittee": {
-                    rs = statement.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer,exam.ExamPaper FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + userID + "' AND assignedexams.InternalModerator = comment.userID ;");
+                    rs = satemnt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + userID + "' AND assignedexams.InternalModerator = comment.userID ;");
                     commentCheckResult = commentCheck.executeQuery("SELECT exam.ExamID FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID INNER JOIN comment ON exam.ExamID = comment.ExamID  WHERE assignedexams.ExamVettingComittee = '" + userID + "' AND assignedexams.ExamVettingComittee = comment.userID ;");
                     break;
                 }
@@ -666,7 +672,7 @@ public class DatabaseConnection {
                 commentCheckResult.beforeFirst();
             }
             CompletedRowss = row;
-            String[][] staffExams = new String[row][7];
+            String[][] staffExams = new String[row][6];
             int j = 0;
             while (rs.next()) {
                 switch (role) {
@@ -716,7 +722,7 @@ public class DatabaseConnection {
                         }else{
                             staffExams[j][5] = "Not Assigned";
                         }
-                      staffExams[j][6] = rs.getString("ExamPaper");
+                      
                         break;
                     }
                     case "External Examiner": {
@@ -873,7 +879,7 @@ public class DatabaseConnection {
         }
         return null;
     }
-    
+  
     public String getName(String id){
       try {
             stmt = conn.createStatement();
@@ -894,6 +900,5 @@ public class DatabaseConnection {
         }
         return null;
 }
-
 }
 
