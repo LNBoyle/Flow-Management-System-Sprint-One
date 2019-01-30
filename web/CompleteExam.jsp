@@ -21,7 +21,7 @@
         %>    
        
         <script>
-            window.location.href = "index.jsp";
+            window.location.href = "StaffDash.jsp";
         </script>    
     </body>
 </html>

@@ -51,9 +51,9 @@
             <th class="headerTable">Module Code</th>
             <th class="headerTable">Exam Type</th>
             <th class="headerTable">Exam Sitting</th>
-            <th hidden>Exam Level</th>
-            <th hidden>Semester</th>
-            <th hidden>Year</th>
+            <th class="headerTable">Exam Level</th>
+            <th class="headerTable">Semester</th>
+            <th class="headerTable">Year</th>
         </tr>
         <%
         for(int i=0;i<db.CompletedRows;i++){
@@ -66,9 +66,9 @@
                 <td><%out.print(completedExams[i][4]);%></td>
                 <td><%out.print(completedExams[i][5]);%></td>
                 <td><%out.print(completedExams[i][6]);%></td>
-                <td hidden><%out.print(completedExams[i][7]);%></td>
-                <td hidden><%out.print(completedExams[i][8]);%></td>
-                <td hidden><%out.print(completedExams[i][9]);%></td>
+                <td><%out.print(completedExams[i][7]);%></td>
+                <td><%out.print(completedExams[i][8]);%></td>
+                <td><%out.print(completedExams[i][9]);%></td>
             </tr>
         <%
         }
