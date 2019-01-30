@@ -391,7 +391,7 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
 
-            String[][] list = new String[rows][5];
+            String[][] list = new String[rows][6];
             int i = 0;
             //return string from query
             while (reslt.next()) {
@@ -399,7 +399,7 @@ public class DatabaseConnection {
                 list[i][1] = reslt.getString("ExamID");
                 list[i][2] = reslt.getString("UserID");
                 list[i][3] = reslt.getString("Comment");
-                list[i][4] = reslt.getString("TimeStamp");
+                list[i][4] = reslt.getString("CommentTimeStamp");
                 i++;
             }
             if (list != null){
