@@ -816,6 +816,56 @@ public class DatabaseConnection {
         }
         return false;
     }
+    
+    public String[][] getFullySignedExams(){
+        ResultSet commentexamrs = null;
+        Statement commentexamstmt = null;
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT exam.* FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = " + LoginCheckClass.userID + " ;");
+            
+            int row = 0;
+            if (reslt.last()) {
+                row = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            CompletedRowss = row;
+            String[][] staffExams = new String[row][13];
+            int j = 0;
+            
+            while (reslt.next()) {
+                int examID = reslt.getInt("ExamID");
+                commentexamstmt = conn.createStatement();
+                commentexamrs = commentexamstmt.executeQuery("SELECT ExamID FROM comment WHERE ExamID = " + examID  + " ;");
+                if (commentexamrs.last()) {
+                row = commentexamrs.getRow();
+                commentexamrs.beforeFirst();
+                }
+                if(row >= 3){
+                    staffExams[j][0] = reslt.getString("ExamID");
+                    staffExams[j][1] = reslt.getString("Title");
+                    staffExams[j][2] = reslt.getString("School");
+                    staffExams[j][3] = reslt.getString("ModuleCoordinator");
+                    staffExams[j][4] = reslt.getString("ModuleCode");
+                    staffExams[j][5] = reslt.getString("ExamType");
+                    staffExams[j][6] = reslt.getString("ExamPeriod");
+                    staffExams[j][7] = reslt.getString("ExamLevel");
+                    staffExams[j][8] = reslt.getString("Semester");
+                    staffExams[j][9] = reslt.getString("Year");
+                    staffExams[j][10] = reslt.getString("Status");
+                    staffExams[j][11] = reslt.getString("ExamPaper");
+                    staffExams[j][12] = reslt.getString("SolutionsPaper");
+                    j++;
+                }
+                
+            }
+            CompletedRowss = j;
+            return staffExams;
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
 
 }
 
