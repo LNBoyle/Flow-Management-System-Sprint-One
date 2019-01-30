@@ -137,51 +137,7 @@ public class DatabaseConnectionTest {
         {
             fail("Incorrect exam ID. Check database is reset.");
         }
-    }    
-    
-    /**
-     * Test of allocateExams method, of class DatabaseConnection.
-     */
-    @Test
-    public void testAllocateExams() {
-        System.out.println("allocateExams");
-        DatabaseConnection db = new DatabaseConnection();
-        String[] examID = {"5"};
-        int setID = 10007;
-        int intID = 10001;
-        int extID = 10003;
-        int vetID = 10004;
-      
-        Connection conn = null;
-        Statement stmt = null;
-        String password = "8326.at8.6238";
-        String username = "18agileteam8";
-        String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
-        
-        try {
-            conn = DriverManager.getConnection(address, username, password);
-        } catch (SQLException exc) {
-            System.out.println("Error: " + exc);
-        }
-        
-        if (!db.allocateExams(examID, setID, intID, extID, vetID))
-        {
-            fail("Allocation failed. Check SQL and that database is reset.");
-        }
-        //delete what was just added to the database.
-        else
-        {
-            try
-            {
-                stmt = conn.createStatement();
-                stmt.executeUpdate("DELETE FROM assignedexams WHERE AssignedExamID = " + examID[0] + ";");
-            }
-            catch (SQLException e)
-            {    
-                System.out.println("Error: " + e);
-            }
-        }
-    }        
+    }
 
     /**
      * Test of getAllSetters method, of class DatabaseConnection.

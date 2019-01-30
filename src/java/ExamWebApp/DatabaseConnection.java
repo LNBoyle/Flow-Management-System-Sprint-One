@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
+import java.lang.System;
 /**
  *
  *
@@ -151,7 +154,40 @@ public class DatabaseConnection {
         return null;
     }
 
-    //Function that returns all the exams that are not yet .
+    //Function that returns all the exams
+    public String[][] getAllExams() {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+
+            String[][] list = new String[rows][6];
+            int i = 0;
+            //return string from query
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("ModuleCode");
+                list[i][1] = reslt.getString("examID");
+                list[i][2] = reslt.getString("ExamPeriod");
+                list[i][3] = reslt.getString("ExamLevel");
+                list[i][4] = reslt.getString("Semester");
+                list[i][5] = reslt.getString("Year");
+                i++;
+            }
+            return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }    
+    
+    //Function that returns all the exams that are not yet assigned.
     public String[][] getAllUnassignedExams() {
         //Try block to add the repsonse to the comment
         try {
@@ -180,39 +216,42 @@ public class DatabaseConnection {
         return null;
     }
     
-    public boolean allocateExams(String[] examIDs, int setter, int internal, int external, int vet)
+    public boolean createAssignedExam(int examID, String moduleCode, String examPeriod, String examLevel, int examSetter)
     {
-        String[] examModule = new String[examIDs.length];
-        String[] examPeriod = new String[examIDs.length];
-        String[] examLevel = new String[examIDs.length];
-        String[] list = new String[3];
+        int success = 0;
+                   
+        try
+        {
+            stmt = conn.createStatement();            
+            System.out.println("INSERT INTO assignedexams (AssignedExamID, ModuleCode, ExamPeriod, ExamLevel, ExamSetter), VALUES (" + examID + ", '" + moduleCode + "', '" + examPeriod + "', '" + examLevel + "', " + examSetter +");");
+            success = stmt.executeUpdate("INSERT INTO assignedexams (AssignedExamID, ModuleCode, ExamPeriod, ExamLevel, ExamSetter) VALUES (" + examID + ", '" + moduleCode + "', '" + examPeriod + "', '" + examLevel + "', " + examSetter +");");
+        }
+        catch (SQLException e)
+        {    
+            System.out.println("Error: " + e);
+            return false;
+        }
+
+        if (success == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public boolean allocateExams(String[] examIDs, int internal, int external, int vet)
+    {
         int success = 0;
         
         for (int i = 0; i < examIDs.length; i++)
-        {
+        {            
             try
             {
                 stmt = conn.createStatement();
-                reslt = stmt.executeQuery("SELECT ModuleCode, ExamPeriod, ExamLevel FROM exam WHERE examID = " + examIDs[i] + ";");
-                
-                //return string from query
-                while (reslt.next())
-                {
-                    list[0] = reslt.getString("ModuleCode");
-                    list[1] = reslt.getString("ExamPeriod");
-                    list[2] = reslt.getString("ExamLevel");
-                }
-            }
-            catch (SQLException e)
-            {    
-                System.out.println("Error: " + e);
-                return false;
-            }
-            
-            try
-            {
-                stmt = conn.createStatement();
-                success = stmt.executeUpdate("INSERT INTO assignedexams VALUES (" + examIDs[i] + ", '" + list[0] + "', '" + list[1] + "', '" + list[2] + "', " + setter + ", " + internal + ", " + external + ", " + vet + ");");
+                success = stmt.executeUpdate("UPDATE assignedexams SET InternalModerator = " + internal + ", ExternalExaminer = " + external + ", ExamVettingComittee = " + vet + " WHERE AssignedExamID = " + examIDs[i] + ";");
             }
             catch (SQLException e)
             {    
@@ -377,11 +416,11 @@ public class DatabaseConnection {
     }
     
     //Function that returns all comments for a given exam
-    public String[][] getAllExamComment(int examID) {
+    public String[] getAllExamComment(int examID) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT * FROM comment WHERE examID = " + examID + ";");
+            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
 
             int rows = 0;
             if (reslt.last()) {
@@ -389,22 +428,14 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
 
-            String[][] list = new String[rows][6];
+            String[] list = new String[rows];
             int i = 0;
             //return string from query
             while (reslt.next()) {
-                list[i][0] = reslt.getString("CommentID");
-                list[i][1] = reslt.getString("ExamID");
-                list[i][2] = reslt.getString("UserID");
-                list[i][3] = reslt.getString("Comment");
-                list[i][4] = reslt.getString("CommentTimeStamp");
+                list[i] = reslt.getString("Comment");
                 i++;
             }
-            if (list != null){
-                return list;
-            } else {
-                return null;
-            }
+            return list;
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
@@ -879,7 +910,7 @@ public class DatabaseConnection {
         }
         return null;
     }
-  
+
     public String getName(String id){
       try {
             stmt = conn.createStatement();
@@ -899,6 +930,6 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
         return null;
-}
+}    
 }
 

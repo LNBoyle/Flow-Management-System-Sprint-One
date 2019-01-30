@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -59,7 +61,7 @@ public class CreateExam extends HttpServlet {
   
             // constructs SQL statement
             String sql = "INSERT INTO EXAM (Title, School, ModuleCoordinator, ModuleCode, ExamType, ExamPeriod, ExamLevel, Semester, Year, Status,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(sql);        
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,request.getParameter("Title"));
             statement.setString(2,request.getParameter("School"));
             statement.setString(3,"10004");
@@ -80,6 +82,12 @@ public class CreateExam extends HttpServlet {
             int row = statement.executeUpdate();
             if (row > 0) {
                 message = "File uploaded and saved into database";
+                ResultSet rs = statement.getGeneratedKeys();
+                if (rs.next())
+                {                    
+                    int newID = rs.getInt(1);
+                    db.createAssignedExam(newID, request.getParameter("ModuleCode"), request.getParameter("ExamPeriod"), request.getParameter("ExamLevel"), Integer.parseInt(LoginCheckClass.userID));
+                }
             }
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
