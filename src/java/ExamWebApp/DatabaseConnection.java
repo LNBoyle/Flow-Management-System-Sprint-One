@@ -703,7 +703,7 @@ public class DatabaseConnection {
                 commentCheckResult.beforeFirst();
             }
             CompletedRowss = row;
-            String[][] staffExams = new String[row][6];
+            String[][] staffExams = new String[row][7];
             int j = 0;
             while (rs.next()) {
                 switch (role) {
@@ -753,7 +753,7 @@ public class DatabaseConnection {
                         }else{
                             staffExams[j][5] = "Not Assigned";
                         }
-                      
+                     
                         break;
                     }
                     case "External Examiner": {
@@ -930,6 +930,12 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
         return null;
-}    
-}
+}   
+    
+    public Blob getExamPaper(String id){
+        
+        return null;
+    }
+    }
+
 
