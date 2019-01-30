@@ -64,7 +64,7 @@
                 <td><%out.print(exam[i][3]);%></td>
                 <td><%out.print(exam[i][4]);%></td>
                 <td><%out.print(exam[i][5]);%></td>
-                <td type="hidden"><%out.print(exam[i][6]);%></td>
+             
             </tr>
             <%
                 }
