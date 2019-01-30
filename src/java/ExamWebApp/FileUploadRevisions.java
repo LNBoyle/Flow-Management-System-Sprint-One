@@ -33,7 +33,7 @@ public class FileUploadRevisions extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    @Override
+ /*    @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         // gets values of text fields
@@ -73,6 +73,7 @@ public class FileUploadRevisions extends HttpServlet {
                 // sets the message in request scope
                 request.setAttribute("Message", message);
 
+               
                 // forwards to the message page
                 switch (LoginCheckClass.userRole) {
                     case "Exam Vetting Comittee":
@@ -196,5 +197,5 @@ public class FileUploadRevisions extends HttpServlet {
             }
         }
     }
-
+*/
 }

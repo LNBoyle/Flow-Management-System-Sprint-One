@@ -1,7 +1,7 @@
 <%-- 
-    Document   : UpdateAccount
-    Created on : 24-Jan-2019, 19:15:38
-    Author     : cyrilvarghese & AbbasLawal
+    Document   : SetDeadline
+    Created on : 26-Jan-2019, 15:40:44
+    Author     : abbaslawal
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Account</title>
+        <title>Set Deadline</title>
     </head>
     <body>
         <div id="header">
@@ -26,53 +26,32 @@
                 <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
             </form>
         </div>
-        
-        
-        <h1>Update a new account</h1>
+        <h1>Set Deadlines</h1>
         
 
   <form method = "POST"> 
-  User ID of the Account you want to update:  
-  <br>  
-  <input type="Int" name="userid" value="">
-  <br>
-  First name:
-  <br>
-  <input type="text" name="firstname" value="">
-  <br>
-  Surname:<br>
-  <input type="text" name="surname" value="">
-  <br>
-  Email:<br>
-  <input type="text" name="email" value="">
-  <br>
-  Password:<br>
-  <input type="password" name="password" value="">
-  <br> <br>
-    <button type = "submit" name = "Update">Update/Change Account</button>
+  Role involved with the deadline :    
+  <input type="text" name="role" value="">
+
+      Deadline you want to set:    
+  <input type="text" name="date" value="">
+    <button type = "submit" onclick="alert(Account Deleted)"  name = "setdeadline">set deadline</button>
   </form> 
         
     <% 
-         String u = " ";
-         String f = " ";
-         String s = " ";
-         String e = " ";
-         String p = " ";
+         String role = "test";
+         String date = "11-12-13";
         
-     if (request.getParameter("Update") != null)
+     if (request.getParameter("setdeadline") != null)
      {
-        
-        u = request.getParameter("userid");     
-      
-        f = request.getParameter("firstname");
-      
-        s = request.getParameter("surname");
-      
-        e = request.getParameter("email");
-        p = request.getParameter("password");
+
+        role = request.getParameter("role"); 
+        out.println(role);
+        date = request.getParameter("date"); 
+        out.println(date);
         
 
-        db.UpdateAccount(u,f,s,e,p);
+        db.SetDeadline(role,date);
     
      }
    

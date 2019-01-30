@@ -43,17 +43,7 @@ public class DeadLineTest {
         String userPassword = "Liam123";
         LoginCheckClass login=new LoginCheckClass();
         login.checkStaffLogin(userEmail,userPassword);
-        
-        System.out.println("deadline");
-        DeadLine deadline = new DeadLine();
-        String expResult = "10-12-19";
-        String result = deadline.deadline();
-        assertEquals(expResult, result);
-        if (!(result.equals(expResult)))
-        {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-        }
+
     }
     
 }

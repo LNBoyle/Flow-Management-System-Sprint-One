@@ -11,22 +11,9 @@ package ExamWebApp;
  */
 public class DeadLine {
     
-    public String deadline(){
+    public String deadline(String role){
         LoginCheckClass loggedin = new LoginCheckClass();
-        
-        switch (loggedin.userRole) {
-            case "Exam Vetting Comittee":
-                return ifDeadline("Exam Vetting Comittee");
-            case "Internal Moderator":
-                return ifDeadline("Internal Moderator");
-            case "External Examiner":
-                return ifDeadline("External Examiner");
-            case "Exam Setter":
-                return ifDeadline("Exam Setter");
-            default:
-                break;
-        }
-        return null;
+        return ifDeadline(role);
     }
     
     /*

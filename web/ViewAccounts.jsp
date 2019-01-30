@@ -15,30 +15,61 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Home" />
-       <input type="button" onclick="location.href='index.jsp';" value="Lock" />
-       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Back" />
+        <title>View Accounts</title>
     </head>
     <body>
+        <div id="header">
+            <nav class="navbar navbar-light">
+                <span class="navbar-brand">Welcome..</span>
+            </nav>
+            <a id="back" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <form action="Logout.jsp" method="POST">
+                <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
+            </form>
+        </div>
         
         
                 <%
 
-                String[][] ViewUsers = new String[db.UserRows][5];
-                ViewUsers = db.getViewUsers();
-          
-            for (int i = 0; i < ViewUsers.length; i++)
-            { 
-                for (int j = 0; j < ViewUsers[i].length; j++)
-                    { 
-                    out.print(ViewUsers[i][j] + " "); 
-                    }
-             
-                
-            }
-            
-         
+        String[][] ViewUsers = new String[db.UserRows][4];
+        ViewUsers = db.getViewUsers();
       %>
+      
+      
+      <table>
+        <tr>
+           
+            <th class="headerTable">UserID</th>
+            <th class="headerTable">First Name</th>
+            <th class="headerTable">Surname</th>
+            <th class="headerTable">Email</th>
+         
+
+        </tr>
+        <%
+        for(int i=0;i<db.UserRows;i++)
+        {
+        %>
+           <tr class='table-bordered'> 
+             <td <%out.print(ViewUsers[i][0]);%></td>
+             <td><%out.print(ViewUsers[i][1]);%></td>
+             <td><%out.print(ViewUsers[i][2]);%></td>
+             <td><%out.print(ViewUsers[i][3]);%></td>
+
+
+
+            </tr>
+        <%
+        }
+        %>
+    </table>
+      
+      
+      
+      
+      
+      
+      
     </body>
 </html>

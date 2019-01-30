@@ -41,18 +41,30 @@ public class LoginCheckClassTest {
      * Test of checkStaffLogin method, of class LoginCheckClass.
      */
     @Test
-    public void testCheckStaffLogin() {
+    public void testCheckStaffLoginTrue() {
         LoginCheckClass login = new LoginCheckClass();
-        System.out.println("checkStaffLogin");
-        String userEmail = "l.boyle@dundee.ac.uk";
-        String userPassword = "Liam123";
-        String expResult = "Internal Moderator";
-        String result = login.checkStaffLogin(userEmail, userPassword);
+        System.out.println("CheckStaffLogin Correct Login Credentials");
+        String email = "l.boyle@dundee.ac.uk";
+        String password = "Liam123";
         
-        if (!result.equals(expResult))
-        {
-            fail("Returned role is not same as expected.");
+        if(!login.checkStaffLogin(email, password)){
+            fail("Error");
         }
+    }
+    
+    /**
+     * Test of checkStaffLogin method, of class LoginCheckClass.
+     */
+    @Test
+    public void testCheckStaffLoginFalse() {
+        LoginCheckClass login = new LoginCheckClass();
+        System.out.println("CheckStaffLogin Incorrect Login Credentials");
+        String email = "test.user@dundee.ac.uk";
+        String password = "Test1232";
+        
+        if(login.checkStaffLogin(email, password)){
+            fail("Error");
+        } 
     }
     
 }
