@@ -24,9 +24,6 @@ import static org.junit.Assert.*;
  */
 public class DatabaseConnectionTest {
     
-    public DatabaseConnectionTest() {
-    }
-    
     @BeforeClass
     public static void setUpClass() {
     }
@@ -415,6 +412,44 @@ public class DatabaseConnectionTest {
         String expResult = "24-5-19";
         String result = tester.deadline(role);
         if (!(result.equals(expResult)))
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+     /**
+     * Test of checkForExternalExam method, of class DatabaseConnection.
+     */
+    @Test
+    public void testcheckForExternalExamTrue() {
+        System.out.println("checkForExternalExam");
+        int userID = 10003;
+        int examID = 1;
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = true;
+        
+        boolean result = tester.checkForExternalExam(examID, userID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+    /**
+     * Test of checkForExternalExam method, of class DatabaseConnection.
+     */
+    @Test
+    public void testcheckForExternalExamFalse() {
+        System.out.println("checkForExternalExam");
+        int userID = 10001;
+        int examID = 1;
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = false;
+        
+        boolean result = tester.checkForExternalExam(examID, userID);
+        if (result != expResult)
         {
         // TODO review the generated test code and remove the default call to fail.
             fail("The test case is a prototype.");

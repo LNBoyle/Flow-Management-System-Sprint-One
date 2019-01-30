@@ -18,7 +18,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="scripts/Dashboard.js"></script>
+	<script src="scripts/ExamSetterDashboard.js"></script>
+        <link href="css/Dashboard.css" rel="stylesheet">
         <link href="css/Dashboard.css" rel="stylesheet">
         <title>Exam Setter Dashboard</title>
         <link rel="icon" type="image/ico" href="https://cdn.dundee.ac.uk/media/dundeewebsite/themes/brandnewhope/img/favicons/apple-icon-57x57.png" />
@@ -44,10 +45,12 @@
             %>
             <br>
 
-
-
-
-        <div>
+             <%
+            String[][] signedExams = db.getFullySignedExams();
+            
+            
+            %>
+             <div>
             <form method=POST">
                 <input type="button" class="btn btn-lg" value="Upload New Exam" name="Upload New Exam" onclick="openPage('FileUpload.jsp')" />
 
@@ -56,7 +59,91 @@
             </form>
 
 
-        </div>     
+        </div>
+             <br>
+             <br>
+             <h3>Completed/Signed Exams Awaiting Approval</h3>
+    <table>
+        <tr>
+            <th hidden>Exam ID</th>
+            <th class="headerTable">Exam Title</th>
+            <th class="headerTable">School</th>
+            <th hidden>Module Coordinator</th>
+            <th class="headerTable">Module Code</th>
+            <th class="headerTable">Exam Type</th>
+            <th class="headerTable">Exam Sitting</th>
+            <th hidden>Exam Level</th>
+            <th hidden>Semester</th>
+            <th hidden>Year</th>
+        </tr>
+        <%
+        for(int i=0;i<db.CompletedRowss;i++){
+        %>
+            <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
+                <td hidden><%out.print(signedExams[i][0]);%></td>
+                <td><%out.print(signedExams[i][1]);%></td>
+                <td><%out.print(signedExams[i][2]);%></td>
+                <td hidden><%out.print(signedExams[i][3]);%></td>
+                <td><%out.print(signedExams[i][4]);%></td>
+                <td><%out.print(signedExams[i][5]);%></td>
+                <td><%out.print(signedExams[i][6]);%></td>
+                <td hidden><%out.print(signedExams[i][7]);%></td>
+                <td hidden><%out.print(signedExams[i][8]);%></td>
+                <td hidden><%out.print(signedExams[i][9]);%></td>
+            </tr>
+        <%
+        }
+        %>
+    </table>
+    
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form method="post" action="StaffDash.jsp">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="modalHeader" class="modal-title">Exam Details</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" name="modalExamIDHidden" id="modalExamIDHidden" value = ' ' />
+                        <input type="hidden" name="modalExamTitleHidden" id="modalExamTitleHidden" value = ' ' />								
+                        <input type="hidden" name="modalSchoolHidden" id="modalSchoolHidden" value = ' ' />
+                        <input type="hidden" name="modalModuleCoordinatorHidden" id="modalModuleCoordinatorHidden" value = ' ' />
+                        <input type="hidden" name="modalModuleCodeHidden" id="modalModuleCodeHidden" value = ' ' />
+                        <input type="hidden" name="modalExamTypeHidden" id="modalExamTypeHidden" value = ' ' />
+                        <input type="hidden" name="modalExamSittingHidden" id="modalExamSittingHidden" value = ' ' />
+                        <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
+                        <input type="hidden" name="modalSemesterHidden" id="modalSemesterHidden" value = ' ' />
+                        <input type="hidden" name="modalYearHidden" id="modalYearHidden" value = ' ' />
+                        <p id="modalExamID" name="examid">Exam ID</p>
+                        <p id="modalExamTitle">Exam Title</p>
+                        <p id="modalSchool">School</p>
+                        <p id="modalModuleCoordinator">Module Coordinator</p>
+                        <p id="modalModuleCode">Module Code</p>
+                        <p id="modalExamType">Exam Type</p>
+                        <p id="modalExamSitting">Exam Sitting</p>
+                        <p id="modalExamLevel">Exam Level</p>
+                        <p id="modalSemester">Semester</p>
+                        <p id="modalYear">Year</p>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                        <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <form action="CompleteExam.jsp" method="POST">
+                            <input type="hidden" name="ExamIDHidden" id="ExamIDHidden" value = ''/>
+                            <button type="submit" id="completed" class="btn btn-default"  name="submit">Approve Exam</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+         
             </div>
     </body>
 

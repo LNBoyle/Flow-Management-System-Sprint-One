@@ -52,7 +52,8 @@
                 <th class="headerTable">Module Code</th>
                 <th class="headerTable">Module Coordinator</th>
                 <th class="headerTable">External Examiner</th>
-                <th class="headerTable">Exam Vetting Comittee</th>
+                <th class="headerTable">Exam Vetting Committee</th>
+                <th type="hidden" class="headerTable">Exam</th>
             </tr>
             <%            for (int i = 0; i < exam.length; i++) {
             %>
@@ -63,6 +64,7 @@
                 <td><%out.print(exam[i][3]);%></td>
                 <td><%out.print(exam[i][4]);%></td>
                 <td><%out.print(exam[i][5]);%></td>
+                <td type="hidden"><%out.print(exam[i][6]);%></td>
             </tr>
             <%
                 }
@@ -71,7 +73,7 @@
     </div>
 
     <div id="pdfDiv" class="split">
-        <object
+        <object id="pdf"
             data="images/Medical Elective Application Form.pdf"
             type="application/pdf"
             width="100%"
