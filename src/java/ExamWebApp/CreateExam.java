@@ -57,23 +57,23 @@ public class CreateExam extends HttpServlet {
         try {
             // connects to the database
   
- Date date = new Date();
- SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
- String creationDate = formatter.format(date);
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (Title, School, ModuleCode, ExamType, ExamPeriod, ExamLevel, DateCreated,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ? )";
+            String sql = "INSERT INTO EXAM (Title, School, ModuleCoordinator, ModuleCode, ExamType, ExamPeriod, ExamLevel, Semester, Year, Status,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);        
             statement.setString(1,request.getParameter("Title"));
             statement.setString(2,request.getParameter("School"));
-            statement.setString(3,request.getParameter("ModuleCode"));
-            statement.setString(4,request.getParameter("ExamType"));
-            statement.setString(5,request.getParameter("ExamPeriod"));
-            statement.setString(6,request.getParameter("ExamLevel"));
-             statement.setString(7,creationDate);
+            statement.setString(3,"10004");
+            statement.setString(4,request.getParameter("ModuleCode"));
+            statement.setString(5,request.getParameter("ExamType"));
+            statement.setString(6,request.getParameter("ExamPeriod"));
+            statement.setString(7,request.getParameter("ExamLevel"));
+            statement.setString(8,"2");
+            statement.setString(9,"2019");
+            statement.setString(10,"New");
             if (examPaperStream != null) {
                 // fetches input stream of the upload file for the blob column
-                statement.setBlob(8, examPaperStream);
-                statement.setBlob(9, examSolutionStream);
+                statement.setBlob(11, examPaperStream);
+                statement.setBlob(12, examSolutionStream);
             }
  
             // sends the statement to the database server
@@ -90,7 +90,7 @@ public class CreateExam extends HttpServlet {
             request.setAttribute("Message", message);
              
             // forwards to the message page
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/StaffDash.jsp").forward(request, response);
         }
         
      
