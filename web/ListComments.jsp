@@ -72,11 +72,6 @@
                     </tr>
                     <tr>
                         <% 
-                                out.println(comment[i][2]); 
-                                %> 
-                    </tr>
-                    <tr>
-                        <% 
                                 out.println(comment[i][3]); 
                                 %> 
                     </tr>
