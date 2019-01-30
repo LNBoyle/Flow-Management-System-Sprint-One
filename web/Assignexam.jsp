@@ -21,23 +21,21 @@
   <form method='POST'>   
             
   Exam:<br>
-  <%String[][] examlist = db.getAllUnassignedExams();
+  <table>
+      <th>Module Code</th>
+      <th>Exam Period</th>
+      <th>Exam Level</th>
+      <th>Semester</th>
+      <th>Year</th>
+      <tr>
+  <%String[][] examlist = db.getAllExams();
     for (int i = 0; i < examlist.length; i++)
     {
-        out.print("<input type='checkbox' name='exam' value=" + examlist[i][1] + ">" + examlist[i][0] + "<br>");
+        out.print("<tr><td><input type='checkbox' name='exam' value=" + examlist[i][1] + ">" + examlist[i][0] + "</td> <td> " + examlist[i][2] + "</td> <td> " + examlist[i][3] + "</td> <td> " + examlist[i][4] + "</td> <td> " + examlist[i][5] + "</td> </tr>");
     }
   %>
-  <br>
-  Exam Setter:<br>  
-    <select name = "setter">
-    <option value = "0"> Select a name
-    <%String[][] setterlist = db.getAllSetters();
-    for (int i = 0; i < setterlist.length; i++)
-    {
-        out.print("<option value=" + setterlist[i][0] + ">" + setterlist[i][1] + " " + setterlist[i][2] + "<br>");
-    }
-    %>
-  </select>
+      </tr>
+  </table>
   <br>
   Internal Moderator:<br>
     <select name = "internal">
@@ -81,7 +79,6 @@
     if (request.getParameter("setExam") != null)
     {
         String[] selectedExams = request.getParameterValues("exam");
-        int selectedSetter = Integer.parseInt(request.getParameter("setter"));
         int selectedInternal = Integer.parseInt(request.getParameter("internal"));
         int selectedExternal = Integer.parseInt(request.getParameter("external"));
         int selectedVet = Integer.parseInt(request.getParameter("vet"));
@@ -90,29 +87,19 @@
         {
            out.print("No exams selected");
         }
-        else if (selectedSetter == 0 || selectedInternal == 0 || selectedExternal == 0 || selectedVet == 0)
+        else if (selectedInternal == 0 || selectedExternal == 0 || selectedVet == 0)
         {
            out.print("Select a staff member for each role");
         }
         else
         {       
-            if (db.allocateExams(selectedExams, selectedSetter, selectedInternal, selectedExternal, selectedVet))
+            if (db.allocateExams(selectedExams, selectedInternal, selectedExternal, selectedVet))
             {
-                out.print("Success. Click to reload page and update the update exam list.");
-                out.println(
-                            "<form method = 'POST' action = 'Assignexam.jsp'>"
-                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
-                            + "</form>"
-                    );
+                out.print("Success.");
             }
             else
             {
-                out.print("Something went wrong. Click to reload page before trying again.");
-                out.println(
-                            "<form method = 'POST' action = 'Assignexam.jsp'>"
-                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
-                            + "</form>"
-                    );
+                out.print("Something went wrong.");
             }
         }
     }    
