@@ -9,8 +9,8 @@ function alerting(x){
 	document.getElementById("modalExamType").innerHTML ="Exam Type: " + x.cells[5].innerHTML;
         document.getElementById("modalExamSitting").innerHTML ="Exam Sitting: " + x.cells[6].innerHTML;
 	document.getElementById("modalExamLevel").innerHTML ="Exam Level: " + x.cells[7].innerHTML;
-	document.getElementById("modalDateCreated").innerHTML ="Date Created: " + x.cells[8].innerHTML;
-	document.getElementById("modalCreatorID").innerHTML ="Created By Lecturer ID: " + x.cells[9].innerHTML;
+	document.getElementById("modalSemester").innerHTML ="Semester: " + x.cells[8].innerHTML;
+	document.getElementById("modalYear").innerHTML ="Exam Year: " + x.cells[9].innerHTML;
         
         document.getElementById('modalExamIDHidden').value = x.cells[0].innerHTML;
 	document.getElementById('modalExamTitleHidden').value = x.cells[1].innerHTML;
@@ -20,8 +20,8 @@ function alerting(x){
 	document.getElementById('modalExamTypeHidden').value = x.cells[5].innerHTML;
 	document.getElementById('modalExamSittingHidden').value = x.cells[6].innerHTML;
         document.getElementById('modalExamLevelHidden').value = x.cells[7].innerHTML;
-	document.getElementById('modalDateCreatedHidden').value = x.cells[8].innerHTML;
-	document.getElementById('modalCreatorIDHidden').value = x.cells[9].innerHTML;
+	document.getElementById("modalSemesterHidden").value = x.cells[8].innerHTML;
+	document.getElementById("modalYearHidden").value = x.cells[9].innerHTML;
 }
 
 function myFunction() {

@@ -52,7 +52,7 @@ public class DatabaseConnection {
     public String[][] getViewUsers() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID,FirstName,Surname,Role,Email FROM user;");
+            reslt = stmt.executeQuery("SELECT UserID,FirstName,Surname,Email FROM user;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -60,14 +60,13 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
             UserRows = rows;
-            String[][] ViewUsers = new String[rows][5];
+            String[][] ViewUsers = new String[rows][4];
             int i = 0;
             while (reslt.next()) {
                 ViewUsers[i][0] = reslt.getString("UserID");
                 ViewUsers[i][1] = reslt.getString("FirstName");
                 ViewUsers[i][2] = reslt.getString("Surname");
-                ViewUsers[i][3] = reslt.getString("Role");
-                ViewUsers[i][4] = reslt.getString("Email");
+                ViewUsers[i][3] = reslt.getString("Email");
                 i++;
             }
             if (ViewUsers != null) {
@@ -81,24 +80,54 @@ public class DatabaseConnection {
         return null;
 
     }
-
-    public String[] checkUser(String email, String password) {
+    
+    
+        public boolean AssignRole(String UserID, int es,int im,int em,int evc,int so,int leo)
+    {
+    
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Role,UserID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "'");
-            // reslt.next();
-            String[] userAccount = new String[2];
-            while (reslt.next()) {
-                userAccount[0] = reslt.getString("Role");
-                userAccount[1] = reslt.getString("UserID");
-            }
-            if (userAccount != null) {
-                return userAccount;
+            int success = stmt.executeUpdate("UPDATE user SET ExamSetter = '" + es + "', InternalModerator ='"+ im + "', ExternalExaminer = '" + em +"', ExamVettingComittee = '"+ evc + "', SchoolOffice = '"+ so + "', LocalExamOfficer = '"+ leo +"' WHERE UserID = '" + UserID + "';");
+                
+            //return true if success, false otherwise
+            if (success == 0) {
+                return false;
             } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    
+    public String[] checkUser(String email, String password){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID FROM user WHERE Email= '"+ email + "' AND Password = '" + password + "'");
+            String[] userAccount = new String[7];
+            while(reslt.next()){
+                userAccount[0] = reslt.getString("UserID");
+            }
+            if(userAccount[0] != null){
+                stmt = conn.createStatement();
+                reslt = stmt.executeQuery("SELECT ExamSetter, InternalModerator, ExternalExaminer, ExamVettingComittee, SchoolOffice, LocalExamOfficer FROM role WHERE UserID = " + userAccount[0]);
+                while(reslt.next()){
+                    userAccount[1] = reslt.getString("ExamSetter");
+                    userAccount[2] = reslt.getString("InternalModerator");
+                    userAccount[3] = reslt.getString("ExternalExaminer");
+                    userAccount[4] = reslt.getString("ExamVettingComittee");
+                    userAccount[5] = reslt.getString("SchoolOffice");
+                    userAccount[6] = reslt.getString("LocalExamOfficer");
+                }
+                return userAccount;
+            }else{
                 return null;
             }
-        } catch (SQLException exc) {
-            System.out.println("Error: " + exc);
+        }catch(SQLException exc){
+            
         }
         return null;
     }
@@ -121,6 +150,213 @@ public class DatabaseConnection {
         return null;
     }
 
+    //Function that returns all the exams that are not yet .
+    public String[][] getAllUnassignedExams() {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT exam.ModuleCode, exam.examID FROM exam LEFT JOIN assignedexams ON exam.examID = assignedexams.AssignedExamID WHERE assignedexams.ModuleCode IS NULL;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+
+            String[][] list = new String[rows][2];
+            int i = 0;
+            //return string from query
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("ModuleCode");
+                list[i][1] = reslt.getString("examID");
+                i++;
+            }
+            return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+    public boolean allocateExams(String[] examIDs, int setter, int internal, int external, int vet)
+    {
+        String[] examModule = new String[examIDs.length];
+        String[] examPeriod = new String[examIDs.length];
+        String[] examLevel = new String[examIDs.length];
+        String[] list = new String[3];
+        int success = 0;
+        
+        for (int i = 0; i < examIDs.length; i++)
+        {
+            try
+            {
+                stmt = conn.createStatement();
+                reslt = stmt.executeQuery("SELECT ModuleCode, ExamPeriod, ExamLevel FROM exam WHERE examID = " + examIDs[i] + ";");
+                
+                //return string from query
+                while (reslt.next())
+                {
+                    list[0] = reslt.getString("ModuleCode");
+                    list[1] = reslt.getString("ExamPeriod");
+                    list[2] = reslt.getString("ExamLevel");
+                }
+            }
+            catch (SQLException e)
+            {    
+                System.out.println("Error: " + e);
+                return false;
+            }
+            
+            try
+            {
+                stmt = conn.createStatement();
+                success = stmt.executeUpdate("INSERT INTO assignedexams VALUES (" + examIDs[i] + ", '" + list[0] + "', '" + list[1] + "', '" + list[2] + "', " + setter + ", " + internal + ", " + external + ", " + vet + ");");
+            }
+            catch (SQLException e)
+            {    
+                System.out.println("Error: " + e);
+                return false;
+            }
+        }
+        if (success == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    //Gets all exam setters
+    public String[][] getAllSetters() {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamSetter = 1;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            CompletedRows = rows;
+            String[][] list = new String[rows][3];
+            int i = 0;
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("UserID");
+                list[i][1] = reslt.getString("FirstName");
+                list[i][2] = reslt.getString("Surname");
+                i++;
+            }
+
+            if (list != null) {
+                return list;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
+    
+    //Gets all internal moderators
+    public String[][] getAllInternalMods() {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            CompletedRows = rows;
+            String[][] list = new String[rows][3];
+            int i = 0;
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("UserID");
+                list[i][1] = reslt.getString("FirstName");
+                list[i][2] = reslt.getString("Surname");
+                i++;
+            }
+
+            if (list != null) {
+                return list;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
+    
+    //Gets all external examiners
+    public String[][] getAllExternalExam() {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            CompletedRows = rows;
+            String[][] list = new String[rows][3];
+            int i = 0;
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("UserID");
+                list[i][1] = reslt.getString("FirstName");
+                list[i][2] = reslt.getString("Surname");
+                i++;
+            }
+
+            if (list != null) {
+                return list;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
+    
+    //Gets all exam vetters
+    public String[][] getAllExamVets() {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            CompletedRows = rows;
+            String[][] list = new String[rows][3];
+            int i = 0;
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("UserID");
+                list[i][1] = reslt.getString("FirstName");
+                list[i][2] = reslt.getString("Surname");
+                i++;
+            }
+
+            if (list != null) {
+                return list;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }
+    
     //Function that returns the comment for a given comment ID.
     public String getExamComment(int commentID) {
         //Try block to add the repsonse to the comment
@@ -138,7 +374,7 @@ public class DatabaseConnection {
         }
         return null;
     }
-
+    
     //Function that returns all comments for a given exam
     public String[] getAllExamComment(int examID) {
         //Try block to add the repsonse to the comment
@@ -206,7 +442,6 @@ public class DatabaseConnection {
         }
         return false;
     }
-
         
     public boolean DeleteAccount(String UserID) {
         //Try block to add the repsonse to the comment
@@ -226,8 +461,7 @@ public class DatabaseConnection {
         }
         return false;
     }
-    
-    
+        
     public boolean SetDeadline(String Role, String Date) {
         //Try block to add the repsonse to the comment
         try {
@@ -246,12 +480,33 @@ public class DatabaseConnection {
         }
         return false;
     }
-    
-    public boolean CreateAccount(String UserID, String FirstName, String SurName, String Role, String Email, String Password) {
+        
+        public boolean UpdateAccount(String UserID, String FirstName, String SurName, String Email, String Password) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Role, Email, Password) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Role + "', '" + Email + "', '" + Password + "');");
+            int success = stmt.executeUpdate("UPDATE user SET FirstName = '" + FirstName + "', Surname ='"+ SurName + "', Email = '" + Email +"', Password = '"+ Password + "' WHERE UserID = '" + UserID + "';");
+                
+            //return true if success, false otherwise
+            if (success == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    
+    
+    
+    public boolean CreateAccount(String UserID, String FirstName, String SurName, String Email, String Password, int es,int im, int em,int evc,int so,int leo) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("INSERT INTO user (UserID, FirstName, Surname, Email, Password, ExamSetter, InternalModerator, ExternalExaminer, ExamVettingComittee, SchoolOffice,LocalExamOfficer) VALUES ('" + UserID + "','" + FirstName + "', '" + SurName + "', '" + Email + "', '" + Password + "', '" + es + "', '" + im + "', '" + em + "', '" + evc + "', '" + so + "', '" + leo + "');");
                 
             //return true if success, false otherwise
             if (success == 0) {
@@ -277,7 +532,7 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
             CompletedRows = rows;
-            String[][] completedExams = new String[rows][14];
+            String[][] completedExams = new String[rows][13];
             int i = 0;
             while (reslt.next()) {
                 completedExams[i][0] = reslt.getString("ExamID");
@@ -288,12 +543,11 @@ public class DatabaseConnection {
                 completedExams[i][5] = reslt.getString("ExamType");
                 completedExams[i][6] = reslt.getString("ExamPeriod");
                 completedExams[i][7] = reslt.getString("ExamLevel");
-                completedExams[i][8] = reslt.getString("DateCreated");
-                completedExams[i][9] = reslt.getString("AuthorID");
-                completedExams[i][10] = reslt.getString("Deadline");
-                completedExams[i][11] = reslt.getString("Status");
-                completedExams[i][12] = reslt.getString("ExamPaper");
-                completedExams[i][13] = reslt.getString("AssignedTo");
+                completedExams[i][8] = reslt.getString("Semester");
+                completedExams[i][9] = reslt.getString("Year");
+                completedExams[i][10] = reslt.getString("Status");
+                completedExams[i][11] = reslt.getString("ExamPaper");
+                completedExams[i][12] = reslt.getString("SolutionsPaper");
                 i++;
             }
 
@@ -328,7 +582,7 @@ public class DatabaseConnection {
         }
         return null;
     }
-
+    
     public String[][] getExamList(String ModuleCoordinator) {
         try {
             stmt = conn.createStatement();
@@ -359,8 +613,8 @@ public class DatabaseConnection {
         }
         return null;
     }
-
-    public String[][] getExamLists() {
+    
+    public String[][] getExamLists(String role) {
         ResultSet rs;
         ResultSet externalExaminer = null;
         ResultSet vettingCommittee = null;
@@ -370,19 +624,19 @@ public class DatabaseConnection {
             Statement external = conn.createStatement();
             Statement internal = conn.createStatement();
             Statement vetting = conn.createStatement();
-            switch (LoginCheckClass.userRole) {
+            switch (role) {
                 case "Internal Moderator": {
-                    rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,ExternalExaminer,ExamVettingComittee FROM exam WHERE InternalModerator = '" + LoginCheckClass.userID + "' ;");
+                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.ExternalExaminer, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.InternalModerator = '" + LoginCheckClass.userID + "' ;");
 
                     break;
                 }
                 case "External Examiner": {
-                    rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModerator,ExamVettingComittee FROM exam WHERE ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
+                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExamVettingComittee FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExternalExaminer = '" + LoginCheckClass.userID + "' ;");
 
                     break;
                 }
                 case "Exam Vetting Comittee": {
-                    rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode,ModuleCoordinator,InternalModerator,ExternalExaminer FROM exam WHERE ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
+                    rs = stmt.executeQuery("SELECT ExamID,exam.Title,exam.ModuleCode,exam.ModuleCoordinator, assignedexams.InternalModerator, assignedexams.ExternalExaminer FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamVettingComittee = '" + LoginCheckClass.userID + "' ;");
 
                     break;
                 }
@@ -400,7 +654,7 @@ public class DatabaseConnection {
             String[][] staffExams = new String[row][6];
             int j = 0;
             while (rs.next()) {
-                switch (LoginCheckClass.userRole) {
+                switch (role) {
                     case "Internal Moderator": {
 
                         externalExaminer = external.executeQuery("SELECT FirstName, Surname FROM user WHERE UserID = '" + rs.getInt("ExternalExaminer") + "' ;");
@@ -423,7 +677,7 @@ public class DatabaseConnection {
                         return null;
                 }
 
-                switch (LoginCheckClass.userRole) {
+                switch (role) {
                     case "Internal Moderator": {
                         externalExaminer.next();
                         vettingCommittee.next();

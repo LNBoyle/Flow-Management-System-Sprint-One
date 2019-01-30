@@ -19,20 +19,27 @@
         <title>Welcome Local Exam Officer</title>
     </head>
     
-        <div class="topnav">
-       <input type="button" onclick="location.href='LocalExamOfficerDashboard.jsp';" value="Home" />
-       <input type="button" onclick="location.href='index.jsp';" value="Lock" />
-           
-            <h1 style="font-size:17px;float:right;padding:0px 10px;">Welcome...</h1>
-        </div>
+         <div id="header">
+            <nav class="navbar navbar-light">
+                    <span class="navbar-brand">Welcome..</span>
+            </nav>
+            
+            <a id="back" href="LocalExamOfficerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <form action="Logout.jsp" method="POST">
+                <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
+            </form>
+
+	</div>
 
 
        <br><input type="button" onclick="location.href='ViewAccounts.jsp';" value="View Account" /></br>
        <br><input type="button" onclick="location.href='DeleteAccount.jsp';" value="Delete Account" /></br>
        <br> <input type="button" onclick="location.href='CreateAccount.jsp';" value="Create Account" />  </br> 
-       <br> <input type="button" onclick="location.href='Assignexam.jsp';" value="Update Account" /></br>
+       <br> <input type="button" onclick="location.href='UpdateAccount.jsp';" value="Update Account" /></br>
        <br> <input type="button" onclick="location.href='Assignexam.jsp';" value="Assign Exams" /></br>
-        <br> <input type="button" onclick="location.href='SetDeadline.jsp';" value="Set Deadline" /></br>
+       <br> <input type="button" onclick="location.href='SetDeadline.jsp';" value="Set Deadline" /></br>
+       <br> <input type="button" onclick="location.href='AssignRole.jsp';" value="Assign Role" /></br>
                 
        
 
@@ -47,11 +54,6 @@
        
 
 <br>
-            <%
-            DeadLine deadline = new DeadLine();
-            out.print("Your Deadline to complete your exams is: " + deadline.deadline());
-            
-            %>
 
         
         

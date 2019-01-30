@@ -26,9 +26,11 @@
                     <span class="navbar-brand">Welcome..</span>
             </nav>
             
-            <a id="back" href="" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
-            <a id="home" href="ExamVettingComitteeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
-            <a id="logout" href="index.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-lock"></i></a>
+            <a id="back" href="ExamVettingComitteeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
+            <form action="Logout.jsp" method="POST">
+                <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
+            </form>
 
 	</div>
         
@@ -37,13 +39,13 @@
         <%
             DeadLine deadline = new DeadLine();
             %><center><h2> <%
-            out.print("Your Deadline to complete your exams is: " + deadline.deadline());
+            out.print("Your Deadline to complete your exams is: " + deadline.deadline("Exam Vetting Comittee"));
             %></h2></center> <%
             %>
             <br>
              <%
             DatabaseConnection db = new DatabaseConnection();
-            String[][] exam = db.getExamLists();
+            String[][] exam = db.getExamLists("Exam Vetting Comittee");
             
             
             %>
