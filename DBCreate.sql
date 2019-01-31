@@ -153,19 +153,21 @@ CREATE TABLE `EXAM` (
   `Status` varchar(20) NOT NULL,
   `ExamPaper` longblob DEFAULT NULL,
   `SolutionsPaper` longblob DEFAULT NULL,
+  `ExamPaperFileExtension` varchar(5) DEFAULT NULL,
+  `SolutionsPaperFileExtension` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`ExamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `EXAM` WRITE;
 /*!40000 ALTER TABLE `EXAM` DISABLE KEYS */;
-INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`)
+INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`,`ExamPaperFileExtension`,`SolutionsPaperFileExtension`)
 VALUES
 
-  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL),
-  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL),
-  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2','2019','In Progress',NULL,NULL),
-  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','1','2020','Completed',NULL,NULL),
-  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL);
+  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL,NULL,NULL),
+  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL,NULL,NULL),
+  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2','2019','In Progress',NULL,NULL,NULL,NULL),
+  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','1','2020','Completed',NULL,NULL,NULL,NULL),
+  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -273,6 +275,8 @@ CREATE TABLE `OLDEXAMS` (
   `ExamPaper` longblob DEFAULT NULL,
   `SolutionsPaper` longblob DEFAULT NULL,
   `TimeStamp` varchar(20) NOT NULL,
+  `ExamPaperFileExtension` varchar(5) DEFAULT NULL,
+  `SolutionsPaperFileExtension` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`OldExamID`),
   KEY `fk_OLDEXAMS_EXAM` (`ExamID`),
   CONSTRAINT `fk_OLDEXAMS_EXAM1` FOREIGN KEY (`ExamID`) REFERENCES `EXAM` (`ExamID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -280,12 +284,12 @@ CREATE TABLE `OLDEXAMS` (
 
 LOCK TABLES `OLDEXAMS` WRITE;
 /*!40000 ALTER TABLE `OLDEXAMS` DISABLE KEYS */;
-INSERT INTO `OLDEXAMS` (`OldExamID`,`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`,`TimeStamp`)
+INSERT INTO `OLDEXAMS` (`OldExamID`,`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`,`TimeStamp`,`ExamPaperFileExtension`,`SolutionsPaperFileExtension`)
 VALUES
 
-  (00000001,00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL,'28/01/2019 20:00:48'),
-  (00000002,00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL,'30/01/2019 21:00:00'),
-  (00000003,00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL,'25/01/2019 12:35:20');
+  (00000001,00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL,'28/01/2019 20:00:48',NULL,NULL),
+  (00000002,00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL,'30/01/2019 21:00:00',NULL,NULL),
+  (00000003,00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL,'25/01/2019 12:35:20',NULL,NULL);
 
 /*!40000 ALTER TABLE `OLDEXAMS` ENABLE KEYS */;
 UNLOCK TABLES;
