@@ -47,7 +47,7 @@
             %>
             <br>
              <%
-            DatabaseConnection db = new DatabaseConnection();
+           
             String[][] exam = db.getExamLists("Exam Vetting Comittee");
             
             
@@ -91,23 +91,7 @@
             out.print(displayModal.returnModal());
         %>
     
-    <%
-            FileDownload download = new FileDownload();
-            if ((request.getParameter("modalExamIDHidden") != null))
-            {
-                String dowloadExamID = request.getParameter("modalExamIDHidden");
-            
-                if (download.download(dowloadExamID) == true)
-                {
-                    System.out.println("Success!");
-                    %><script>alert("Exam Successfully Downloaded - You find the downloaded exam in your downloads folder")</script><%
-                }
-                else
-                {
-                   System.out.println("Failure!");
-                }
-            }
-        %>
+   
     
        
     
