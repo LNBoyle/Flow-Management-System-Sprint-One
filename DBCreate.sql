@@ -252,6 +252,45 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table OldExams
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `OLDEXAMS`;
+
+CREATE TABLE `OLDEXAMS` (
+  `OldExamID` int(10) NOT NULL AUTO_INCREMENT,
+  `ExamID` int(10) NOT NULL,
+  `Title` varchar(255) NOT NULL,
+  `School` varchar(255) NOT NULL,
+  `ModuleCoordinator` varchar(255) NOT NULL,
+  `ModuleCode` varchar(12) NOT NULL,
+  `ExamType` varchar(12) NOT NULL,
+  `ExamPeriod` varchar(12) NOT NULL,
+  `ExamLevel` varchar(20) NOT NULL,
+  `Semester` varchar(1) NOT NULL,
+  `Year` int(4) NOT NULL,
+  `Status` varchar(20) NOT NULL,
+  `ExamPaper` longblob DEFAULT NULL,
+  `SolutionsPaper` longblob DEFAULT NULL,
+  `TimeStamp` varchar(20) NOT NULL,
+  PRIMARY KEY (`OldExamID`),
+  KEY `fk_OLDEXAMS_EXAM` (`ExamID`),
+  CONSTRAINT `fk_OLDEXAMS_EXAM1` FOREIGN KEY (`ExamID`) REFERENCES `EXAM` (`ExamID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `OLDEXAMS` WRITE;
+/*!40000 ALTER TABLE `OLDEXAMS` DISABLE KEYS */;
+INSERT INTO `OLDEXAMS` (`OldExamID`,`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`,`TimeStamp`)
+VALUES
+
+  (00000001,00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL,'28/01/2019 20:00:48'),
+  (00000002,00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL,'30/01/2019 21:00:00'),
+  (00000003,00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL,'25/01/2019 12:35:20');
+
+/*!40000 ALTER TABLE `OLDEXAMS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
