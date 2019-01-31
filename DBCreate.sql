@@ -303,4 +303,22 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-  
+ CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `18agileteam8`@`%` 
+    SQL SECURITY DEFINER
+VIEW `progressview` AS
+    SELECT 
+        `user`.`FirstName` AS `FirstName`,
+        `user`.`Surname` AS `Surname`,
+        `user`.`ExamSetter` AS `ExamSetter`,
+        `user`.`InternalModerator` AS `InternalModerator`,
+        `user`.`ExternalExaminer` AS `ExternalExaminer`,
+        `user`.`ExamVettingComittee` AS `ExamVettingComittee`,
+        `comment`.`CommentID` AS `CommentID`,
+        `comment`.`ExamID` AS `ExamID`,
+        `responce`.`Responce` AS `Responce`
+    FROM
+        ((`user`
+        JOIN `comment` ON ((`user`.`UserID` = `comment`.`UserID`)))
+        LEFT JOIN `responce` ON ((`comment`.`CommentID` = `responce`.`CommentID`)))
