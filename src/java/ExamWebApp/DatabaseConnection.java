@@ -442,33 +442,63 @@ public class DatabaseConnection {
         return null;
     }
     
-    //Function that returns all comments for a given exam
-    public String[] getAllExamComment(int examID) {
-        //Try block to add the repsonse to the comment
-        try {
-            stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
-
-            int rows = 0;
-            if (reslt.last()) {
-                rows = reslt.getRow();
-                reslt.beforeFirst();
-            }
-
-            String[] list = new String[rows];
-            int i = 0;
-            //return string from query
-            while (reslt.next()) {
-                list[i] = reslt.getString("Comment");
-                i++;
-            }
-            return list;
-        } //Catch block for errors with SQL
-        catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        return null;
-    }
+    public Boolean isResponseNeeded(int examID)		
+	    {		
+	        //Try block to add the repsonse to the comment		
+	        try		
+	        {		
+	            stmt = conn.createStatement();		
+	            reslt = stmt.executeQuery("SELECT CommentID FROM comment WHERE ExamID = " + examID + ";");		
+			
+	            //if record exists		
+	            if (reslt.next())		
+	            {		
+	                int commentID = reslt.getInt("CommentID");		
+	                reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");		
+	                		
+	                //if record exists		
+	                if (reslt.next())		
+	                {		
+	                    return true;   		
+	                }		
+	            }		
+	        }		
+	        //Catch block for errors with SQL		
+	        catch (SQLException e)		
+	        {		
+	            System.out.println("Error: " + e);		
+	        }		
+	        return false;    		
+	    }
+  
+	    //Function that returns all comments for a given exam
+	    public String[][] getAllExamComment(int examID) {
+	        //Try block to add the repsonse to the comment
+	        try {
+	            stmt = conn.createStatement();
+	            reslt = stmt.executeQuery("SELECT Comment, CommentTimeStamp  FROM comment WHERE ExamID = " + examID + ";");
+			
+	            int rows = 0;
+	            if (reslt.last()) {
+	                rows = reslt.getRow();
+	                reslt.beforeFirst();
+	            }
+			
+	            String[][] list = new String[rows][3];
+	            int i = 0;
+	            //return string from query
+	            while (reslt.next()) {
+	                list[i][0] = reslt.getString("Comment");
+	                list[i][1] = reslt.getString("CommentTimeStamp");		
+	                i++;
+	            }
+	            return list;
+	        } //Catch block for errors with SQL
+	        catch (SQLException e) {
+	            System.out.println("Error: " + e);
+	        }
+	        return null;
+	    }
   
     //Function gets all responses from an exam
     public String[][] getAllResponse(int examID) {

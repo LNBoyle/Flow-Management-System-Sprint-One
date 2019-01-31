@@ -1,11 +1,4 @@
-<%-- 
-    Document   : ViewExam
-    Created on : 24-Jan-2019, 15:41:41
-    Author     : Jordan
---%>
-
 <%@page import="java.util.Arrays"%>
-
 <%@page import="ExamWebApp.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%DatabaseConnection db = new DatabaseConnection();%>
@@ -38,13 +31,15 @@
         </div>
         
        <% 
-           String[][] comment = db.getExamList("Iain Murray");  
+           String[][] comment = db.getExamList(Integer.parseInt(LoginCheckClass.userID));
        %>
        <div>
             <table border="2">
                 <tr>
                     <td>Exam ID</td>
-                    <td>Title</td>
+                    <td>Module Code</td>
+                    <td>Exam Period</td>
+                    <td>Exam Level</td>
                     <td>Comment</td>
                 </tr>
                 <%
@@ -58,7 +53,7 @@
                                 out.println(comment[i][0]); 
                                 %> 
                             </td>
-                            <td>
+                            <td> 
                             <% 
                                 out.println(comment[i][1]); 
                                 %> 
@@ -68,11 +63,22 @@
                                 out.println(comment[i][2]); 
                                 %> 
                             </td>
+                            <td>
+                            <% 
+                                out.println(comment[i][3]); 
+                                %> 
+                            </td>
                             
                             <td>
-                                <form action="commentRespond.jsp" method="POST">
-                                    <button type = "submit" name = "respondComment" value =<% out.print(comment[i][0]); %>> Respond</button>
-                                 </form> 
+                                <%
+                                    if(db.isResponseNeeded(Integer.parseInt(comment[i][0])))
+                                    {
+                                        out.print("<form action='commentRespond.jsp' method='POST'>"
+                                        + "<button type = 'submit' name = 'respondComment' value = " + comment[i][0] + " > Respond</button>"
+                                        + "</form>");
+                                    }
+                                
+                                %>
                             </td>
                             
                             <td>
