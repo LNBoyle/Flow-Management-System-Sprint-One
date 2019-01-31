@@ -167,11 +167,6 @@
         
         
         %>
-        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-          
-        <form style=float:right;padding:100px; >
-                <button  id="download" class="btn btn-default" type="submit" name="submit" value="submit"><i></i>Download</button>
-        </form>
-        
+        <br>
     </body>
 </html>
