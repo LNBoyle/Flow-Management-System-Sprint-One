@@ -51,6 +51,7 @@
         <div>
                 <table border="2">
                     <tr>
+                        <td>Comment ID</td>
                         <td>Exam ID</td>
                         <td>Comment</td>
                         <td>Time Stamp</td>
