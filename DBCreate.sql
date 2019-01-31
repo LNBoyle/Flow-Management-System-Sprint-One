@@ -104,10 +104,11 @@ CREATE TABLE `ASSIGNEDEXAMS` (
   `ExamPeriod` varchar(12) NOT NULL,
   `ExamLevel` varchar(20) NOT NULL,
   `ExamSetter` int(10) NOT NULL,
-  `InternalModerator` int(10) NOT NULL,
-  `ExternalExaminer` int(10) NOT NULL,
-  `ExamVettingComittee` int(10) NOT NULL,
+  `InternalModerator` int(10),
+  `ExternalExaminer` int(10),
+  `ExamVettingComittee` int(10),
   PRIMARY KEY (`AssignedExamID`),
+  KEY `pk_AssignedExamID` (`AssignedExamID`),
   KEY `fk_EXAMSET` (`ExamSetter`),
   KEY `fk_INTERNALMOD` (`InternalModerator`),
   KEY `fk_EXTERNALEXAM` (`ExternalExaminer`),
@@ -115,7 +116,8 @@ CREATE TABLE `ASSIGNEDEXAMS` (
   CONSTRAINT `fk_EXAMSET` FOREIGN KEY (`ExamSetter`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_INTERNALMOD` FOREIGN KEY (`InternalModerator`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_EXTERNALEXAM` FOREIGN KEY (`ExternalExaminer`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_EXAMVETTING` FOREIGN KEY (`ExamVettingComittee`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_EXAMVETTING` FOREIGN KEY (`ExamVettingComittee`) REFERENCES `USER` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pk_AssignedExamID` FOREIGN KEY (`AssignedExamID`) REFERENCES `EXAM` (`ExamID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -125,7 +127,9 @@ INSERT INTO `ASSIGNEDEXAMS` (`AssignedExamID`,`ModuleCode`,`ExamPeriod`,`ExamLev
 VALUES
   (1,'AC310001','Main','Undergraduate',00010007,00010001,00010003,00010004),
   (2,'AC330001','Main','Undergraduate',00010007,00010001,00010003,00010004),
-  (3,'AC320001','Main','Postgraduate',00010007,00010001,00010003,00010004);
+  (3,'AC320001','Main','Postgraduate',00010007,00010001,00010003,00010004),
+  (4,'AC350001','Resit','Postgraduate',00010007,00010001,00010003,00010004),
+  (5,'AC380001','Main','Undergraduate',00010007,00010001,00010003,00010004);
 
 /*!40000 ALTER TABLE `ASSIGNEDEXAMS` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -149,19 +153,21 @@ CREATE TABLE `EXAM` (
   `Status` varchar(20) NOT NULL,
   `ExamPaper` longblob DEFAULT NULL,
   `SolutionsPaper` longblob DEFAULT NULL,
+  `ExamPaperFileExtension` varchar(5) DEFAULT NULL,
+  `SolutionsPaperFileExtension` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`ExamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `EXAM` WRITE;
 /*!40000 ALTER TABLE `EXAM` DISABLE KEYS */;
-INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`)
+INSERT INTO `EXAM` (`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`,`ExamPaperFileExtension`,`SolutionsPaperFileExtension`)
 VALUES
 
-  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL),
-  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL),
-  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2','2019','Completed',NULL,NULL),
-  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','1','2020','Completed',NULL,NULL),
-  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL);
+  (00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL,NULL,NULL),
+  (00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL,NULL,NULL),
+  (00000003,'Multi Paradigm','Science and Engineering','Iain Murray','AC320001','Online','Main','Postgraduate','2','2019','In Progress',NULL,NULL,NULL,NULL),
+  (00000004,'Web Authoring','Science and Engineering','Iain Murray','AC350001','Paper','Resit','Postgraduate','1','2020','Completed',NULL,NULL,NULL,NULL),
+  (00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `EXAM` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -190,7 +196,10 @@ LOCK TABLES `COMMENT` WRITE;
 INSERT INTO `COMMENT` (`CommentID`,`ExamID`,`UserID`,`Comment`,`CommentTimeStamp`)
 VALUES
 
-  (1,00000001,00010001,'Looks Good!','28/01/2019 18:00');
+  (1,00000001,00010001,'Looks Good!','28/01/2019 18:00'),
+  (2,00000002,00010001,'Needs Some Improvement','29/01/2019 17:24'),
+  (3,00000001,00010004,'Looks all fine','29/01/2019 17:44'),
+  (4,00000001,00010003,'Looks bad','30/01/2019 17:54');
   
 
 /*!40000 ALTER TABLE `COMMENT` ENABLE KEYS */;
@@ -246,6 +255,47 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table OldExams
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `OLDEXAMS`;
+
+CREATE TABLE `OLDEXAMS` (
+  `OldExamID` int(10) NOT NULL AUTO_INCREMENT,
+  `ExamID` int(10) NOT NULL,
+  `Title` varchar(255) NOT NULL,
+  `School` varchar(255) NOT NULL,
+  `ModuleCoordinator` varchar(255) NOT NULL,
+  `ModuleCode` varchar(12) NOT NULL,
+  `ExamType` varchar(12) NOT NULL,
+  `ExamPeriod` varchar(12) NOT NULL,
+  `ExamLevel` varchar(20) NOT NULL,
+  `Semester` varchar(1) NOT NULL,
+  `Year` int(4) NOT NULL,
+  `Status` varchar(20) NOT NULL,
+  `ExamPaper` longblob DEFAULT NULL,
+  `SolutionsPaper` longblob DEFAULT NULL,
+  `TimeStamp` varchar(20) NOT NULL,
+  `ExamPaperFileExtension` varchar(5) DEFAULT NULL,
+  `SolutionsPaperFileExtension` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`OldExamID`),
+  KEY `fk_OLDEXAMS_EXAM` (`ExamID`),
+  CONSTRAINT `fk_OLDEXAMS_EXAM1` FOREIGN KEY (`ExamID`) REFERENCES `EXAM` (`ExamID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `OLDEXAMS` WRITE;
+/*!40000 ALTER TABLE `OLDEXAMS` DISABLE KEYS */;
+INSERT INTO `OLDEXAMS` (`OldExamID`,`ExamID`,`Title`,`School`,`ModuleCoordinator`,`ModuleCode`,`ExamType`,`ExamPeriod`,`ExamLevel`,`Semester`,`Year`,`Status`,`ExamPaper`,`SolutionsPaper`,`TimeStamp`,`ExamPaperFileExtension`,`SolutionsPaperFileExtension`)
+VALUES
+
+  (00000001,00000001,'Agile Software Engineering','Science and Engineering','Iain Murray','AC310001','Online','Main','Undergraduate','2','2019','New',NULL,NULL,'28/01/2019 20:00:48',NULL,NULL),
+  (00000002,00000002,'AI and Algorithims','Science and Engineering','Iain Murray','AC330001','Online','Main','Undergraduate','1','2020','In Progress',NULL,NULL,'30/01/2019 21:00:00',NULL,NULL),
+  (00000003,00000005,'Data Structures','Science and Engineering','Iain Murray','AC380001','Paper','Main','Undergraduate','2','2019','Completed',NULL,NULL,'25/01/2019 12:35:20',NULL,NULL);
+
+/*!40000 ALTER TABLE `OLDEXAMS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -253,4 +303,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
- 
+  

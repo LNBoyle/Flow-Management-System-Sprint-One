@@ -38,7 +38,7 @@
         </div>
         
        <% 
-           String[][] comment = db.getExamList("Iain Murray");      
+           String[][] comment = db.getExamList("Iain Murray");  
        %>
        <div>
             <table border="2">
@@ -72,6 +72,12 @@
                             <td>
                                 <form action="commentRespond.jsp" method="POST">
                                     <button type = "submit" name = "respondComment" value =<% out.print(comment[i][0]); %>> Respond</button>
+                                 </form> 
+                            </td>
+                            
+                            <td>
+                                <form action="ListComments.jsp" method="POST">
+                                    <button type = "submit" name = "ListComments" value =<% out.print(comment[i][0]); %>> All Comments</button>
                                  </form> 
                             </td>
                         </tr>

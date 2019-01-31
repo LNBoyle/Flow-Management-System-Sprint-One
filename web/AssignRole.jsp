@@ -26,17 +26,17 @@
  
   <br>  
   <input type="text" name="userid" value=""  placeholder="Enter A User ID">
-    <br> 
+    
   
   
-  
+  <br>
   <input type="checkbox" name="ExamSetter" value=""> Exam Setter<br>
   <input type="checkbox" name="InternalModerator" value="">Internal Moderator<br>
   <input type="checkbox" name="ExternalExaminer" value=""> External Examiner<br>
   <input type="checkbox" name="ExamVettingComittee" value="">Exam Vetting Comittee<br>
   <input type="checkbox" name="SchoolOffice" value="">School Office<br>
   <input type="checkbox" name="LocalExamOfficer" value="">Local Exam Officer<br>
-   <br> 
+  <br> 
 
   
 
@@ -51,12 +51,12 @@
      if (request.getParameter("Assign") != null)
      {
         String userID;
-        Boolean esCheck = false;
-        Boolean imCheck = false;
-        Boolean emCheck = false;
-        Boolean evcCheck = false;
-        Boolean soCheck = false;
-        Boolean leoCheck = false;
+        int esCheck = 0;
+        int imCheck = 0;
+        int emCheck = 0;
+        int evcCheck = 0;
+        int soCheck = 0;
+        int leoCheck = 0;
         
         
         
@@ -67,41 +67,44 @@
          
          if (request.getParameter("ExamSetter") != null)
          {
-             esCheck = true;
+             esCheck = 1;
              out.print(esCheck);
          }
          
          if (request.getParameter("InternalModerator") != null)
          {
-             imCheck = true;
+             imCheck = 1;
              out.print(imCheck);
          }
          
          if (request.getParameter("ExternalExaminer") != null)
          {
-             emCheck = true;
+             emCheck = 1;
              out.print(emCheck);
          }
          
          if (request.getParameter("ExamVettingComittee") != null)
          {
-             evcCheck = true;
+             evcCheck = 1;
              out.print(evcCheck);
          }
          
          
          if (request.getParameter("SchoolOffice") != null)
          {
-             soCheck = true;
+             soCheck = 1;
              out.print(soCheck);
          }
          
          if (request.getParameter("LocalExamOfficer") != null)
          {
-             leoCheck = true;
+             leoCheck = 1;
              out.print(leoCheck);
          }
          
+         
+         
+         db.AssignRole(userID,esCheck, imCheck, emCheck, evcCheck, soCheck, leoCheck);
      }
    
  

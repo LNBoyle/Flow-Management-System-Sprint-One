@@ -63,6 +63,12 @@ input[type=submit]:hover {
     border-color: white;
 }
 
+#mainBody{
+    width: 100%;
+    height: 80%;
+    display: inline-block;
+}
+
 /*Table*/
 table{
     position:absolute;
@@ -70,21 +76,66 @@ table{
     margin-left: 5%;
 }
 
-table, th, td{
-    border: 2px solid grey;
-    border-collapse: collapse;
-    min-height: 100px;
+.table2title{
+    position:relative;
+    top: 80px;
 }
 
+.oldexams{
+    position:relative;
+    top: 80px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+table, th, td{
+    border: none;
+
+    /*min-height: 100px;*/
+}
+
+th{
+    background-color: #4365e2;
+    color: white;
+    height: 50px;
+
+}
+td{
+   
+    padding: 15px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
 .clickable-row:hover {
-    border:2.1px solid #4365e2;
+    background: rgba(67, 101, 226, 0.35);
     cursor: pointer;
 }
 
 .headerTable{
-	padding-left: 3px;
+	padding-left: 10px;
 	padding-top: 1px;
 }
+
+#tableDiv{
+left: 0;
+}
+
+#pdfDiv{
+    right: 0;
+}
+.split{
+    margin-top: 125px;
+height: inherit;
+  width: 50%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;  
+}
+
+
 
 /*Modal*/
 #modalHeader{
