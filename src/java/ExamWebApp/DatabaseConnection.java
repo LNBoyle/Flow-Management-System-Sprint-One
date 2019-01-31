@@ -378,13 +378,46 @@ public class DatabaseConnection {
         return null;
     }
     
+    public String[][] getAllResponse(int examID) {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT responce.CommentID, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID  WHERE exam.ExamID = " + examID + ";");
+        
+            int rows = 0;
+            
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            String[][]list1 = new String[rows][3];
+            int i = 0;
+            
+            while (reslt.next()) {
+                list1[i][0] = reslt.getString("CommentID");
+                list1[i][1] = reslt.getString("Responce");
+                list1[i][2] = reslt.getString("ResponceTimeStamp");
+                i++;
+            }
+            if (list1 != null){
+                return list1;
+            } else {
+                return null;
+            }
+            
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
     //Function that returns all comments for a given exam
     public String[][] getAllExamComment(int examID) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
             reslt = stmt.executeQuery("SELECT * FROM comment WHERE examID = " + examID + ";");
-
+            
             int rows = 0;
             if (reslt.last()) {
                 rows = reslt.getRow();
