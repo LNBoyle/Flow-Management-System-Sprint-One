@@ -24,7 +24,10 @@
     <body>
         <div id="header">
             <nav class="navbar navbar-light">
-                    <span class="navbar-brand">Welcome..</span>
+                     <% 
+                    String user = db.getName(LoginCheckClass.userID);
+                    out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
+                %>
             </nav>
 
             <a id="back" href="SchoolOfficeDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
@@ -54,21 +57,23 @@
             <th class="headerTable">Exam Level</th>
             <th class="headerTable">Semester</th>
             <th class="headerTable">Year</th>
+             <th class="headerTable">Select</th>
         </tr>
         <%
         for(int i=0;i<db.CompletedRows;i++){
         %>
-            <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
-                <td hidden><%out.print(completedExams[i][0]);%></td>
-                <td><%out.print(completedExams[i][1]);%></td>
-                <td><%out.print(completedExams[i][2]);%></td>
-                <td hidden><%out.print(completedExams[i][3]);%></td>
-                <td><%out.print(completedExams[i][4]);%></td>
-                <td><%out.print(completedExams[i][5]);%></td>
-                <td><%out.print(completedExams[i][6]);%></td>
-                <td><%out.print(completedExams[i][7]);%></td>
-                <td><%out.print(completedExams[i][8]);%></td>
-                <td><%out.print(completedExams[i][9]);%></td>
+            <tr class='clickable-row' onclick="alerting(this)">
+                <td hidden data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][0]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][1]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][2]);%></td>
+                <td hidden data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][3]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][4]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][5]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][6]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][7]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][8]);%></td>
+                <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][9]);%></td>
+                <td><input type="checkbox" name="selectexam" ></td>
             </tr>
         <%
         }
@@ -110,7 +115,6 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>

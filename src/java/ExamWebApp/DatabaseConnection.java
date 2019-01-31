@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -46,9 +44,6 @@ public class DatabaseConnection {
         }
     }
 
-    
-    
-    
   
     public Connection getConn() {
         return conn;
@@ -93,29 +88,28 @@ public class DatabaseConnection {
     
     public boolean EditExam(int ExamID, String Title, String School,String ModuleCoordinator,String ModuleCode,String ExamType,String ExamPeriod,String ExamLevel,String Semester,int Year, String DateCreated, String Status,int ExamSetter, int InternalModerator, int ExternalExaminer, int ExamVettingComittee )
     {
-        
+        DatabaseConnection db = new DatabaseConnection();
      //Try block to add the repsonse to the comment
         try {
-            stmt = conn.createStatement();
-            int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "', Status = '" + Status + "' WHERE ExamID = '" + ExamID + "';");
-            int success1 = stmt.executeUpdate("UPDATE assignedexams SET  ModuleCode = '"+ ModuleCode + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +  "' WHERE AssignedExamID = '" + ExamID + "';");     
-            //return true if success, false otherwise
-            if (success + success1  != 2) 
-            
-            {
+            if(db.createOldVersion(ExamID)){
+                stmt = conn.createStatement();
+                int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "', Status = '" + Status + "' WHERE ExamID = '" + ExamID + "';");
+                int success1 = stmt.executeUpdate("UPDATE assignedexams SET  ModuleCode = '"+ ModuleCode + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +  "' WHERE AssignedExamID = '" + ExamID + "';");     
+                //return true if success, false otherwise
+                if (success + success1  != 2) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }else{
+                System.out.println("Error creating old exam version");
                 return false;
-            } else {
-                return true;
-            }
+            } 
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
         }
         return false;
-    
-     
-        
-        
     }
     
     
@@ -192,7 +186,7 @@ public class DatabaseConnection {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam;");
+            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam ORDER BY Semester, examID ASC;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -338,7 +332,7 @@ public class DatabaseConnection {
     public String[][] getAllInternalMods() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -370,7 +364,7 @@ public class DatabaseConnection {
     public String[][] getAllExternalExam() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -402,7 +396,7 @@ public class DatabaseConnection {
     public String[][] getAllExamVets() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -469,6 +463,40 @@ public class DatabaseConnection {
                 i++;
             }
             return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+  
+    //Function gets all responses from an exam
+    public String[][] getAllResponse(int examID) {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT responce.CommentID, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID  WHERE exam.ExamID = " + examID + ";");
+        
+            int rows = 0;
+            
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            String[][]list1 = new String[rows][3];
+            int i = 0;
+            
+            while (reslt.next()) {
+                list1[i][0] = reslt.getString("CommentID");
+                list1[i][1] = reslt.getString("Responce");
+                list1[i][2] = reslt.getString("ResponceTimeStamp");
+                i++;
+            }
+            if (list1 != null){
+                return list1;
+            } else {
+                return null;
+            }
+            
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
@@ -600,7 +628,7 @@ public class DatabaseConnection {
     public String[][] getCompletedExams() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ;");
+            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ORDER BY Semester, Status;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -662,7 +690,7 @@ public class DatabaseConnection {
     public String[][] getExamList(String ModuleCoordinator) {
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
+            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ORDER BY ExamID;");
 
             int row = 0;
             if (rs.last()) {
@@ -966,7 +994,23 @@ public class DatabaseConnection {
     }   
     
     public Blob getExamPaper(String id){
-        
+      try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamPaper FROM exam WHERE ExamID = '" + id + "' ;");
+
+            Blob exam = null;
+
+            reslt.next();
+            exam = reslt.getBlob("ExamPaper");
+
+            if (exam != null) {
+                return exam;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
         return null;
     }
     
@@ -1029,5 +1073,3 @@ public class DatabaseConnection {
     }    
     
 }
-
-

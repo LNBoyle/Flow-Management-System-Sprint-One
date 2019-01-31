@@ -7,6 +7,10 @@
  */
 
 
+
+
+
+
 var rowSelected = null;
 
 function alerting(x){
@@ -14,7 +18,10 @@ function alerting(x){
 	document.getElementById("modalExamTitle").innerHTML ="Exam Title: " + x.cells[1].innerHTML;
 	document.getElementById("modalModuleCode").innerHTML ="Module Code: " + x.cells[2].innerHTML;
 	document.getElementById("modalModuleCoordinator").innerHTML ="Module Coordinator: " + x.cells[3].innerHTML;
-	document.getElementById("pdf").data = x.cells[6].innerHTML;
+   
+   
+	document.getElementById("pdf").data = "data:application/pdf;base64," + x.cells[6].innerHTML;
+        document.getElementById("frame").src = "data:application/pdf;base64," + x.cells[6].innerHTML;
         
         document.getElementById('ExamIDHidden').value = x.cells[0].innerHTML;
         document.getElementById('modalExamIDHidden').value = x.cells[0].innerHTML;

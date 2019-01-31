@@ -15,7 +15,7 @@
         
         <%
             String strid = request.getParameter("ListComments");
-           int id = Integer.parseInt(strid);
+            int id = Integer.parseInt(strid);
         %>
         
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,7 +44,8 @@
         </form>
 
         <% 
-           String[][] comment = db.getAllExamComment(id);      
+           String[][] comment = db.getAllExamComment(id);  
+           String[][] comments = db.getAllResponse(id);
        %>
        
         <div>
@@ -54,39 +55,61 @@
                         <td>Exam ID</td>
                         <td>Comment</td>
                         <td>Time Stamp</td>
+                        <td>Response</td>
+                        <td>Response Time Stamp</td>
                     </tr>
                     <%
                     int i = 0;
-                    for(i=0; i < comment.length; i++)
+                    int j = 0;
+                    for(j=0; j < comments.length; j++)
                     {
-                        %>
-                    <tr>
-                        <td>
-                            <% 
-                                    out.println(comment[i][0]); 
-                                    %> 
-                        </td>
-                        <td>
-                            <% 
-                                    out.println(comment[i][1]); 
-                                    %> 
-                        </td>
-                        <td>
-                            <% 
-                                    out.println(comment[i][3]); 
-                                    %> 
-                        </td>
-                        <td>
-                            <% 
-                                    out.println(comment[i][4]); 
-                                    %> 
-                        </td>
-                    </tr>
-                    <%
+                        for (i=0; i < comment.length; i++)
+                        {
+                            %>
+                            <tr>
+                                <td>
+                                    <% 
+                                            out.println(comment[i][0]); 
+                                            %> 
+                                </td>
+                                <td>
+                                    <% 
+                                            out.println(comment[i][1]); 
+                                            %> 
+                                </td>
+                                <td>
+                                    <% 
+                                            out.println(comment[i][3]); 
+                                            %> 
+                                </td>
+                                <td>
+                                    <% 
+                                            out.println(comment[i][4]); 
+                                            %> 
+                                </td>
+                                <td>
+                                    <% 
+                                        if (comment[i][0].equals(comments[j][0])) {
+                                            out.println(comments[j][1]); 
+                                        }
+                                            %> 
+                                </td>
+                                <td>
+                                    <% 
+                                        if (comment[i][0].equals(comments[j][0])) {
+                                            out.println(comments[j][2]); 
+                                        }
+                                            %> 
+                                </td>
+                            </tr>
+                        <%
+                            }
                         }
                             %>
 
                 </table>
         </div>
+                            
+        
     </body>
 </html>

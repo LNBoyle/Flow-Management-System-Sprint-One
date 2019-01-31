@@ -28,7 +28,10 @@
 
         <div id="header">
             <nav class="navbar navbar-light">
-                <span class="navbar-brand">Welcome..</span>
+                  <% 
+                    String user = db.getName(LoginCheckClass.userID);
+                    out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
+                %>
             </nav>
             <a id="back" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
             <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
