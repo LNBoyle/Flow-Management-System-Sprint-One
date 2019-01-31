@@ -110,6 +110,53 @@ public class DatabaseConnectionTest {
         }
     }
     
+    
+    @Test
+    public void TestEditExam()
+    {
+      System.out.println("edit");
+        int AssignedExamID = 0;
+        int ExamID = 6;
+        String Title = "Test Title";
+        String School = "School of hard knocks";
+        String ModuleCoordinator = "Abbas Lawal";
+        String ModuleCode = "12345667";
+        String ExamType = "TestOnline";
+        String ExamPeriod = "Test";
+        String ExamLevel = "TestLevel";
+        String Semester = "1";
+        int Year = 2019;
+        String DateCreated = "2019";
+        String Status = "Complete";
+        int ExamSetter = 10007;
+        int InternalModerator = 10007;
+        int ExternalExaminer = 10007;
+        int ExamVettingComittee = 10007;
+        
+        
+        DatabaseConnection instance = new DatabaseConnection();
+        boolean expResult = true;
+        
+        boolean result = instance.EditExam(ExamID, Title, School,ModuleCoordinator,ModuleCode,ExamType,ExamPeriod,ExamLevel,Semester, Year, DateCreated,Status,ExamSetter, InternalModerator,  ExternalExaminer, ExamVettingComittee);
+        assertEquals(expResult, result);
+        
+        
+        if (result != true)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Test of getAllUnassignedExams method, of class DatabaseConnection.
      */
@@ -137,51 +184,7 @@ public class DatabaseConnectionTest {
         {
             fail("Incorrect exam ID. Check database is reset.");
         }
-    }    
-    
-    /**
-     * Test of allocateExams method, of class DatabaseConnection.
-     */
-    @Test
-    public void testAllocateExams() {
-        System.out.println("allocateExams");
-        DatabaseConnection db = new DatabaseConnection();
-        String[] examID = {"5"};
-        int setID = 10007;
-        int intID = 10001;
-        int extID = 10003;
-        int vetID = 10004;
-      
-        Connection conn = null;
-        Statement stmt = null;
-        String password = "8326.at8.6238";
-        String username = "18agileteam8";
-        String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
-        
-        try {
-            conn = DriverManager.getConnection(address, username, password);
-        } catch (SQLException exc) {
-            System.out.println("Error: " + exc);
-        }
-        
-        if (!db.allocateExams(examID, setID, intID, extID, vetID))
-        {
-            fail("Allocation failed. Check SQL and that database is reset.");
-        }
-        //delete what was just added to the database.
-        else
-        {
-            try
-            {
-                stmt = conn.createStatement();
-                stmt.executeUpdate("DELETE FROM assignedexams WHERE AssignedExamID = " + examID[0] + ";");
-            }
-            catch (SQLException e)
-            {    
-                System.out.println("Error: " + e);
-            }
-        }
-    }        
+    }
 
     /**
      * Test of getAllSetters method, of class DatabaseConnection.
@@ -399,7 +402,15 @@ public class DatabaseConnectionTest {
         String Role = "tester";
         String Email = "test@test.test";
         String Password = "test";
-
+        boolean result = false;
+        DatabaseConnection instance = new DatabaseConnection();
+        Boolean expResult = true; 
+        
+        if (expResult != true)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
     }
 
     /**
@@ -467,6 +478,62 @@ public class DatabaseConnectionTest {
         
         boolean result = tester.checkForExternalExam(examID, userID);
         if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+    /**
+     * Test of CreateOldVersion method, of class DatabaseConnection.
+     */
+    @Test
+    public void testCreateOldVersionTrue() {
+        System.out.println("CreateOldVersion");
+        int examID = 4;
+        
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = true;
+        
+        boolean result = tester.createOldVersion(examID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+    /**
+     * Test of CreateOldVersion method, of class DatabaseConnection.
+     */
+    @Test
+    public void testCreateOldVersionFalse() {
+        System.out.println("CreateOldVersion");
+        int examID = 9999;
+        
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = false;
+        
+        boolean result = tester.createOldVersion(examID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+    /**
+     * Test of CreateOldVersion method, of class DatabaseConnection.
+     */
+    @Test
+    public void testGetOldExams() {
+        System.out.println("getOldExams");
+        
+        DatabaseConnection tester = new DatabaseConnection();
+        
+        String[][] result = tester.getOldExams();
+        
+        if (result == null)
         {
         // TODO review the generated test code and remove the default call to fail.
             fail("The test case is a prototype.");

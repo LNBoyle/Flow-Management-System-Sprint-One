@@ -1,5 +1,6 @@
 
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
+import java.lang.System;
 /**
  *
  *
@@ -24,6 +26,7 @@ public class DatabaseConnection {
     public int CompletedRows = 0;
     public int UserRows = 0;
     public int CompletedRowss = 0;
+    public int CompletedRowsss = 0;
 
     public DatabaseConnection() {
         String password = "8326.at8.6238";
@@ -44,6 +47,10 @@ public class DatabaseConnection {
         }
     }
 
+    
+    
+    
+  
     public Connection getConn() {
         return conn;
     }
@@ -82,6 +89,32 @@ public class DatabaseConnection {
         }
         return null;
 
+    }
+    
+    
+    public boolean EditExam(int ExamID, String Title, String School,String ModuleCoordinator,String ModuleCode,String ExamType,String ExamPeriod,String ExamLevel,String Semester,int Year, String DateCreated, String Status,int ExamSetter, int InternalModerator, int ExternalExaminer, int ExamVettingComittee )
+    {
+        
+     //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "', Status = '" + Status + "' WHERE ExamID = '" + ExamID + "';");
+            int success1 = stmt.executeUpdate("UPDATE assignedexams SET  ModuleCode = '"+ ModuleCode + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +  "' WHERE AssignedExamID = '" + ExamID + "';");     
+            //return true if success, false otherwise
+            if (success + success1  != 2) {
+                return false;
+            } else {
+                return true;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    
+     
+        
+        
     }
     
     
@@ -153,7 +186,40 @@ public class DatabaseConnection {
         return null;
     }
 
-    //Function that returns all the exams that are not yet .
+    //Function that returns all the exams
+    public String[][] getAllExams() {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+
+            String[][] list = new String[rows][6];
+            int i = 0;
+            //return string from query
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("ModuleCode");
+                list[i][1] = reslt.getString("examID");
+                list[i][2] = reslt.getString("ExamPeriod");
+                list[i][3] = reslt.getString("ExamLevel");
+                list[i][4] = reslt.getString("Semester");
+                list[i][5] = reslt.getString("Year");
+                i++;
+            }
+            return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }    
+    
+    //Function that returns all the exams that are not yet assigned.
     public String[][] getAllUnassignedExams() {
         //Try block to add the repsonse to the comment
         try {
@@ -182,39 +248,42 @@ public class DatabaseConnection {
         return null;
     }
     
-    public boolean allocateExams(String[] examIDs, int setter, int internal, int external, int vet)
+    public boolean createAssignedExam(int examID, String moduleCode, String examPeriod, String examLevel, int examSetter)
     {
-        String[] examModule = new String[examIDs.length];
-        String[] examPeriod = new String[examIDs.length];
-        String[] examLevel = new String[examIDs.length];
-        String[] list = new String[3];
+        int success = 0;
+                   
+        try
+        {
+            stmt = conn.createStatement();            
+            System.out.println("INSERT INTO assignedexams (AssignedExamID, ModuleCode, ExamPeriod, ExamLevel, ExamSetter), VALUES (" + examID + ", '" + moduleCode + "', '" + examPeriod + "', '" + examLevel + "', " + examSetter +");");
+            success = stmt.executeUpdate("INSERT INTO assignedexams (AssignedExamID, ModuleCode, ExamPeriod, ExamLevel, ExamSetter) VALUES (" + examID + ", '" + moduleCode + "', '" + examPeriod + "', '" + examLevel + "', " + examSetter +");");
+        }
+        catch (SQLException e)
+        {    
+            System.out.println("Error: " + e);
+            return false;
+        }
+
+        if (success == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public boolean allocateExams(String[] examIDs, int internal, int external, int vet)
+    {
         int success = 0;
         
         for (int i = 0; i < examIDs.length; i++)
-        {
+        {            
             try
             {
                 stmt = conn.createStatement();
-                reslt = stmt.executeQuery("SELECT ModuleCode, ExamPeriod, ExamLevel FROM exam WHERE examID = " + examIDs[i] + ";");
-                
-                //return string from query
-                while (reslt.next())
-                {
-                    list[0] = reslt.getString("ModuleCode");
-                    list[1] = reslt.getString("ExamPeriod");
-                    list[2] = reslt.getString("ExamLevel");
-                }
-            }
-            catch (SQLException e)
-            {    
-                System.out.println("Error: " + e);
-                return false;
-            }
-            
-            try
-            {
-                stmt = conn.createStatement();
-                success = stmt.executeUpdate("INSERT INTO assignedexams VALUES (" + examIDs[i] + ", '" + list[0] + "', '" + list[1] + "', '" + list[2] + "', " + setter + ", " + internal + ", " + external + ", " + vet + ");");
+                success = stmt.executeUpdate("UPDATE assignedexams SET InternalModerator = " + internal + ", ExternalExaminer = " + external + ", ExamVettingComittee = " + vet + " WHERE AssignedExamID = " + examIDs[i] + ";");
             }
             catch (SQLException e)
             {    
@@ -378,6 +447,35 @@ public class DatabaseConnection {
         return null;
     }
     
+    //Function that returns all comments for a given exam
+    public String[] getAllExamComment(int examID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+
+            String[] list = new String[rows];
+            int i = 0;
+            //return string from query
+            while (reslt.next()) {
+                list[i] = reslt.getString("Comment");
+                i++;
+            }
+            return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+  
+    //Function gets all responses from an exam
     public String[][] getAllResponse(int examID) {
         try {
             stmt = conn.createStatement();
@@ -404,42 +502,6 @@ public class DatabaseConnection {
                 return null;
             }
             
-        } //Catch block for errors with SQL
-        catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        return null;
-    }
-    
-    //Function that returns all comments for a given exam
-    public String[][] getAllExamComment(int examID) {
-        //Try block to add the repsonse to the comment
-        try {
-            stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT * FROM comment WHERE examID = " + examID + ";");
-            
-            int rows = 0;
-            if (reslt.last()) {
-                rows = reslt.getRow();
-                reslt.beforeFirst();
-            }
-
-            String[][] list = new String[rows][6];
-            int i = 0;
-            //return string from query
-            while (reslt.next()) {
-                list[i][0] = reslt.getString("CommentID");
-                list[i][1] = reslt.getString("ExamID");
-                list[i][2] = reslt.getString("UserID");
-                list[i][3] = reslt.getString("Comment");
-                list[i][4] = reslt.getString("CommentTimeStamp");
-                i++;
-            }
-            if (list != null){
-                return list;
-            } else {
-                return null;
-            }
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
@@ -707,7 +769,7 @@ public class DatabaseConnection {
                 commentCheckResult.beforeFirst();
             }
             CompletedRowss = row;
-            String[][] staffExams = new String[row][6];
+            String[][] staffExams = new String[row][7];
             int j = 0;
             while (rs.next()) {
                 switch (role) {
@@ -757,7 +819,7 @@ public class DatabaseConnection {
                         }else{
                             staffExams[j][5] = "Not Assigned";
                         }
-                      
+                     
                         break;
                     }
                     case "External Examiner": {
@@ -915,5 +977,89 @@ public class DatabaseConnection {
         return null;
     }
 
+    public String getName(String id){
+      try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName FROM user WHERE UserID = '" + id + "' ;");
+
+            String name = null;
+
+            reslt.next();
+            name = reslt.getString("FirstName");
+
+            if (name != null) {
+                return name;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        return null;
+    }   
+    
+    public Blob getExamPaper(String id){
+        
+        return null;
+    }
+    
+    public boolean createOldVersion(int examID){
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat (" dd/MM/yyyy hh:mm:ss");
+        String timeStamp = ft.format(dNow);
+      try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("Insert INTO oldexams (oldexams.ExamID, oldexams.Title, oldexams.School, oldexams.ModuleCoordinator, oldexams.ModuleCode, oldexams.ExamType, oldexams.ExamPeriod, oldexams.ExamLevel,  oldexams.Semester, oldexams.Year, oldexams.Status, oldexams.ExamPaper, oldexams.SolutionsPaper, oldexams.TimeStamp) (SELECT exam.ExamID, exam.Title, exam.School, exam.ModuleCoordinator, exam.ModuleCode, exam.ExamType, exam.ExamPeriod, exam.ExamLevel,  exam.Semester, exam.Year, exam.Status, exam.ExamPaper, exam.SolutionsPaper, '" + timeStamp + "' FROM exam WHERE exam.examID = " + examID +" );");
+
+            if(success == 1){
+                return true;
+            }else{
+                System.out.println("Exam Does Not Exist");
+                return false;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }        
+        return false;
+    }
+  
+    public String[][] getOldExams() {
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT oldexams.ExamID,oldexams.TimeStamp,oldexams.Title,oldexams.School,oldexams.ModuleCoordinator,oldexams.ModuleCode,oldexams.ExamType,oldexams.ExamPeriod,oldexams.ExamLevel,oldexams.Semester,oldexams.Year FROM oldexams INNER JOIN assignedexams ON oldexams.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = '" + LoginCheckClass.userID + "' ORDER BY `ExamID` ASC, `TimeStamp` DESC ;");
+
+            int row = 0;
+            if (rs.last()) {
+                row = rs.getRow();
+                rs.beforeFirst();
+            }
+            CompletedRowsss = row;
+            String[][] oldExams = new String[row][11];
+            int j = 0;
+            while (rs.next()) {
+                oldExams[j][0] = rs.getString("ExamID");
+                oldExams[j][1] = rs.getString("TimeStamp");
+                oldExams[j][2] = rs.getString("Title");
+                oldExams[j][3] = rs.getString("School");
+                oldExams[j][4] = rs.getString("ModuleCoordinator");
+                oldExams[j][5] = rs.getString("ModuleCode");
+                oldExams[j][6] = rs.getString("ExamType");
+                oldExams[j][7] = rs.getString("ExamPeriod");
+                oldExams[j][8] = rs.getString("ExamLevel");
+                oldExams[j][9] = rs.getString("Semester");
+                oldExams[j][10] = rs.getString("Year");
+                j++;
+            }
+            if (oldExams != null) {
+                return oldExams;
+            } else {
+                System.out.println("The query returned no results");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }    
+    
 }
 
