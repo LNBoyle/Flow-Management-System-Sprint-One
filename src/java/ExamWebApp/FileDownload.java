@@ -97,7 +97,7 @@ DatabaseConnection db = new DatabaseConnection();
                 statement.close();
                 conn.close();
             } catch (SQLException e) {
-                System.err.println("Connot close connecton!");
+                System.err.println("Cannot close connecton!");
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
