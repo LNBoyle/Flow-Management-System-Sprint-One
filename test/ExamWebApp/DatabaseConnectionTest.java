@@ -411,6 +411,44 @@ public class DatabaseConnectionTest {
             fail("The test case is a prototype.");
         }
     }
+    
+    /**
+     * Test of CreateOldVersion method, of class DatabaseConnection.
+     */
+    @Test
+    public void testCreateOldVersionTrue() {
+        System.out.println("CreateOldVersion");
+        int examID = 4;
+        
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = true;
+        
+        boolean result = tester.createOldVersion(examID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+    
+    /**
+     * Test of CreateOldVersion method, of class DatabaseConnection.
+     */
+    @Test
+    public void testCreateOldVersionFalse() {
+        System.out.println("CreateOldVersion");
+        int examID = 9999;
+        
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = false;
+        
+        boolean result = tester.createOldVersion(examID);
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
 
     
 }

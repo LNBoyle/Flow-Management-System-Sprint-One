@@ -930,12 +930,19 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
         return null;
-}   
+    }   
     
     public Blob getExamPaper(String id){
         
         return null;
     }
+    
+    public boolean createOldVersion(int examID){
+        
+        return false;
     }
+  
+    
+}
 
 
