@@ -1,5 +1,7 @@
+<%@page import="java.sql.Blob"%>
 <%@page import="ExamWebApp.*"%>
 <%@page import="ExamWebApp.DeadLine"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,7 @@
 
         </div>
 
-       
+
 
         <%
             DeadLine deadline = new DeadLine();
@@ -44,50 +46,60 @@
 
     %>
     <div id="mainBody">
-    <div id="tableDiv" class="split">
-        <table>
-            <tr>
-                <th class="headerTable">Exam ID</th>
-                <th class="headerTable">Exam Title</th>
-                <th class="headerTable">Module Code</th>
-                <th class="headerTable">Module Coordinator</th>
-                <th class="headerTable">External Examiner</th>
-                <th class="headerTable">Exam Vetting Committee</th>
-                <th type="hidden" class="headerTable">Exam</th>
-            </tr>
-            <%            for (int i = 0; i < exam.length; i++) {
-            %>
-            <tr class="clickable-row" data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
-                <td><%out.print(exam[i][0]);%></td>
-                <td><%out.print(exam[i][1]);%></td>
-                <td><%out.print(exam[i][2]);%></td>
-                <td><%out.print(exam[i][3]);%></td>
-                <td><%out.print(exam[i][4]);%></td>
-                <td><%out.print(exam[i][5]);%></td>
-             
-            </tr>
-            <%
-                }
-            %>
-        </table>
-    </div>
+        <div id="tableDiv" class="split">
+            <table>
+                <tr>
+                    <th class="headerTable">Exam ID</th>
+                    <th class="headerTable">Exam Title</th>
+                    <th class="headerTable">Module Code</th>
+                    <th class="headerTable">Module Coordinator</th>
+                    <th class="headerTable">External Examiner</th>
+                    <th class="headerTable">Exam Vetting Committee</th>
+                    <th hidden class="headerTable">Exam</th>
+                </tr>
+                <%            for (int i = 0; i < exam.length; i++) {
+                        String blobString = null;
+                        Blob examPaper = db.getExamPaper(exam[i][0]);
+                        if (examPaper != null) {
+                            String type = "";
+                            int blobLength = (int) examPaper.length();
+                            byte[] blobAsBytes = examPaper.getBytes(1, blobLength);
+                            blobString = Base64.getEncoder().encodeToString(blobAsBytes);
+                        }
 
-    <div id="pdfDiv" class="split">
-        <object id="pdf"
-            data="images/Medical Elective Application Form.pdf"
-            type="application/pdf"
-            width="100%"
-            height="100%">
-            <iframe
-                src="images/Medical Elective Application Form.pdf"
-                width="100%"
-                height="100%"
-                style="border: none;">
-                <p>Your browser does not support PDFs.
-                    <a href="https://example.com/test.pdf">Download the PDF</a>.</p>
-            </iframe>
-        </object>
-    </div>
+                %>
+
+                <tr class="clickable-row" data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
+                    <td><%out.print(exam[i][0]);%></td>
+                    <td><%out.print(exam[i][1]);%></td>
+                    <td><%out.print(exam[i][2]);%></td>
+                    <td><%out.print(exam[i][3]);%></td>
+                    <td><%out.print(exam[i][4]);%></td>
+                    <td><%out.print(exam[i][5]);%></td>
+                    <td hidden><%out.print(blobString);%></td>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+
+        <div id="pdfDiv" class="split">
+            <object id="pdf"
+                    data=""
+                    type="application/pdf"
+                    width="100%"
+                    height="100%">
+                <iframe id="frame"
+                        src=""
+                        width="100%"
+                        height="100%"
+                        style="border: none;">
+                    <p>Your browser does not support PDFs.
+                        <a href="https://example.com/test.pdf">Download the PDF</a>.</p>
+                </iframe>
+            </object>
+        </div>
     </div>
     <!-- 
         REFACTORED CODE - due to the modals on each of the 3 Dashboards all
@@ -101,20 +113,5 @@
         out.print(displayModal.returnModal());
     %>
 
-    <%
-        if (request.getParameter("DownloadExam") != null) {
-            FileDownload download = new FileDownload();
-            if ((request.getParameter("modalExamIDHidden") != null)) {
-                String dowloadExamID = request.getParameter("modalExamIDHidden");
-
-                if (download.download(dowloadExamID) == true) {
-                    System.out.println("Success!");
-    %><script>alert("Exam Successfully Downloaded - You find the downloaded exam in your downloads folder")</script><%
-                } else {
-                    System.out.println("Failure!");
-                }
-            }
-        }
-    %>
 </body>
 </html>

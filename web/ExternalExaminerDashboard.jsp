@@ -23,7 +23,10 @@
     <body>
          <div id="header">
             <nav class="navbar navbar-light">
-                    <span class="navbar-brand">Welcome..</span>
+                     <% DatabaseConnection db = new DatabaseConnection();
+                    String user = db.getName(LoginCheckClass.userID);
+                    out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
+                %>
             </nav>
              
              <a id="back" href="ExternalExaminerDashboard.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
@@ -44,7 +47,6 @@
             %>
             <br>
              <%
-            DatabaseConnection db = new DatabaseConnection();
             String[][] exam = db.getExamLists("External Examiner");
             
             
@@ -84,29 +86,6 @@
     <%
             Modal displayModal = new Modal();
             out.print(displayModal.returnModal());
-        %>
-    
-    <%
-            FileDownload download = new FileDownload();
-            if ((request.getParameter("modalExamIDHidden") != null))
-            {
-                String dowloadExamID = request.getParameter("modalExamIDHidden");
-            
-                if (download.download(dowloadExamID) == true)
-                {
-                    System.out.println("Success!");
-                    %><script>alert("Exam Successfully Downloaded - You find the downloaded exam in your downloads folder")</script><%
-                }
-                else
-                {
-                   System.out.println("Failure!");
-                }
-            }
-        %>
-    
-    
-    
-    
-    
+        %> 
     </body>
 </html>

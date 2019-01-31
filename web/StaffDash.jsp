@@ -28,7 +28,10 @@
 
         <div id="header">
             <nav class="navbar navbar-light">
-                <span class="navbar-brand">Welcome..</span>
+                  <% 
+                    String user = db.getName(LoginCheckClass.userID);
+                    out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
+                %>
             </nav>
             <a id="back" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
             <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
@@ -54,7 +57,9 @@
             <form method=POST">
                 <input type="button" class="btn btn-lg" value="Upload New Exam" name="Upload New Exam" onclick="openPage('FileUpload.jsp')" />
 
-                <button class="btn btn-lg" type="EditExam" name="edit">Edit Current Exam</button>
+                <button class="btn btn-lg" type="button" onclick="openPage('EditExam.jsp')" name="edit">Edit Current Exam</button>
+                
+                
                 <input type="button" class="btn btn-lg" value="View Exam" name="View Exam" onclick="openPage('ViewComments.jsp')" />
             </form>
 
