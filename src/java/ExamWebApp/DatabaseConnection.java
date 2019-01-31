@@ -933,7 +933,23 @@ public class DatabaseConnection {
 }   
     
     public Blob getExamPaper(String id){
-        
+      try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamPaper FROM exam WHERE ExamID = '" + id + "' ;");
+
+            Blob exam = null;
+
+            reslt.next();
+            exam = reslt.getBlob("ExamPaper");
+
+            if (exam != null) {
+                return exam;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
         return null;
     }
     }
