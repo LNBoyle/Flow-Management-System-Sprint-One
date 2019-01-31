@@ -71,10 +71,11 @@
                             
                             <td>
                                 <%
-                                    if(db.isResponseNeeded(Integer.parseInt(comment[i][0])))
+                                    int responseID = db.isResponseNeeded(Integer.parseInt(comment[i][0]));
+                                    if(responseID != 0)
                                     {
                                         out.print("<form action='commentRespond.jsp' method='POST'>"
-                                        + "<button type = 'submit' name = 'respondComment' value = " + comment[i][0] + " > Respond</button>"
+                                        + "<button type = 'submit' name = 'respondComment' value = " + responseID + " > Respond</button>"
                                         + "</form>");
                                     }
                                 
