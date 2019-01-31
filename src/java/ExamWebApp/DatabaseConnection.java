@@ -186,7 +186,7 @@ public class DatabaseConnection {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam;");
+            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam ORDER BY Semester, examID ASC;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -332,7 +332,7 @@ public class DatabaseConnection {
     public String[][] getAllInternalMods() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -364,7 +364,7 @@ public class DatabaseConnection {
     public String[][] getAllExternalExam() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -396,7 +396,7 @@ public class DatabaseConnection {
     public String[][] getAllExamVets() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -628,7 +628,7 @@ public class DatabaseConnection {
     public String[][] getCompletedExams() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ;");
+            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ORDER BY Semester, Status;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -690,7 +690,7 @@ public class DatabaseConnection {
     public String[][] getExamList(String ModuleCoordinator) {
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
+            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ORDER BY ExamID;");
 
             int row = 0;
             if (rs.last()) {
