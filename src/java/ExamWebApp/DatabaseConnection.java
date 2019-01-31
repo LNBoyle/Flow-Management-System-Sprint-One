@@ -1113,5 +1113,138 @@ public class DatabaseConnection {
         }
         return null;
     }    
-    
+    //Checks if there is an exam comment
+    public boolean checkExamComment(int commentID){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE CommentID = " + commentID + ";");
+            
+            if (reslt != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    //Checks if there is an exam response
+    public boolean checkExamResponse(int commentID){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");
+            
+            if (reslt != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    //Gets the Internal Moderator
+    public String[][] getIM(int examID, int commentID) {
+        
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE InternalModerator = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+           
+            
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    //Gets the Exam Vetting Committee
+    public String[][] getEVC(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE ExamVettingComittee = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+
+            //return string from query
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+        //Gets the External Examiner
+    public String[][] getEE(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE ExternalExaminer = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+
+            //return string from query
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
 }
+    
+    
