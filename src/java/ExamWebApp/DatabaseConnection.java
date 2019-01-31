@@ -972,17 +972,17 @@ public class DatabaseConnection {
             String[][] oldExams = new String[row][11];
             int j = 0;
             while (rs.next()) {
-                oldExams[j][0] = reslt.getString("ExamID");
-                oldExams[j][1] = reslt.getString("TimeStamp");
-                oldExams[j][2] = reslt.getString("Title");
-                oldExams[j][3] = reslt.getString("School");
-                oldExams[j][4] = reslt.getString("ModuleCoordinator");
-                oldExams[j][5] = reslt.getString("ModuleCode");
-                oldExams[j][6] = reslt.getString("ExamType");
-                oldExams[j][7] = reslt.getString("ExamPeriod");
-                oldExams[j][8] = reslt.getString("ExamLevel");
-                oldExams[j][9] = reslt.getString("Semester");
-                oldExams[j][10] = reslt.getString("Year");
+                oldExams[j][0] = rs.getString("ExamID");
+                oldExams[j][1] = rs.getString("TimeStamp");
+                oldExams[j][2] = rs.getString("Title");
+                oldExams[j][3] = rs.getString("School");
+                oldExams[j][4] = rs.getString("ModuleCoordinator");
+                oldExams[j][5] = rs.getString("ModuleCode");
+                oldExams[j][6] = rs.getString("ExamType");
+                oldExams[j][7] = rs.getString("ExamPeriod");
+                oldExams[j][8] = rs.getString("ExamLevel");
+                oldExams[j][9] = rs.getString("Semester");
+                oldExams[j][10] = rs.getString("Year");
                 j++;
             }
             if (oldExams != null) {
