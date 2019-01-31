@@ -938,7 +938,19 @@ public class DatabaseConnection {
     }
     
     public boolean createOldVersion(int examID){
-        
+      try {
+            stmt = conn.createStatement();
+            int success = stmt.executeUpdate("Insert INTO oldexams (oldexams.ExamID, oldexams.Title, oldexams.School, oldexams.ModuleCoordinator, oldexams.ModuleCode, oldexams.ExamType, oldexams.ExamPeriod, oldexams.ExamLevel,  oldexams.Semester, oldexams.Year, oldexams.Status, oldexams.ExamPaper, oldexams.SolutionsPaper, oldexams.TimeStamp) (SELECT exam.ExamID, exam.Title, exam.School, exam.ModuleCoordinator, exam.ModuleCode, exam.ExamType, exam.ExamPeriod, exam.ExamLevel,  exam.Semester, exam.Year, exam.Status, exam.ExamPaper, exam.SolutionsPaper, '31/01/2019 02:34:22' FROM exam WHERE exam.examID = " + examID +" );");
+
+            if(success == 1){
+                return true;
+            }else{
+                System.out.println("Exam Does Not Exist");
+                return false;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }        
         return false;
     }
   
