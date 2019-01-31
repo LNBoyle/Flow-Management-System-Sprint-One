@@ -28,7 +28,7 @@ public class DatabaseConnection {
         String address = "jdbc:mysql://silva.computing.dundee.ac.uk/18agileteam8db";
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded!");
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException("Cannot find the driver in the classpath!", e);
@@ -291,7 +291,104 @@ public class DatabaseConnection {
         }
         return false;
     }
+    
+    public String[][] getIM(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE InternalModerator = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+           
+            
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+    public String[][] getEVC(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE ExamVettingComittee = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+
+            //return string from query
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
         
+    public String[][] getEE(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE ExternalExaminer = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+
+            //return string from query
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+    
     public boolean DeleteAccount(String UserID) {
         //Try block to add the repsonse to the comment
         try {
