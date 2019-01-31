@@ -300,7 +300,24 @@ public class DatabaseConnectionTest {
         {
             fail("Incorrect user ID. Check database is reset.");
         }
-    }        
+    }    
+
+ /**
+     * Test of getExamComment method, of class DatabaseConnection.
+     */
+    @Test
+    public void testgetAllResponse() {
+        System.out.println("getAllResponse");
+        int examID = 00000001;
+        DatabaseConnection instance = new DatabaseConnection();
+        String expResult = "Thanks for the feedback";
+        String[][] result = instance.getAllResponse(examID);
+        if (!(result[0][0].equals(expResult)))
+        {
+            // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }    
     
     /**
      * Test of getExamComment method, of class DatabaseConnection.
