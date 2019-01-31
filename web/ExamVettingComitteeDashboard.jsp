@@ -47,7 +47,7 @@
             %>
             <br>
              <%
-            DatabaseConnection db = new DatabaseConnection();
+                 
             String[][] exam = db.getExamLists("Exam Vetting Comittee");
             
             
