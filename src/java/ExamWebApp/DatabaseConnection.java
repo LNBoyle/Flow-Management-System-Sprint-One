@@ -93,18 +93,23 @@ public class DatabaseConnection {
     
     public boolean EditExam(int ExamID, String Title, String School,String ModuleCoordinator,String ModuleCode,String ExamType,String ExamPeriod,String ExamLevel,String Semester,int Year, String DateCreated, String Status,int ExamSetter, int InternalModerator, int ExternalExaminer, int ExamVettingComittee )
     {
-        
+        DatabaseConnection db = new DatabaseConnection();
      //Try block to add the repsonse to the comment
         try {
-            stmt = conn.createStatement();
-            int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "', Status = '" + Status + "' WHERE ExamID = '" + ExamID + "';");
-            int success1 = stmt.executeUpdate("UPDATE assignedexams SET  ModuleCode = '"+ ModuleCode + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +  "' WHERE AssignedExamID = '" + ExamID + "';");     
-            //return true if success, false otherwise
-            if (success + success1  != 2) {
+            if(db.createOldVersion(ExamID)){
+                stmt = conn.createStatement();
+                int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "', Status = '" + Status + "' WHERE ExamID = '" + ExamID + "';");
+                int success1 = stmt.executeUpdate("UPDATE assignedexams SET  ModuleCode = '"+ ModuleCode + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +  "' WHERE AssignedExamID = '" + ExamID + "';");     
+                //return true if success, false otherwise
+                if (success + success1  != 2) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }else{
+                System.out.println("Error creating old exam version");
                 return false;
-            } else {
-                return true;
-            }
+            } 
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
