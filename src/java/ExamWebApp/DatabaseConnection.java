@@ -100,7 +100,9 @@ public class DatabaseConnection {
             int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "', Status = '" + Status + "' WHERE ExamID = '" + ExamID + "';");
             int success1 = stmt.executeUpdate("UPDATE assignedexams SET  ModuleCode = '"+ ModuleCode + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +  "' WHERE AssignedExamID = '" + ExamID + "';");     
             //return true if success, false otherwise
-            if (success + success1  != 2) {
+            if (success + success1  != 2) 
+            
+            {
                 return false;
             } else {
                 return true;
