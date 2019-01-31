@@ -633,7 +633,7 @@ public class DatabaseConnection {
     public String[][] getCompletedExams() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ;");
+            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ORDER BY Semester;");
 
             int rows = 0;
             if (reslt.last()) {
