@@ -1132,5 +1132,105 @@ public class DatabaseConnection {
         }
         return null;
     }    
-    
+        //Checks if there is an exam comment
+    public boolean[][] checkExamComment(int examID){
+        boolean[][] progress = new boolean[3][2];
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT * FROM progressview WHERE ExamID = " + examID + ";");
+            
+            while (reslt.next()){
+                
+                if (reslt.getBoolean("InternalModerator"))
+                {
+                    progress[0][0] = true;
+                    
+                    if(reslt.getString("Responce") != null)
+                    {
+                        progress[0][1] = true;
+                    }
+                }
+                
+                if (reslt.getBoolean("ExamVettingComittee"))
+                {
+                    progress[1][0] = true;
+                    
+                    if(reslt.getString("Responce") != null)
+                    {
+                        progress[1][1] = true;
+                    }
+                }
+                
+                if (reslt.getBoolean("ExternalExaminer"))
+                {
+                    progress[2][0] = true;
+                    
+                    if(reslt.getString("Responce") != null)
+                    {
+                        progress[2][1] = true;
+                    }
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return progress;
+    }
+    public String[][] getExamListProgressLEO() {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ModuleCode, examID, Title FROM exam ORDER BY examID ASC;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+
+            String[][] list = new String[rows][6];
+            int i = 0;
+            //return string from query
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("examID");
+                list[i][1] = reslt.getString("ModuleCode");
+                list[i][2] = reslt.getString("Title");
+                i++;
+            }
+            return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    public String[][] getExamListProgressES() {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT ExamID, exam.ModuleCode, Title FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = '\" + LoginCheckClass.userID + \"' ORDER BY `ExamID` ASC;");
+
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+
+            String[][] list = new String[rows][6];
+            int i = 0;
+            //return string from query
+            while (reslt.next()) {
+                list[i][0] = reslt.getString("examID");
+                list[i][1] = reslt.getString("ModuleCode");
+                list[i][2] = reslt.getString("Title");
+                i++;
+            }
+            return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    } 
 }
