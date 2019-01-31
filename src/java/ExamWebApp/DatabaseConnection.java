@@ -861,10 +861,11 @@ public class DatabaseConnection {
                                 break;
                             }
                         }else{
-                            rs.previous();
                             commentCheckResult.previous();
-                            j--;
-                            break;
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
                         }
                            internalModerator.next();
                             externalExaminer.next();
