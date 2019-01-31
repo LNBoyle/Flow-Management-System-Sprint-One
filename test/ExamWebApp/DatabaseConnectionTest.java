@@ -110,6 +110,53 @@ public class DatabaseConnectionTest {
         }
     }
     
+    
+    @Test
+    public void TestEditExam()
+    {
+      System.out.println("edit");
+        int AssignedExamID = 0;
+        int ExamID = 6;
+        String Title = "Test Title";
+        String School = "School of hard knocks";
+        String ModuleCoordinator = "Abbas Lawal";
+        String ModuleCode = "12345667";
+        String ExamType = "TestOnline";
+        String ExamPeriod = "Test";
+        String ExamLevel = "TestLevel";
+        String Semester = "1";
+        int Year = 2019;
+        String DateCreated = "2019";
+        String Status = "Complete";
+        int ExamSetter = 10007;
+        int InternalModerator = 10007;
+        int ExternalExaminer = 10007;
+        int ExamVettingComittee = 10007;
+        
+        
+        DatabaseConnection instance = new DatabaseConnection();
+        boolean expResult = true;
+        
+        boolean result = instance.EditExam(ExamID, Title, School,ModuleCoordinator,ModuleCode,ExamType,ExamPeriod,ExamLevel,Semester, Year, DateCreated,Status,ExamSetter, InternalModerator,  ExternalExaminer, ExamVettingComittee);
+        assertEquals(expResult, result);
+        
+        
+        if (result != true)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Test of getAllUnassignedExams method, of class DatabaseConnection.
      */
@@ -338,7 +385,15 @@ public class DatabaseConnectionTest {
         String Role = "tester";
         String Email = "test@test.test";
         String Password = "test";
-
+        boolean result = false;
+        DatabaseConnection instance = new DatabaseConnection();
+        Boolean expResult = true; 
+        
+        if (expResult != true)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
     }
 
     /**
