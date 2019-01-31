@@ -50,7 +50,6 @@
         <div>
                 <table border="2">
                     <tr>
-                        <td>Comment ID</td>
                         <td>Exam ID</td>
                         <td>Comment</td>
                         <td>Time Stamp</td>
@@ -63,22 +62,17 @@
                     <tr>
                         <td>
                             <% 
+                                    out.println(id); 
+                                    %> 
+                        </td>
+                        <td>
+                            <% 
                                     out.println(comment[i][0]); 
                                     %> 
                         </td>
                         <td>
                             <% 
                                     out.println(comment[i][1]); 
-                                    %> 
-                        </td>
-                        <td>
-                            <% 
-                                    out.println(comment[i][3]); 
-                                    %> 
-                        </td>
-                        <td>
-                            <% 
-                                    out.println(comment[i][4]); 
                                     %> 
                         </td>
                     </tr>

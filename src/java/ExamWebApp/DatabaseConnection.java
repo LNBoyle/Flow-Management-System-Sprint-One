@@ -416,12 +416,42 @@ public class DatabaseConnection {
         return null;
     }
     
+    public Boolean isResponseNeeded(int examID)
+    {
+        //Try block to add the repsonse to the comment
+        try
+        {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT CommentID FROM comment WHERE ExamID = " + examID + ";");
+
+            //if record exists
+            if (reslt.next())
+            {
+                int commentID = reslt.getInt("CommentID");
+                reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");
+                
+                //if record exists
+                if (reslt.next())
+                {
+                    return true;   
+                }
+            }
+        }
+        //Catch block for errors with SQL
+        catch (SQLException e)
+        {
+            System.out.println("Error: " + e);
+        }
+        return false;    
+    }
+    
+    
     //Function that returns all comments for a given exam
-    public String[] getAllExamComment(int examID) {
+    public String[][] getAllExamComment(int examID) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
+            reslt = stmt.executeQuery("SELECT Comment, CommentTimeStamp  FROM comment WHERE ExamID = " + examID + ";");
 
             int rows = 0;
             if (reslt.last()) {
@@ -429,14 +459,49 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
 
-            String[] list = new String[rows];
+            String[][] list = new String[rows][3];
             int i = 0;
             //return string from query
             while (reslt.next()) {
-                list[i] = reslt.getString("Comment");
+                list[i][0] = reslt.getString("Comment");
+                list[i][1] = reslt.getString("CommentTimeStamp");
                 i++;
             }
             return list;
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    
+     //Function gets all responses from an exam
+    public String[][] getAllResponse(int examID) {
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT responce.CommentID, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID  WHERE exam.ExamID = " + examID + ";");
+        
+            int rows = 0;
+            
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            String[][]list1 = new String[rows][3];
+            int i = 0;
+            
+            while (reslt.next()) {
+                list1[i][0] = reslt.getString("CommentID");
+                list1[i][1] = reslt.getString("Responce");
+                list1[i][2] = reslt.getString("ResponceTimeStamp");
+                i++;
+            }
+            if (list1 != null){
+                return list1;
+            } else {
+                return null;
+            }
+            
         } //Catch block for errors with SQL
         catch (SQLException e) {
             System.out.println("Error: " + e);
@@ -627,10 +692,10 @@ public class DatabaseConnection {
         return null;
     }
     
-    public String[][] getExamList(String ModuleCoordinator) {
+    public String[][] getExamList(int userID) {
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ;");
+            ResultSet rs = stmt.executeQuery("SELECT AssignedExamID,ModuleCode,ExamPeriod,ExamLevel FROM assignedexams WHERE ExamSetter = " + userID + ";");
 
             int row = 0;
             if (rs.last()) {
@@ -641,10 +706,10 @@ public class DatabaseConnection {
             String[][] staffExams = new String[row][4];
             int j = 0;
             while (rs.next()) {
-                staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
-                staffExams[j][1] = rs.getString("Title");
-                staffExams[j][2] = ModuleCoordinator;
-                staffExams[j][3] = rs.getString("ModuleCode");
+                staffExams[j][0] = Integer.toString(rs.getInt("AssignedExamID"));
+                staffExams[j][1] = rs.getString("ModuleCode");
+                staffExams[j][2] = rs.getString("ExamPeriod");
+                staffExams[j][3] = rs.getString("ExamLevel");
                 j++;
             }
             if (staffExams != null) {
