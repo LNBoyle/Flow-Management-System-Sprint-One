@@ -21,7 +21,7 @@
     
          <div id="header">
             <nav class="navbar navbar-light">
-                     <%
+                     <% 
                     String user = db.getName(LoginCheckClass.userID);
                     out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
                 %>

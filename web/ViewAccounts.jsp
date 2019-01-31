@@ -52,7 +52,7 @@
         {
         %>
            <tr class='table-bordered'> 
-             <td <%out.print(ViewUsers[i][0]);%></td>
+             <td> <%out.print(ViewUsers[i][0]);%></td>
              <td><%out.print(ViewUsers[i][1]);%></td>
              <td><%out.print(ViewUsers[i][2]);%></td>
              <td><%out.print(ViewUsers[i][3]);%></td>

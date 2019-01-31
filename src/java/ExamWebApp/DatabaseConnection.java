@@ -186,7 +186,7 @@ public class DatabaseConnection {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam;");
+            reslt = stmt.executeQuery("SELECT ModuleCode, examID, ExamPeriod, ExamLevel, Semester, Year FROM exam ORDER BY Semester, examID ASC;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -332,7 +332,7 @@ public class DatabaseConnection {
     public String[][] getAllInternalMods() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE InternalModerator = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -364,7 +364,7 @@ public class DatabaseConnection {
     public String[][] getAllExternalExam() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExternalExaminer = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -396,7 +396,7 @@ public class DatabaseConnection {
     public String[][] getAllExamVets() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1;");
+            reslt = stmt.executeQuery("SELECT UserID, FirstName, Surname FROM user WHERE ExamVettingComittee = 1 ORDER BY Surname;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -442,91 +442,65 @@ public class DatabaseConnection {
         return null;
     }
     
-    //returns ID of comment, 0 if no response needed
-    public int isResponseNeeded(int examID)
-    {
-        int commentID = 0;
-        
-        try
-        {
-            stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT CommentID FROM comment WHERE ExamID = " + examID + ";");
-
-            //if record exists
-            if (reslt.next())
-            {
-                commentID = reslt.getInt("CommentID");
-                reslt = stmt.executeQuery("SELECT CommentID FROM responce WHERE CommentID = " + commentID + ";");
-                
-                //if there is a response already
-                if (reslt.next())
-                {
-                    commentID = 0;
-                }
-            }
-        }
-        //Catch block for errors with SQL
-        catch (SQLException e)
-        {
-            System.out.println("Error: " + e);
-        }
-        return commentID;    
-    }
-    
-    //returns ID of exam from comment ID
-    public int getExamIDFromComment(int commentID)
-    {
-        int examID = 0;
-        
-        try
-        {
-            stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT ExamID FROM comment WHERE CommentID = " + commentID + ";");
-            
-            if (reslt.next())
-            {
-                examID = reslt.getInt("ExamID");
-            }
-        }
-        //Catch block for errors with SQL
-        catch (SQLException e)
-        {
-            System.out.println("Error: " + e);
-        }
-        return examID;    
-    }
-    
-    
-    //Function that returns all comments for a given exam
-    public String[][] getAllExamComment(int examID) {
-        //Try block to add the repsonse to the comment
-        try {
-            stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Comment, CommentTimeStamp  FROM comment WHERE ExamID = " + examID + ";");
-
-            int rows = 0;
-            if (reslt.last()) {
-                rows = reslt.getRow();
-                reslt.beforeFirst();
-            }
-
-            String[][] list = new String[rows][3];
-            int i = 0;
-            //return string from query
-            while (reslt.next()) {
-                list[i][0] = reslt.getString("Comment");
-                list[i][1] = reslt.getString("CommentTimeStamp");
-                i++;
-            }
-            return list;
-        } //Catch block for errors with SQL
-        catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        return null;
-    }
-    
-     //Function gets all responses from an exam
+    public Boolean isResponseNeeded(int examID)		
+	    {		
+	        //Try block to add the repsonse to the comment		
+	        try		
+	        {		
+	            stmt = conn.createStatement();		
+	            reslt = stmt.executeQuery("SELECT CommentID FROM comment WHERE ExamID = " + examID + ";");		
+			
+	            //if record exists		
+	            if (reslt.next())		
+	            {		
+	                int commentID = reslt.getInt("CommentID");		
+	                reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");		
+	                		
+	                //if record exists		
+	                if (reslt.next())		
+	                {		
+	                    return true;   		
+	                }		
+	            }		
+	        }		
+	        //Catch block for errors with SQL		
+	        catch (SQLException e)		
+	        {		
+	            System.out.println("Error: " + e);		
+	        }		
+	        return false;    		
+	    }
+  
+	    //Function that returns all comments for a given exam
+	    public String[][] getAllExamComment(int examID) {
+	        //Try block to add the repsonse to the comment
+	        try {
+	            stmt = conn.createStatement();
+	            reslt = stmt.executeQuery("SELECT Comment, CommentTimeStamp  FROM comment WHERE ExamID = " + examID + ";");
+			
+	            int rows = 0;
+	            if (reslt.last()) {
+	                rows = reslt.getRow();
+	                reslt.beforeFirst();
+	            }
+			
+	            String[][] list = new String[rows][3];
+	            int i = 0;
+	            //return string from query
+	            while (reslt.next()) {
+	                list[i][0] = reslt.getString("Comment");
+	                list[i][1] = reslt.getString("CommentTimeStamp");		
+	                i++;
+	            }
+	            return list;
+	        } //Catch block for errors with SQL
+	        catch (SQLException e) {
+	            System.out.println("Error: " + e);
+	        }
+	        return null;
+	    }
+  
+    //Function gets all responses from an exam
     public String[][] getAllResponse(int examID) {
         try {
             stmt = conn.createStatement();
@@ -585,15 +559,10 @@ public class DatabaseConnection {
 
     //Function that adds a response to a comment in the database
     public boolean setCommentResponse(int commentID, String newResponse) {
-        
-        Date dNow = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat (" dd/MM/yyyy hh:mm:ss");
-        String timeStamp = ft.format(dNow);
-        
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("INSERT INTO responce (CommentID, Responce, ResponceTimeStamp) VALUES ( " + commentID + ", '" + newResponse + "', '" + timeStamp + "');");
+            int success = stmt.executeUpdate("UPDATE comment SET Response = '" + newResponse + "' WHERE CommentID = " + commentID + ";");
 
             //return true if success, false otherwise
             if (success != 0) {
@@ -689,7 +658,7 @@ public class DatabaseConnection {
     public String[][] getCompletedExams() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ;");
+            reslt = stmt.executeQuery("SELECT * FROM exam WHERE Status = 'Completed' ORDER BY Semester, Status;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -748,10 +717,10 @@ public class DatabaseConnection {
         return null;
     }
     
-    public String[][] getExamList(int userID) {
+    public String[][] getExamList(String ModuleCoordinator) {
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT AssignedExamID,ModuleCode,ExamPeriod,ExamLevel FROM assignedexams WHERE ExamSetter = " + userID + ";");
+            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ORDER BY ExamID;");
 
             int row = 0;
             if (rs.last()) {
@@ -762,10 +731,10 @@ public class DatabaseConnection {
             String[][] staffExams = new String[row][4];
             int j = 0;
             while (rs.next()) {
-                staffExams[j][0] = Integer.toString(rs.getInt("AssignedExamID"));
-                staffExams[j][1] = rs.getString("ModuleCode");
-                staffExams[j][2] = rs.getString("ExamPeriod");
-                staffExams[j][3] = rs.getString("ExamLevel");
+                staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
+                staffExams[j][1] = rs.getString("Title");
+                staffExams[j][2] = ModuleCoordinator;
+                staffExams[j][3] = rs.getString("ModuleCode");
                 j++;
             }
             if (staffExams != null) {
@@ -858,6 +827,12 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
+                        }else{
+                            commentCheckResult.previous();
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
                         }
                         externalExaminer.next();
                         vettingCommittee.next();
@@ -885,8 +860,11 @@ public class DatabaseConnection {
                                 break;
                             }
                         }else{
-                            j--;
-                            break;
+                            commentCheckResult.previous();
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
                         }
                         internalModerator.next();
                         vettingCommittee.next();
@@ -913,8 +891,11 @@ public class DatabaseConnection {
                                 break;
                             }
                         }else{
-                            j--;
-                            break;
+                            commentCheckResult.previous();
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
                         }
                            internalModerator.next();
                             externalExaminer.next();
@@ -1132,5 +1113,138 @@ public class DatabaseConnection {
         }
         return null;
     }    
-    
+    //Checks if there is an exam comment
+    public boolean checkExamComment(int commentID){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE CommentID = " + commentID + ";");
+            
+            if (reslt != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    //Checks if there is an exam response
+    public boolean checkExamResponse(int commentID){
+        try{
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT Responce FROM responce WHERE CommentID = " + commentID + ";");
+            
+            if (reslt != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return false;
+    }
+    //Gets the Internal Moderator
+    public String[][] getIM(int examID, int commentID) {
+        
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE InternalModerator = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+           
+            
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+    //Gets the Exam Vetting Committee
+    public String[][] getEVC(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE ExamVettingComittee = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+
+            //return string from query
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
+        //Gets the External Examiner
+    public String[][] getEE(int examID, int commentID) {
+        //Try block to add the repsonse to the comment
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT FirstName, Surname FROM user WHERE ExternalExaminer = 1 AND UserID = (SELECT UserID FROM comment WHERE ExamID = " + examID + " AND CommentID = " + commentID + ");");
+
+            //return string from query
+            int rows = 0;
+            if (reslt.last()) {
+                rows = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            UserRows = rows;
+            String[][] users = new String[rows][4];
+            int i = 0;
+            while (reslt.next()) {
+                users[i][0] = reslt.getString("FirstName");
+                users[i][1] = reslt.getString("Surname");
+                i++;
+            }
+            if (users != null) {
+                return users;
+            } else {
+                return null;
+            }
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }
 }
+    
+    
