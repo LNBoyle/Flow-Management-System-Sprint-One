@@ -43,6 +43,7 @@
        <br> <input type="button" onclick="location.href='Assignexam.jsp';" value="Assign Exams" /></br>
        <br> <input type="button" onclick="location.href='SetDeadline.jsp';" value="Set Deadline" /></br>
        <br> <input type="button" onclick="location.href='AssignRole.jsp';" value="Assign Role" /></br>
+       <br> <input type="button" onclick="location.href='ViewExamProgress.jsp';" value="View Exam Progress" /></br>
                 
        
 

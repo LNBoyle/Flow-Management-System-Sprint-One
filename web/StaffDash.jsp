@@ -61,6 +61,7 @@
                 
                 
                 <input type="button" class="btn btn-lg" value="View Exam" name="View Exam" onclick="openPage('ViewComments.jsp')" />
+                <input type="button" class="btn btn-lg" value="View Exam Progress" name="View Exam Progress" onclick="openPage('ViewProgressES.jsp')" />
             </form>
 
 
