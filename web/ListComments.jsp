@@ -15,7 +15,7 @@
         
         <%
             String strid = request.getParameter("ListComments");
-           int id = Integer.parseInt(strid);
+            int id = Integer.parseInt(strid);
         %>
         
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
