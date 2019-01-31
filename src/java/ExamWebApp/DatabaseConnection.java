@@ -25,6 +25,7 @@ public class DatabaseConnection {
     public int CompletedRows = 0;
     public int UserRows = 0;
     public int CompletedRowss = 0;
+    public int CompletedRowsss = 0;
 
     public DatabaseConnection() {
         String password = "8326.at8.6238";
@@ -938,9 +939,12 @@ public class DatabaseConnection {
     }
     
     public boolean createOldVersion(int examID){
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat (" dd/MM/yyyy hh:mm:ss");
+        String timeStamp = ft.format(dNow);
       try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("Insert INTO oldexams (oldexams.ExamID, oldexams.Title, oldexams.School, oldexams.ModuleCoordinator, oldexams.ModuleCode, oldexams.ExamType, oldexams.ExamPeriod, oldexams.ExamLevel,  oldexams.Semester, oldexams.Year, oldexams.Status, oldexams.ExamPaper, oldexams.SolutionsPaper, oldexams.TimeStamp) (SELECT exam.ExamID, exam.Title, exam.School, exam.ModuleCoordinator, exam.ModuleCode, exam.ExamType, exam.ExamPeriod, exam.ExamLevel,  exam.Semester, exam.Year, exam.Status, exam.ExamPaper, exam.SolutionsPaper, '31/01/2019 02:34:22' FROM exam WHERE exam.examID = " + examID +" );");
+            int success = stmt.executeUpdate("Insert INTO oldexams (oldexams.ExamID, oldexams.Title, oldexams.School, oldexams.ModuleCoordinator, oldexams.ModuleCode, oldexams.ExamType, oldexams.ExamPeriod, oldexams.ExamLevel,  oldexams.Semester, oldexams.Year, oldexams.Status, oldexams.ExamPaper, oldexams.SolutionsPaper, oldexams.TimeStamp) (SELECT exam.ExamID, exam.Title, exam.School, exam.ModuleCoordinator, exam.ModuleCode, exam.ExamType, exam.ExamPeriod, exam.ExamLevel,  exam.Semester, exam.Year, exam.Status, exam.ExamPaper, exam.SolutionsPaper, '" + timeStamp + "' FROM exam WHERE exam.examID = " + examID +" );");
 
             if(success == 1){
                 return true;
@@ -954,6 +958,43 @@ public class DatabaseConnection {
         return false;
     }
   
+    public String[][] getOldExams() {
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT oldexams.ExamID,oldexams.TimeStamp,oldexams.Title,oldexams.School,oldexams.ModuleCoordinator,oldexams.ModuleCode,oldexams.ExamType,oldexams.ExamPeriod,oldexams.ExamLevel,oldexams.Semester,oldexams.Year FROM oldexams INNER JOIN assignedexams ON oldexams.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = '" + LoginCheckClass.userID + "' ORDER BY `ExamID` ASC, `TimeStamp` DESC ;");
+
+            int row = 0;
+            if (rs.last()) {
+                row = rs.getRow();
+                rs.beforeFirst();
+            }
+            CompletedRowsss = row;
+            String[][] oldExams = new String[row][11];
+            int j = 0;
+            while (rs.next()) {
+                oldExams[j][0] = rs.getString("ExamID");
+                oldExams[j][1] = rs.getString("TimeStamp");
+                oldExams[j][2] = rs.getString("Title");
+                oldExams[j][3] = rs.getString("School");
+                oldExams[j][4] = rs.getString("ModuleCoordinator");
+                oldExams[j][5] = rs.getString("ModuleCode");
+                oldExams[j][6] = rs.getString("ExamType");
+                oldExams[j][7] = rs.getString("ExamPeriod");
+                oldExams[j][8] = rs.getString("ExamLevel");
+                oldExams[j][9] = rs.getString("Semester");
+                oldExams[j][10] = rs.getString("Year");
+                j++;
+            }
+            if (oldExams != null) {
+                return oldExams;
+            } else {
+                System.out.println("The query returned no results");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return null;
+    }    
     
 }
 

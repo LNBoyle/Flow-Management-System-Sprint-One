@@ -449,6 +449,24 @@ public class DatabaseConnectionTest {
             fail("The test case is a prototype.");
         }
     }
+    
+    /**
+     * Test of CreateOldVersion method, of class DatabaseConnection.
+     */
+    @Test
+    public void testGetOldExams() {
+        System.out.println("getOldExams");
+        
+        DatabaseConnection tester = new DatabaseConnection();
+        
+        String[][] result = tester.getOldExams();
+        
+        if (result == null)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
 
     
 }
