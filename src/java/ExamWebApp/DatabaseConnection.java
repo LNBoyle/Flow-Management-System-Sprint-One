@@ -797,6 +797,12 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
+                        }else{
+                            commentCheckResult.previous();
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
                         }
                         externalExaminer.next();
                         vettingCommittee.next();
@@ -824,8 +830,11 @@ public class DatabaseConnection {
                                 break;
                             }
                         }else{
-                            j--;
-                            break;
+                            commentCheckResult.previous();
+                            if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
+                                j--;
+                                break;
+                            }
                         }
                         internalModerator.next();
                         vettingCommittee.next();
@@ -852,6 +861,8 @@ public class DatabaseConnection {
                                 break;
                             }
                         }else{
+                            rs.previous();
+                            commentCheckResult.previous();
                             j--;
                             break;
                         }

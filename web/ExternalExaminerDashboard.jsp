@@ -47,7 +47,6 @@
             %>
             <br>
              <%
-            DatabaseConnection db = new DatabaseConnection();
             String[][] exam = db.getExamLists("External Examiner");
             
             
