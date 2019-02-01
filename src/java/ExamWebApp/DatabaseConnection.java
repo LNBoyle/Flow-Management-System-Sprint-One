@@ -1091,32 +1091,44 @@ public class DatabaseConnection {
             stmt = conn.createStatement();
             reslt = stmt.executeQuery("SELECT * FROM progressview WHERE ExamID = " + examID + ";");
             
+            int row = 0;
+            if (reslt.last()) {
+                row = reslt.getRow();
+                reslt.beforeFirst();
+            }
+            int i = 0;
             while (reslt.next()){
                 
                 if (reslt.getBoolean("InternalModerator"))
                 {
                     progress[0][0] = true;
-                    
+                    i++;
                     if(reslt.getString("Responce") != null)
                     {
                         progress[0][1] = true;
                     }
                 }
+                if(i >= row){
+                    break;
+                }
                 
                 if (reslt.getBoolean("ExamVettingComittee"))
                 {
                     progress[1][0] = true;
-                    
+                    i++;
                     if(reslt.getString("Responce") != null)
                     {
                         progress[1][1] = true;
                     }
                 }
+                if(i >= row){
+                    break;
+                }
                 
                 if (reslt.getBoolean("ExternalExaminer"))
                 {
                     progress[2][0] = true;
-                    
+                    i++;
                     if(reslt.getString("Responce") != null)
                     {
                         progress[2][1] = true;
@@ -1161,7 +1173,7 @@ public class DatabaseConnection {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT ExamID, exam.ModuleCode, Title FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = '\" + LoginCheckClass.userID + \"' ORDER BY `ExamID` ASC;");
+            reslt = stmt.executeQuery("SELECT exam.ExamID, exam.ModuleCode, exam.Title FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = " + LoginCheckClass.userID + " ORDER BY `ExamID` ASC ;");
 
             int rows = 0;
             if (reslt.last()) {
@@ -1169,11 +1181,11 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
 
-            String[][] list = new String[rows][6];
+            String[][] list = new String[rows][3];
             int i = 0;
             //return string from query
             while (reslt.next()) {
-                list[i][0] = reslt.getString("examID");
+                list[i][0] = reslt.getString("ExamID");
                 list[i][1] = reslt.getString("ModuleCode");
                 list[i][2] = reslt.getString("Title");
                 i++;

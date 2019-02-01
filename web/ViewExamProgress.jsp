@@ -24,7 +24,7 @@
     </head>
     <body>
     </body>
-    <form method="POST">
+    
       <div id="header">
             <nav class="navbar navbar-light">
                 <span class="navbar-brand">Welcome..</span>
@@ -35,13 +35,16 @@ function goBack() {
   window.history.back();
 }
 </script>
+
+
             <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
             <form action="Logout.jsp" method="POST">
                 <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>
             </form>
 
         </div>
-        
+    
+    <form action="ViewProgress.jsp" method="POST">    
        <% 
            String[][] comment = db.getExamListProgressLEO();  
        %>
@@ -76,9 +79,8 @@ function goBack() {
                             </td>
                             
                             <td>
-                                <form action="ViewProgress.jsp" method="POST">
                                     <button type = "submit" name = "ViewProgress" value =<% out.print(comment[i][0]); %>> View</button>
-                                 </form> 
+                                 
                             </td>
                             
                             
