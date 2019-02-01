@@ -47,7 +47,7 @@ function goBack() {
             %>
     <br>
     <%                 String[][] exam = db.getExamLists("Internal Moderator");
-
+                       String[][] responces = db.getAllResponse();
 
     %>
     <div id="mainBody">
@@ -87,6 +87,43 @@ function goBack() {
                     }
                 %>
             </table>
+            
+            <br>
+            <h3 class="table3title"> Responces to Comments </h3>
+                    <br>
+            <table class="responces">
+        <tr>
+            <th class="headerTable">Exam ID</th>
+            <th class="headerTable">Module Code</th>
+            <th class="headerTable">Exam Period</th>
+            <th class="headerTable">Exam Type</th>
+            <th class="headerTable">Exam Level</th>
+            <th class="headerTable">Comment</th>
+            <th class="headerTable">Comment Time Stamp</th>
+            <th hidden class="headerTable">Responce</th>
+            <th hidden class="headerTable">Responce Time Stamp</th>
+        </tr>
+        <%
+        for(int i=0;i<responces.length;i++){
+        %>
+        <tr class='clickable-row' data-toggle="modal" data-target="#myOtherModal" onclick="modal(this)">
+                <td><%out.print(responces[i][0]);%></td>
+                <td><%out.print(responces[i][1]);%></td>
+                <td><%out.print(responces[i][2]);%></td>
+                <td><%out.print(responces[i][3]);%></td>
+                <td><%out.print(responces[i][4]);%></td>
+                <td><%out.print(responces[i][5]);%></td>
+                <td><%out.print(responces[i][6]);%></td>
+                <td hidden><%out.print(responces[i][7]);%></td>
+                <td hidden><%out.print(responces[i][8]);%></td>
+            </tr>
+        <%
+        }
+        %>
+    </table>
+            
+    
+            
         </div>
 
         <div id="pdfDiv" class="split">
@@ -106,6 +143,49 @@ function goBack() {
             </object>
         </div>
     </div>
+    
+    <div id="myOtherModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form method="post" action="StaffDash.jsp">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="modalHeader" class="modal-title">Responce</h4>
+                    </div>
+
+                    
+                    <div class="modal-body">
+                        <input type="hidden" name="modalExamIDHidden" id="modalExamIDHidden" value = ' ' />
+                        <input type="hidden" name="modalModuleCodeHidden" id="modalModuleCodeHidden" value = ' ' />
+                        <input type="hidden" name="modalExamPeriodHidden" id="modalExamPeriodHidden" value = ' ' />								
+                        <input type="hidden" name="modalExamTypeHidden" id="modalExamTypeHidden" value = ' ' />
+                        <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
+                        <input type="hidden" name="modalCommentHidden" id="modalCommentHidden" value = ' ' />
+                        <input type="hidden" name="modalCommentTimeStampHidden" id="modalCommentTimeStampHidden" value = ' ' />
+                        <input type="hidden" name="modalResponceHidden" id="modalResponceHidden" value = ' ' />
+                        <input type="hidden" name="modalResponceTimeStampHidden" id="modalResponceTimeStampHidden" value = ' ' />
+                        <p id="modalExamID">Exam ID</p>
+                        <p id="modalModuleCode">Module Code</p>
+                        <p id="modalExamPeriod">Exam Period</p>
+                        <p id="modalExamType">Exam Type</p>
+                        <p id="modalExamLevel">Exam Level</p>
+                        <p id="modalComment">Comment</p>
+                        <p id="modalCommentTimeStamp">Comment Time Stamp</p>
+                        <p id="modalResponce">Responce</p>
+                        <p id="modalResponceTimeStamp">Responce Time Stamp</p>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
     <!-- 
         REFACTORED CODE - due to the modals on each of the 3 Dashboards all
         displaying the same content, just differing depending on which dash
@@ -118,5 +198,14 @@ function goBack() {
         out.print(displayModal.returnModal());
     %>
 
+    
+    
+    
+    
 </body>
+
+
+
+
+
 </html>

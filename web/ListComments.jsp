@@ -49,6 +49,39 @@ function goBack() {
             </div>
         </form>
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <% 
            String[][] comment = db.getAllExamComment(id);  
            String[][] comments = db.getAllResponse(id);

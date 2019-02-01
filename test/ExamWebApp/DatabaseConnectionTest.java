@@ -308,10 +308,9 @@ public class DatabaseConnectionTest {
     @Test
     public void testgetAllResponse() {
         System.out.println("getAllResponse");
-        int examID = 00000001;
         DatabaseConnection instance = new DatabaseConnection();
         String expResult = "Thanks for the feedback";
-        String[][] result = instance.getAllResponse(examID);
+        String[][] result = instance.getAllResponse();
         if (!(result[0][0].equals(expResult)))
         {
             // TODO review the generated test code and remove the default call to fail.
@@ -340,6 +339,20 @@ public class DatabaseConnectionTest {
      * Test of getAllExamComment method, of class DatabaseConnection.
      */
 
+    @Test
+    public void testGetAllExamComment() {
+        System.out.println("getAllExamComment");
+        int examID = 00000001;
+        DatabaseConnection instance = new DatabaseConnection();
+        String expResult = null;
+        String[][] result = instance.getAllExamComment(examID);
+        if ((result[0].equals(expResult)))
+        {
+            // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+        }
+    }
+
 
     /**
      * Test of setComment method, of class DatabaseConnection.
@@ -366,7 +379,7 @@ public class DatabaseConnectionTest {
     @Test
     public void testSetCommentResponse() {
         System.out.println("setCommentResponse");
-        int commentID = 20;
+        String commentID = "20";
         String newResponse = "test";
         DatabaseConnection instance = new DatabaseConnection();
         boolean expResult = true;

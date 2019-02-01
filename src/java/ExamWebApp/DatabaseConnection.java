@@ -25,7 +25,7 @@ public class DatabaseConnection {
     public int CompletedRowss = 0;
     public int CompletedRowsss = 0;
     public int CompletedRowssss = 0;
-    
+    public int CompletedRowsssss = 0;
     public DatabaseConnection() {
         String password = "8326.at8.6238";
         String username = "18agileteam8";
@@ -474,11 +474,11 @@ public class DatabaseConnection {
         return null;
     }
   
-    //Function gets all responses from an exam
-    public String[][] getAllResponse(int examID) {
+    //Function gets all responses to a user
+    public String[][] getAllResponse() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT responce.CommentID, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID  WHERE exam.ExamID = " + examID + ";");
+            reslt = stmt.executeQuery("SELECT exam.examID, exam.ModuleCode, exam.ExamPeriod, exam.ExamType, exam.Examlevel, comment.comment, comment.CommentTimeStamp, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID INNER JOIN assignedexams ON assignedexams.AssignedExamID = exam.ExamID Where comment.UserID = '" + LoginCheckClass.userID + "' ;");
         
             int rows = 0;
             
@@ -486,13 +486,19 @@ public class DatabaseConnection {
                 rows = reslt.getRow();
                 reslt.beforeFirst();
             }
-            String[][]list1 = new String[rows][3];
+            String[][]list1 = new String[rows][9];
             int i = 0;
             
             while (reslt.next()) {
-                list1[i][0] = reslt.getString("CommentID");
-                list1[i][1] = reslt.getString("Responce");
-                list1[i][2] = reslt.getString("ResponceTimeStamp");
+                list1[i][0] = reslt.getString("examID");
+                list1[i][1] = reslt.getString("ModuleCode");
+                list1[i][2] = reslt.getString("ExamPeriod");
+                list1[i][3] = reslt.getString("ExamType");
+                list1[i][4] = reslt.getString("Examlevel");
+                list1[i][5] = reslt.getString("comment");
+                list1[i][6] = reslt.getString("CommentTimeStamp");
+                list1[i][7] = reslt.getString("Responce");
+                list1[i][8] = reslt.getString("ResponceTimeStamp");
                 i++;
             }
             if (list1 != null){
@@ -532,14 +538,17 @@ public class DatabaseConnection {
     }
 
     //Function that adds a response to a comment in the database
-    public boolean setCommentResponse(int commentID, String newResponse) {
+    public boolean setCommentResponse(String commentID, String response) {
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat (" dd/MM/yyyy hh:mm");
+        String timeStamp = ft.format(dNow);
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("UPDATE comment SET Response = '" + newResponse + "' WHERE CommentID = " + commentID + ";");
+            int success = stmt.executeUpdate("INSERT INTO responce (CommentID, Responce, ResponceTimeStamp) VALUES ( '" + commentID + "', '" + response + "', '" + timeStamp +"' ) ;");
 
             //return true if success, false otherwise
-            if (success != 0) {
+            if (success == 1) {
                 return true;
             } else {
                 return false;
@@ -801,12 +810,13 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
-                        }else{
-                            commentCheckResult.previous();
+                        }else if(commentCheckResult.previous()){
                             if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
                                 j--;
                                 break;
                             }
+                        }else{
+                            
                         }
                         externalExaminer.next();
                         vettingCommittee.next();
@@ -833,12 +843,13 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
-                        }else{
-                            commentCheckResult.previous();
+                        }else if(commentCheckResult.previous()){
                             if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
                                 j--;
                                 break;
                             }
+                        }else{
+                            
                         }
                         internalModerator.next();
                         vettingCommittee.next();
@@ -864,12 +875,13 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
-                        }else{
-                            commentCheckResult.previous();
+                        }else if(commentCheckResult.previous()){
                             if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
                                 j--;
                                 break;
                             }
+                        }else{
+                            
                         }
                            internalModerator.next();
                             externalExaminer.next();
@@ -1282,6 +1294,41 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
         
+        return null;
+    }
+    
+    
+    public String[][] getUnrepliedComments() {
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT comment.CommentID, comment.ExamID, Comment, comment.UserID,  exam.ModuleCode, exam.Title  FROM comment LEFT JOIN responce ON comment.CommentID = responce.CommentID INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN assignedexams ON assignedexams.AssignedExamID = exam.ExamID WHERE assignedexams.ExamSetter = '" + LoginCheckClass.userID +"' AND responce.CommentID IS NULL ORDER BY examID, CommentID ASC ;");
+
+            int row = 0;
+            if (rs.last()) {
+                row = rs.getRow();
+                rs.beforeFirst();
+            }
+            CompletedRowsssss = row;
+            String[][] setterExams = new String[row][6];
+            int j = 0;
+            while (rs.next()) {
+                setterExams[j][0] = rs.getString("CommentID");
+                setterExams[j][1] = rs.getString("ExamID");
+                setterExams[j][2] = rs.getString("Comment");
+                setterExams[j][3] = rs.getString("UserID");
+                setterExams[j][4] = rs.getString("ModuleCode");
+                setterExams[j][5] = rs.getString("Title");
+                j++;
+            }
+            if (setterExams != null) {
+                return setterExams;
+            } else {
+                System.out.println("Error getExamSetterList, Array is null");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
         return null;
     }
     
