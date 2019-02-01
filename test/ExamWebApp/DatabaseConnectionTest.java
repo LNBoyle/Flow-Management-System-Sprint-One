@@ -539,6 +539,26 @@ public class DatabaseConnectionTest {
             fail("The test case is a prototype.");
         }
     }
+    
+    
+    /**
+     * Test of getExamSetterList method, of class DatabaseConnection.
+     */
+    @Test
+    public void testgetExamSetterList() {
+        System.out.println("getExamSetterList");
+        DatabaseConnection tester = new DatabaseConnection();
+        LoginCheckClass.userID = "10005"; 
+        String[][] result = tester.getExamSetterList();
+        
+        if (result == null)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("Test Failed, No exams for exam setter");
+        }
+    }
+    
+    
 
     
 }

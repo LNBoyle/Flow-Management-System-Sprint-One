@@ -13,7 +13,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Account</title>
+        <script src="scripts/jquery-1.11.1.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="scripts/ExamSetterDashboard.js"></script>
+        <link href="css/Dashboard.css" rel="stylesheet">
+        <link href="css/Dashboard.css" rel="stylesheet">
+        <title>Exam Setter Dashboard</title>
+        <link rel="icon" type="image/ico" href="https://cdn.dundee.ac.uk/media/dundeewebsite/themes/brandnewhope/img/favicons/apple-icon-57x57.png" />
     </head>
     <body>
         <div id="header">
@@ -28,9 +36,25 @@
         </div>
         
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <h1>Edit an exam</h1>
         
-
   <form method = "POST"> 
   ID of the Exam you want to edit:  
   <br>  
