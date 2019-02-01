@@ -11,12 +11,12 @@ public class LoginCheckClass {
     public static String[] roles = new String[6];
 
     public boolean checkStaffLogin(String email, String password){
-        DatabaseConnection checkStaffdb = new DatabaseConnection();
-        String[] userAccount = checkStaffdb.checkUser(email, password);
+        DatabaseConnection db = new DatabaseConnection();
+        String[] userAccount = db.checkUser(email, password);
         
         if(userAccount != null){
             userID = userAccount[0];
-            for(int i=0; i<6;i++){
+            for(int i=0; i<6; i++){
                 roles[i] = userAccount[i+1];
             }
             return true;
@@ -24,7 +24,7 @@ public class LoginCheckClass {
             return false;
         }
     }
-    
+ 
     public void logout(){
         userID = null;
         roles = new String[6];

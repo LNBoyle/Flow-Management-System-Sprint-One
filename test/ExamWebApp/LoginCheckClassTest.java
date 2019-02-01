@@ -41,14 +41,14 @@ public class LoginCheckClassTest {
      * Test of checkStaffLogin method, of class LoginCheckClass.
      */
     @Test
-    public void testCheckStaffLoginTrue() {
+    public void testCheckStaffLoginTrue(){
         LoginCheckClass login = new LoginCheckClass();
-        System.out.println("CheckStaffLogin Correct Login Credentials");
+        System.out.println("Check Staff Login correct login credentials");
         String email = "l.boyle@dundee.ac.uk";
         String password = "Liam123";
         
         if(!login.checkStaffLogin(email, password)){
-            fail("Error");
+            fail("Incorrect credentials, ERROR");
         }
     }
     
@@ -56,15 +56,15 @@ public class LoginCheckClassTest {
      * Test of checkStaffLogin method, of class LoginCheckClass.
      */
     @Test
-    public void testCheckStaffLoginFalse() {
+    public void testCheckStaffLoginFalse(){
         LoginCheckClass login = new LoginCheckClass();
-        System.out.println("CheckStaffLogin Incorrect Login Credentials");
+        System.out.println("Check Staff Login incorrect login credentials");
         String email = "test.user@dundee.ac.uk";
-        String password = "Test1232";
+        String password = "Test123";
         
         if(login.checkStaffLogin(email, password)){
-            fail("Error");
-        } 
+            fail("Incorrect credentials, ERROR");
+        }
     }
     
 }

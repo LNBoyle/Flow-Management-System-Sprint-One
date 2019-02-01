@@ -137,7 +137,7 @@ public class DatabaseConnection {
     public String[] checkUser(String email, String password){
         try{
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT UserID FROM user WHERE Email= '"+ email + "' AND Password = '" + password + "'");
+            reslt = stmt.executeQuery("SELECT userID FROM user WHERE Email = '" + email + "' AND Password = '" + password + "'");
             String[] userAccount = new String[7];
             while(reslt.next()){
                 userAccount[0] = reslt.getString("UserID");
@@ -157,13 +157,13 @@ public class DatabaseConnection {
             }else{
                 return null;
             }
-        }catch(SQLException exc){
             
+        }catch(SQLException exp){
+            System.out.println("Error sql exception: " + exp);
         }
         return null;
     }
-
-    //Function that returns the module code for a given exam
+      
     public String getExamModule(int examID) {
         //Try block to add the repsonse to the comment
         try {

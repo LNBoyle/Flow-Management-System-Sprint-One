@@ -42,7 +42,6 @@ public class DeadLineTest {
         String userEmail = "l.boyle@dundee.ac.uk" ;
         String userPassword = "Liam123";
         LoginCheckClass login=new LoginCheckClass();
-        login.checkStaffLogin(userEmail,userPassword);
 
     }
     
