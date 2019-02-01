@@ -81,9 +81,22 @@ table{
     top: 80px;
 }
 
+.table3title{
+    position:absolute;
+    top: 320px;
+    left: 190px;
+}
+
 .oldexams{
     position:relative;
     top: 80px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.responces{
+    position:absolute;
+    top: 380px;
     width: 90%;
     margin-left: 5%;
 }
@@ -147,6 +160,9 @@ height: inherit;
 .modal-body{
 	text-align: right;
 }
+
+.modal.in{z-index:10000!important}
+.modal-backdrop.in{z-index:9999!important}
 
 .btn-blue:hover,
 .btn-blue:focus,

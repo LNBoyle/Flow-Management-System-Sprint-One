@@ -474,11 +474,11 @@ public class DatabaseConnection {
         return null;
     }
   
-    //Function gets all responses from an exam
-    public String[][] getAllResponse(int examID) {
+    //Function gets all responses to a user
+    public String[][] getAllResponse() {
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT responce.CommentID, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID  WHERE exam.ExamID = " + examID + ";");
+            reslt = stmt.executeQuery("SELECT exam.examID, exam.ModuleCode, exam.ExamPeriod, exam.ExamType, exam.Examlevel, comment.comment, comment.CommentTimeStamp, responce.Responce, responce.ResponceTimestamp FROM comment INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN responce ON comment.CommentID = responce.CommentID INNER JOIN assignedexams ON assignedexams.AssignedExamID = exam.ExamID Where comment.UserID = '" + LoginCheckClass.userID + "' ;");
         
             int rows = 0;
             
@@ -486,13 +486,19 @@ public class DatabaseConnection {
                 rows = reslt.getRow();
                 reslt.beforeFirst();
             }
-            String[][]list1 = new String[rows][3];
+            String[][]list1 = new String[rows][9];
             int i = 0;
             
             while (reslt.next()) {
-                list1[i][0] = reslt.getString("CommentID");
-                list1[i][1] = reslt.getString("Responce");
-                list1[i][2] = reslt.getString("ResponceTimeStamp");
+                list1[i][0] = reslt.getString("examID");
+                list1[i][1] = reslt.getString("ModuleCode");
+                list1[i][2] = reslt.getString("ExamPeriod");
+                list1[i][3] = reslt.getString("ExamType");
+                list1[i][4] = reslt.getString("Examlevel");
+                list1[i][5] = reslt.getString("comment");
+                list1[i][6] = reslt.getString("CommentTimeStamp");
+                list1[i][7] = reslt.getString("Responce");
+                list1[i][8] = reslt.getString("ResponceTimeStamp");
                 i++;
             }
             if (list1 != null){
@@ -804,12 +810,13 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
-                        }else{
-                            commentCheckResult.previous();
+                        }else if(commentCheckResult.previous()){
                             if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
                                 j--;
                                 break;
                             }
+                        }else{
+                            
                         }
                         externalExaminer.next();
                         vettingCommittee.next();
@@ -836,12 +843,13 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
-                        }else{
-                            commentCheckResult.previous();
+                        }else if(commentCheckResult.previous()){
                             if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
                                 j--;
                                 break;
                             }
+                        }else{
+                            
                         }
                         internalModerator.next();
                         vettingCommittee.next();
@@ -867,12 +875,13 @@ public class DatabaseConnection {
                                 j--;
                                 break;
                             }
-                        }else{
-                            commentCheckResult.previous();
+                        }else if(commentCheckResult.previous()){
                             if(commentCheckResult.getInt("ExamID") == rs.getInt("ExamID")){
                                 j--;
                                 break;
                             }
+                        }else{
+                            
                         }
                            internalModerator.next();
                             externalExaminer.next();

@@ -88,7 +88,7 @@ function goBack() {
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form method="post" action="SchoolOfficeDashboard.jsp">
+                <form method="post" action="downloadServlet">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 id="modalHeader" class="modal-title">Exam Details</h4>
@@ -119,6 +119,8 @@ function goBack() {
                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        
+                        <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
                     </div>
                 </form>
             </div>
@@ -154,11 +156,8 @@ function goBack() {
         
         
         %>
-        <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-          
-        <form style=float:right;padding:100px; >
-                <button  id="download" class="btn btn-default" type="submit" name="submit" value="submit"><i></i>Download</button>
-        </form>
+
+
         
     </body>
 </html>

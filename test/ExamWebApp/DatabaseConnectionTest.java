@@ -308,10 +308,9 @@ public class DatabaseConnectionTest {
     @Test
     public void testgetAllResponse() {
         System.out.println("getAllResponse");
-        int examID = 00000001;
         DatabaseConnection instance = new DatabaseConnection();
         String expResult = "Thanks for the feedback";
-        String[][] result = instance.getAllResponse(examID);
+        String[][] result = instance.getAllResponse();
         if (!(result[0][0].equals(expResult)))
         {
             // TODO review the generated test code and remove the default call to fail.
