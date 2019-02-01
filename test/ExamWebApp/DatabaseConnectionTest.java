@@ -561,11 +561,24 @@ public class DatabaseConnectionTest {
     /**
      * Test of editExamMetaData method, of class DatabaseConnection.
      */
+    @Test
     public void testEditExamMetaData(){
         System.out.println("EditExamMetaData");
         DatabaseConnection tester = new DatabaseConnection();
         boolean expResult = true;
-        boolean result = tester.editExamMetaData();
+        LoginCheckClass.userID = "10007";
+        String ExamID = "1";
+        String Title = "Test Title";
+        String School = "School of hard knocks";
+        String ModuleCoordinator = "Abbas Lawal";
+        String ModuleCode = "12345667";
+        String ExamType = "Online";
+        String ExamPeriod = "Test";
+        String ExamLevel = "TestLevel";
+        String Semester = "1";
+        String Year = "2019";
+        
+        boolean result = tester.editExamMetaData(ExamID,Title, School, ModuleCoordinator, ModuleCode, ExamType, ExamPeriod, ExamLevel, Semester, Year);
         
         if (result != expResult)
         {

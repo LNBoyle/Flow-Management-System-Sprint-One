@@ -1224,7 +1224,28 @@ public class DatabaseConnection {
         return null;
     }
     
-    public boolean editExamMetaData(){
+    public boolean editExamMetaData(String ExamID, String Title, String School,String ModuleCoordinator,String ModuleCode,String ExamType,String ExamPeriod,String ExamLevel,String Semester,String Year){
+        DatabaseConnection db = new DatabaseConnection();
+        int exam = Integer.parseInt(ExamID);
+        try {
+            if(db.createOldVersion(exam)){
+                stmt = conn.createStatement();
+                int success = stmt.executeUpdate("UPDATE exam SET Title = '" + Title + "', School ='"+ School + "', ModuleCoordinator = '" + ModuleCoordinator +"', ModuleCode = '"+ ModuleCode + "', ExamType = '"+ ExamType  + "', ExamPeriod = '"+ ExamPeriod +"', ExamLevel = '"+ ExamLevel +"', Semester = '"+ Semester + "', Year = '"+ Year  + "' WHERE ExamID = '" + ExamID + "';");
+                //return true if success, false otherwise
+                if (success == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
+                System.out.println("Error creating old exam version");
+                return false;
+            } 
+        } //Catch block for errors with SQL
+        catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
         return false;
     }
+    
 }
