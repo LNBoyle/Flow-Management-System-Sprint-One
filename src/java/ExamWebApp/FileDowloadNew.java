@@ -45,7 +45,7 @@ public class FileDowloadNew extends HttpServlet {
             
  
             // queries the database
-            String sql = "SELECT ExamPaper,Title,ModuleCode FROM exam WHERE ExamID= '" + examID + "';";
+            String sql = "SELECT ExamPaper,Title,ModuleCode,ExamPaperFileExtension FROM exam WHERE ExamID= '" + examID + "';";
             PreparedStatement statement = conn.prepareStatement(sql);
             
  
@@ -62,10 +62,12 @@ public class FileDowloadNew extends HttpServlet {
                 ServletContext context = getServletContext();
  
                 // sets MIME type for the file download
-                String mimeType = context.getMimeType(fileName);
-                if (mimeType == null) {        
-                    mimeType = "application/octet-stream";
-                }              
+                String mimeType = "application/octet-stream";
+                if (result.getString("ExamPaperFileExtension").equals("pdf")) {        
+                     mimeType = "application/pdf";
+                } else if(result.getString("ExamPaperFileExtension").equals("docx")){ 
+                    mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                }
                  
                 // set content properties and header attributes for the response
                 response.setContentType(mimeType);
