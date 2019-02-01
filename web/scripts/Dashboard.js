@@ -22,8 +22,9 @@ function alerting(x){
    
 	document.getElementById("pdf").data = "data:application/pdf;base64," + x.cells[6].innerHTML;
         document.getElementById("frame").src = "data:application/pdf;base64," + x.cells[6].innerHTML;
-        
+       
         document.getElementById('ExamIDHidden').value = x.cells[0].innerHTML;
+       document.getElementById('ExamSolutionIDHidden').value = x.cells[0].innerHTML;
         document.getElementById('modalExamIDHidden').value = x.cells[0].innerHTML;
 	document.getElementById('modalExamTitleHidden').value = x.cells[1].innerHTML;
 	document.getElementById('modalModuleCodeHidden').value = x.cells[2].innerHTML;

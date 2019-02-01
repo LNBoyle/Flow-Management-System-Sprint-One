@@ -339,19 +339,7 @@ public class DatabaseConnectionTest {
     /**
      * Test of getAllExamComment method, of class DatabaseConnection.
      */
-    @Test
-    public void testGetAllExamComment() {
-        System.out.println("getAllExamComment");
-        int examID = 00000001;
-        DatabaseConnection instance = new DatabaseConnection();
-        String expResult = null;
-        String[] result = instance.getAllExamComment(examID);
-        if ((result[0].equals(expResult)))
-        {
-            // TODO review the generated test code and remove the default call to fail.
-            fail("The test case is a prototype.");
-        }
-    }
+
 
     /**
      * Test of setComment method, of class DatabaseConnection.
