@@ -8,5 +8,4 @@ Current items within the repository:
 1) Database Creation File (Not finalised)
 2) Login page for website *DONE*
 
-Google Spreadsheet
-https://docs.google.com/spreadsheets/d/1hFRBoaEvUajmGST9gPnjRSelph1FwLbql7e0TqR-Bc0/edit#gid=1557283319
+

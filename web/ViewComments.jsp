@@ -43,6 +43,7 @@ function goBack() {
         </div>
        
        <% 
+
            String[][] comment = db.getUnrepliedComments();  
        %>
        
@@ -112,7 +113,4 @@ function goBack() {
             </div>
         </div>
     </div>
-       
-
-   
 </html>

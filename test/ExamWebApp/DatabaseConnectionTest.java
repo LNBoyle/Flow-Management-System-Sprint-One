@@ -338,6 +338,7 @@ public class DatabaseConnectionTest {
     /**
      * Test of getAllExamComment method, of class DatabaseConnection.
      */
+
     @Test
     public void testGetAllExamComment() {
         System.out.println("getAllExamComment");
@@ -351,6 +352,7 @@ public class DatabaseConnectionTest {
             fail("The test case is a prototype.");
         }
     }
+
 
     /**
      * Test of setComment method, of class DatabaseConnection.

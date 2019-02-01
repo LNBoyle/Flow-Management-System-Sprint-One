@@ -56,12 +56,12 @@ function goBack() {
            String[][] exam = db.getExamList("Iain Murray");      
        %>
        <div>
-            <table border="2">
+            <table>
                 <tr>
-                    <td>Exam ID</td>
-                    <td>Title</td>
-                    <td>Module Coordinator</td>
-                    <td>Module Code</td>
+                    <th class="headerTable">Exam ID</th>
+                    <th class="headerTable">Title</th>
+                    <th class="headerTable">Module Coordinator</th>
+                    <th class="headerTable">Module Code</th>
                 </tr>
                 <%
                     int i = 0;
