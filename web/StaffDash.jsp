@@ -33,7 +33,13 @@
                     out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
                 %>
             </nav>
-            <a id="back" href="StaffDash.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+            <a id="back" onclick="goBack()" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
+                     <script>
+function goBack() {
+  window.history.back();
+}
+</script>
+            
             <a id="home" href="HomePage.jsp" class="btn btn-blue btn-lg toggle"><i class="fa fa-home"></i></a>
             <form action="Logout.jsp" method="POST">
                 <button id="logout" class="btn btn-blue btn-lg toggle" type="submit" name="submit" value="submit"><i class="fa fa-lock"></i></button>

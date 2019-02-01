@@ -32,7 +32,7 @@
                 {
                     if(db.checkForExternalExam(examID, Integer.parseInt(LoginCheckClass.userID))){
                         if(db.markExamCompleted(examID)){
-                            System.out.println("Sucess updating to completed");
+                            System.out.println("Success updating to completed");
                         }else{
                             System.out.println("ERROR updating to completed");
                         }
@@ -40,7 +40,7 @@
                     out.println("Success!");
                     out.println(
                             "<center>"
-                            +"<form method = 'POST' action = 'HomePage.jsp' enctype = 'multipart/form-data'>"
+                            +"<form method = 'POST' action = 'revisionServlet' enctype = 'multipart/form-data'>"
                             + "<input type='hidden' name='hiddenID' value='"+request.getParameter("hiddenID")+"'/>"
                             + "<input type='file' name='ExamPaper' size='50'/>" 
                             + "<input type='file' name='ExamSolution' size='50'/>" 
