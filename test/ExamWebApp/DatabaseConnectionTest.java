@@ -539,6 +539,55 @@ public class DatabaseConnectionTest {
             fail("The test case is a prototype.");
         }
     }
+    
+    
+    /**
+     * Test of getExamSetterList method, of class DatabaseConnection.
+     */
+    @Test
+    public void testgetExamSetterList() {
+        System.out.println("getExamSetterList");
+        DatabaseConnection tester = new DatabaseConnection();
+        LoginCheckClass.userID = "10007"; 
+        String[][] result = tester.getExamSetterList();
+        
+        if (result == null)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("Test Failed, No exams for exam setter");
+        }
+    }
+    
+    /**
+     * Test of editExamMetaData method, of class DatabaseConnection.
+     */
+    @Test
+    public void testEditExamMetaData(){
+        System.out.println("EditExamMetaData");
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = true;
+        LoginCheckClass.userID = "10007";
+        String ExamID = "1";
+        String Title = "Test Title";
+        String School = "School of hard knocks";
+        String ModuleCoordinator = "Abbas Lawal";
+        String ModuleCode = "12345667";
+        String ExamType = "Online";
+        String ExamPeriod = "Test";
+        String ExamLevel = "TestLevel";
+        String Semester = "1";
+        String Year = "2019";
+        
+        boolean result = tester.editExamMetaData(ExamID,Title, School, ModuleCoordinator, ModuleCode, ExamType, ExamPeriod, ExamLevel, Semester, Year);
+        
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("Test Failed, No exams for exam setter");
+        }
+    }
+    
+    
 
     
 }
