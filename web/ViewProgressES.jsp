@@ -24,7 +24,7 @@
     </head>
     <body>
     </body>
-    <form method="POST">
+    
       <div id="header">
             <nav class="navbar navbar-light">
                 <span class="navbar-brand">Welcome..</span>
@@ -36,7 +36,8 @@
             </form>
 
         </div>
-        
+    
+        <form action="ViewProgress.jsp" method="POST">
        <% 
            String[][] comment = db.getExamListProgressES();  
        %>
@@ -71,9 +72,8 @@
                             </td>
                             
                             <td>
-                                <form action="ViewProgress.jsp" method="POST">
                                     <button type = "submit" name = "ViewProgress" value =<% out.print(comment[i][0]); %>> View</button>
-                                 </form> 
+                                
                             </td>
                             
                             

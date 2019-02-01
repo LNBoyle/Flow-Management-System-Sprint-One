@@ -24,7 +24,7 @@
     </head>
     <body>
     </body>
-    <form method="POST">
+    
       <div id="header">
             <nav class="navbar navbar-light">
                 <span class="navbar-brand">Welcome..</span>
@@ -41,7 +41,7 @@ function goBack() {
             </form>
 
         </div>
-        
+      <form method="POST">  
        <% 
            String[][] comment = db.getExamList("Iain Murray");  
        %>
