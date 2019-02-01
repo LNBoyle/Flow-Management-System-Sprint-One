@@ -60,7 +60,7 @@ input[type=submit]{
 }
 
 input[type=submit]:hover {
-    background-color: #75dbf4;
+    background-color: #4365e2;
     color: white;
     border-color: white;
 }
@@ -121,8 +121,8 @@ input[type=submit]:hover {
    letter-spacing: .05em;
     display: inline-block;
     margin: 0 0 10px;
-    border: 3px solid #00afdb!important;
-    color: #00afdb!important;
+    border: 3px solid #4365e2!important;
+    color: #4365e2!important;
     text-transform: uppercase;
     background: 0 0;
     transition: background 0.5s;
@@ -135,9 +135,10 @@ input[type=submit]:hover {
 .btn-actuallyblue:active {
     cursor: pointer;
     text-align: center;
-    color: #00afdb!important;
-    background: #00afdb!important;
+    color: white!important;
+    background: #4365e2!important;
     text-shadow: none;
+    
 }
 
 /* Navigation Menue */
@@ -183,11 +184,11 @@ input[type=submit]:hover {
 }
 
 .btn:hover{
-    color:#4365e2!important;
+    color:white!important;
 }
 
 .btn-actuallyblue{
-    color: #00afdb!important
+    color: #4365e2!important
 }
 
 .btn-light{
@@ -229,7 +230,7 @@ a:hover {
 }
 
 .active {
-  background-color: #4CAF50;
+  background-color: #4365e2;
   color: black;
 }
 

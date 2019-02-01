@@ -58,8 +58,10 @@
                                 Would you like to attach any annotated copies of exams?
                             <form method = 'POST' action = 'revisionServlet' enctype = 'multipart/form-data'>
                             <input type='hidden' name='hiddenID' value='"+request.getParameter("hiddenID")+"'/>
-                            <input type='file' name='ExamPaper' size='50'/>
-                            <input type='file' name='ExamSolution' size='50'/>
+                            
+                            EXAM<input type='file' name='ExamPaper' size='50'/>
+                            
+                            SOLUTIONS<input type='file' name='ExamSolution' size='50'/>
                             <button type = 'submit' name = 'ReturnFromSubmit'>Return</button>
                             </form>
                             </center>

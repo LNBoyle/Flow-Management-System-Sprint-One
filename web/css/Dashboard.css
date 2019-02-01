@@ -58,7 +58,7 @@ input[type=submit]{
 }
 
 input[type=submit]:hover {
-    background-color: #75dbf4;
+    background-color: #4365e2;
     color: white;
     border-color: white;
 }
@@ -277,11 +277,36 @@ height: inherit;
 }
 
 .btn:hover{
-    color:#4365e2!important;
+    color:white!important;
 }
 
 .btn-light{
     background-color: #6c6c6c;
+}
+
+.btn-actuallyblue{
+    
+   letter-spacing: .05em;
+    display: inline-block;
+    margin: 0 0 10px;
+    border: 3px solid #4365e2!important;
+    color: #4365e2!important;
+    text-transform: uppercase;
+    background: 0 0;
+    transition: background 0.5s;
+    padding: 5 5!important;
+    
+}
+
+.btn-actuallyblue:hover,
+.btn-actuallyblue:focus,
+.btn-actuallyblue:active {
+    cursor: pointer;
+    text-align: center;
+    color: white!important;
+    background: #4365e2!important;
+    text-shadow: none;
+    
 }
 
 .toggle {
@@ -319,7 +344,7 @@ a:hover {
 }
 
 .active {
-  background-color: #4CAF50;
+  background-color: #4365e2;
   color: black;
 }
 
