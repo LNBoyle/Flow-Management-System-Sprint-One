@@ -10,8 +10,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
+              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="scripts/jquery-1.11.1.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="scripts/Dashboard.js"></script>
+        <link href="css/Dashboard.css" rel="stylesheet">
+        <link rel="icon" type="image/ico" href="https://cdn.dundee.ac.uk/media/dundeewebsite/themes/brandnewhope/img/favicons/apple-icon-57x57.png" />
+        <title>Annotation Upload</title>
     </head>
     <body>
            <div id="header">
@@ -38,16 +45,7 @@
                         }
                     }
                     out.println("Success!");
-                    out.println(
-                            "<center>"
-                            +"<form method = 'POST' action = 'revisionServlet' enctype = 'multipart/form-data'>"
-                            + "<input type='hidden' name='hiddenID' value='"+request.getParameter("hiddenID")+"'/>"
-                            + "<input type='file' name='ExamPaper' size='50'/>" 
-                            + "<input type='file' name='ExamSolution' size='50'/>" 
-                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
-                            + "</form>"
-                            + "</center>"
-                    );
+                    
                 }
                 else
                 {
@@ -55,5 +53,16 @@
                 }
             
         %>
+        
+                            <center>
+                                Would you like to attach any annotated copies of exams?
+                            <form method = 'POST' action = 'revisionServlet' enctype = 'multipart/form-data'>
+                            <input type='hidden' name='hiddenID' value='"+request.getParameter("hiddenID")+"'/>
+                            <input type='file' name='ExamPaper' size='50'/>
+                            <input type='file' name='ExamSolution' size='50'/>
+                            <button type = 'submit' name = 'ReturnFromSubmit'>Return</button>
+                            </form>
+                            </center>
+                    
     </body>
 </html>

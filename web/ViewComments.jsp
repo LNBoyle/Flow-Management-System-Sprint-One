@@ -43,14 +43,18 @@ function goBack() {
         </div>
       <form method="POST">  
        <% 
-           String[][] comment = db.getExamList("Iain Murray");  
+           String[][] comment = db.getExamList(LoginCheckClass.userID);  
        %>
        <div>
-            <table border="2">
+           <br>
+           <br>
+            <table>
                 <tr>
-                    <td>Exam ID</td>
-                    <td>Title</td>
-                    <td>Comment</td>
+                    <th class="headerTable">Exam ID</th>
+                    <th class="headerTable">Title</th>
+                    <th class="headerTable">Module Coordinator</th>
+                    <th class="headerTable"></th>
+                    <th class="headerTable"></th>
                 </tr>
                 <%
                     int i = 0;

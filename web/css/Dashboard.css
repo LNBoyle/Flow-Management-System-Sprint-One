@@ -337,3 +337,13 @@ text-align: center;
 #FormDiv{
    display: inline-block;
 }
+
+h1{
+    font-size: 14pt;
+    
+}
+
+
+#menuButtons{
+    padding-top: 20%;
+}
