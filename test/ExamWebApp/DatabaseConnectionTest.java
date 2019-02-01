@@ -57,45 +57,45 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test of checkUser method, of class DatabaseConnection.
+     * Test of CheckUser method, of class DatabaseConnection.
      */
     @Test
-    public void testCheckUserTrue() {
-        DatabaseConnection dbConnect = new DatabaseConnection();
-        System.out.println("CheckStaffLogin Correct Login Credentials");
+    public void testCheckUserTrue(){
+        DatabaseConnection db = new DatabaseConnection();
+        System.out.println("Check user login when using correct credentials");
         String email = "l.boyle@dundee.ac.uk";
         String password = "Liam123";
         String[] expResult = {"10001","0","1","0","0","0","0"};
         
-        String[] result = dbConnect.checkUser(email, password);
+        String[] result = db.checkUser(email, password);
         
         if(!Arrays.equals(expResult, result)){
-            fail("Error somthing went wrong");
+            fail("Somthing went wrong, arrays dont equal");
+        }
+    }
+    
+    
+    /**
+     * Test of CheckUser method, of class DatabaseConnection.
+     */
+    @Test
+    public void testCheckUserFalse(){
+        DatabaseConnection db = new DatabaseConnection();
+        System.out.println("Check user login when using incorrect credentials");
+        String email = "test.user@dundee.ac.uk";
+        String password = "Test123";
+        String[] expResult = null;
+        
+        String[] result = db.checkUser(email, password);
+        
+        if(!Arrays.equals(expResult, result)){
+            fail("Somthing went wrong, arrays dont equal");
         }
     }
     
     /**
-     * Test of checkUser method, of class DatabaseConnection.
-     */
-    @Test
-    public void testCheckUserFalse() {
-        DatabaseConnection dbConnect = new DatabaseConnection();
-        System.out.println("CheckStaffLogin Incorrect Login Credentials");
-        String email = "test.user@dundee.ac.uk";
-        String password = "Tested123";
-        String[] expResult = null;
-        
-        String[] result = dbConnect.checkUser(email, password);
-        
-        if(!Arrays.equals(expResult, result)){
-            fail("Error somthing went wrong");
-        }
-        
-    }
-
-    /**
-     * Test of getExamModule method, of class DatabaseConnection.
-     */
+    * Test of getExamModule method, of class DatabaseConnection.
+    */
     @Test
     public void testGetExamModule() {
         System.out.println("getExamModule");
