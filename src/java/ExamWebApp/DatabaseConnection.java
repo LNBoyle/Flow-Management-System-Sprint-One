@@ -24,7 +24,8 @@ public class DatabaseConnection {
     public int UserRows = 0;
     public int CompletedRowss = 0;
     public int CompletedRowsss = 0;
-
+    public int CompletedRowssss = 0;
+    
     public DatabaseConnection() {
         String password = "8326.at8.6238";
         String username = "18agileteam8";
@@ -1186,7 +1187,40 @@ public class DatabaseConnection {
     }
     
     public String[][] getExamSetterList() {
-       
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT exam.ExamID,exam.Title,exam.School,exam.ModuleCoordinator,exam.ModuleCode,exam.ExamType,exam.ExamPeriod,exam.ExamLevel,exam.Semester,exam.Year FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = '" + LoginCheckClass.userID + "' ;");
+
+            int row = 0;
+            if (rs.last()) {
+                row = rs.getRow();
+                rs.beforeFirst();
+            }
+            CompletedRowssss = row;
+            String[][] setterExams = new String[row][10];
+            int j = 0;
+            while (rs.next()) {
+                setterExams[j][0] = rs.getString("ExamID");
+                setterExams[j][1] = rs.getString("Title");
+                setterExams[j][2] = rs.getString("School");
+                setterExams[j][3] = rs.getString("ModuleCoordinator");
+                setterExams[j][4] = rs.getString("ModuleCode");
+                setterExams[j][5] = rs.getString("ExamType");
+                setterExams[j][6] = rs.getString("ExamPeriod");
+                setterExams[j][7] = rs.getString("ExamLevel");
+                setterExams[j][8] = rs.getString("Semester");
+                setterExams[j][9] = rs.getString("Year");
+                j++;
+            }
+            if (setterExams != null) {
+                return setterExams;
+            } else {
+                System.out.println("Error getExamSetterList, Array is null");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
         return null;
     }
 }

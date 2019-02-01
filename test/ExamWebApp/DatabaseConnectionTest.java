@@ -548,7 +548,7 @@ public class DatabaseConnectionTest {
     public void testgetExamSetterList() {
         System.out.println("getExamSetterList");
         DatabaseConnection tester = new DatabaseConnection();
-        LoginCheckClass.userID = "10005"; 
+        LoginCheckClass.userID = "10007"; 
         String[][] result = tester.getExamSetterList();
         
         if (result == null)
