@@ -65,8 +65,10 @@ public class FileDowloadNew extends HttpServlet {
                 String mimeType = "application/octet-stream";
                 if (result.getString("ExamPaperFileExtension").equals("pdf")) {        
                      mimeType = "application/pdf";
+                     fileName = fileName + ".pdf";
                 } else if(result.getString("ExamPaperFileExtension").equals("docx")){ 
                     mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                     fileName = fileName + ".docx";
                 }
                  
                 // set content properties and header attributes for the response
