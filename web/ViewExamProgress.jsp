@@ -8,7 +8,6 @@
 
 <%@page import="ExamWebApp.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%DatabaseConnection db = new DatabaseConnection();%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +18,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="scripts/Dashboard.js"></script>
         <link href="css/Dashboard.css" rel="stylesheet">
-        <title>View Exams</title>
+        <title>View Exam Progress</title>
         <link rel="icon" type="image/ico" href="https://cdn.dundee.ac.uk/media/dundeewebsite/themes/brandnewhope/img/favicons/apple-icon-57x57.png" />
     </head>
     <body>
@@ -27,7 +26,10 @@
     
       <div id="header">
             <nav class="navbar navbar-light">
-                <span class="navbar-brand">Welcome..</span>
+                <% DatabaseConnection db = new DatabaseConnection();
+                String user = db.getName(LoginCheckClass.userID);
+                out.print("<span class='navbar-brand'>Welcome " + user + "</span>");
+            %>
             </nav>
          <a id="back" onclick="goBack()" class="btn btn-blue btn-lg toggle"><i class="fa fa-chevron-left"></i></a>
                      <script>

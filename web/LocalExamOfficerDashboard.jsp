@@ -44,17 +44,22 @@
 
     </div>
     <body>
-        <div id="menuButtons">
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'ViewAccounts.jsp';" value="View Account" /></br>
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'DeleteAccount.jsp';" value="Delete Account" /></br>
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'CreateAccount.jsp';" value="Create Account" />  </br> 
-            <br><button class="btn btn-lg btn-actuallyblue" onclick="location.href = 'UpdateAccount.jsp';" value="Update Account" /></br>
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'Assignexam.jsp';" value="Assign Exams" /></br>
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'SetDeadline.jsp';" value="Set Deadline" /></br>
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'AssignRole.jsp';" value="Assign Role" /></br>
-            <br><button class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'ViewExamProgress.jsp';" value="View Exam Progress" /></br>
+    <center>
+         <br>
+          <br>
+           <br> <br>
+           
+           
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'ViewAccounts.jsp';" value="View Account" /></br>
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'DeleteAccount.jsp';" value="Delete Account" /></br>
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'CreateAccount.jsp';" value="Create Account" />  </br> 
+            <br><input type="button" class="btn btn-lg btn-actuallyblue" onclick="location.href = 'UpdateAccount.jsp';" value="Update Account" /></br>
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'Assignexam.jsp';" value="Assign Exams" /></br>
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'SetDeadline.jsp';" value="Set Deadline" /></br>
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'AssignRole.jsp';" value="Assign Role" /></br>
+            <br><input type="button" class="btn btn-lg btn-actuallyblue"  onclick="location.href = 'ViewExamProgress.jsp';" value="View Exam Progress" /></br>
 
-        </div>
+        </center>
     </body>
 
 
