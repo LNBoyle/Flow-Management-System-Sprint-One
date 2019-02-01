@@ -67,10 +67,8 @@ function goBack() {
                     <%
                     int i = 0;
                     int j = 0;
-                    for(j=0; j < comments.length; j++)
+                    for(i=0; i < comment.length; i++)
                     {
-                        for (i=0; i < comment.length; i++)
-                        {
                             %>
                             <tr>
                                 <td>
@@ -85,14 +83,16 @@ function goBack() {
                                 </td>
                                 <td>
                                     <% 
-                                            out.println(comment[i][3]); 
+                                            out.println(comment[i][2]); 
                                             %> 
                                 </td>
                                 <td>
                                     <% 
-                                            out.println(comment[i][4]); 
+                                            out.println(comment[i][3]); 
                                             %> 
                                 </td>
+                                <%  for (j=0; j < comments.length; j++)
+                        {%>
                                 <td>
                                     <% 
                                         if (comment[i][0].equals(comments[j][0])) {
