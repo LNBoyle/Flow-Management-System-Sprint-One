@@ -62,7 +62,6 @@ function goBack() {
             <th class="headerTable">Exam Level</th>
             <th class="headerTable">Semester</th>
             <th class="headerTable">Year</th>
-             <th class="headerTable">Select</th>
         </tr>
         <%
         for(int i=0;i<db.CompletedRows;i++){
@@ -78,7 +77,6 @@ function goBack() {
                 <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][7]);%></td>
                 <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][8]);%></td>
                 <td data-toggle="modal" data-target="#myModal"><%out.print(completedExams[i][9]);%></td>
-                <td><input type="checkbox" name="selectexam" ></td>
             </tr>
         <%
         }
@@ -126,23 +124,7 @@ function goBack() {
             </div>
         </div>
     </div>
-        <%
-            FileDownload download = new FileDownload();
-            if ((request.getParameter("modalExamIDHidden") != null))
-            {
-                String dowloadExamID = request.getParameter("modalExamIDHidden");
-            
-                if (download.download(dowloadExamID) == true)
-                {
-                    System.out.println("Success!");
-                    %><script>alert("Exam Successfully Downloaded - You find the downloaded exam in your downloads folder")</script><%
-                }
-                else
-                {
-                   System.out.println("Failure!");
-                }
-            }
-        %>
+     
         
         
         <% 
