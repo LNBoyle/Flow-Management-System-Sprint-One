@@ -1,3 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author liamboyle
+ */
 package ExamWebApp;
  
 
@@ -18,13 +28,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
-/**
- * A servlet that retrieves a file from MySQL database and lets the client
- * downloads the file.
- * @author www.codejava.net
- */
-@WebServlet("/downloadServlet")
-public class FileDowloadNew extends HttpServlet {
+@WebServlet("/downloadSolutionServlet")
+public class SolutionPaperDownload extends HttpServlet {
  
     // size of byte buffer to send file
     private static final int BUFFER_SIZE = 4096;   
@@ -35,7 +40,7 @@ public class FileDowloadNew extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         // get upload id from URL's parameters
            DatabaseConnection db = new DatabaseConnection();
-        String examID = request.getParameter("modalExamIDHidden");
+        String examID = request.getParameter("ExamSolutionIDHidden");
           Connection conn = db.getConn();
        
          
@@ -45,15 +50,15 @@ public class FileDowloadNew extends HttpServlet {
             
  
             // queries the database
-            String sql = "SELECT ExamPaper,Title,ModuleCode,ExamPaperFileExtension FROM exam WHERE ExamID= '" + examID + "';";
+            String sql = "SELECT SolutionsPaper,Title,ModuleCode,SolutionsPaperFileExtension FROM exam WHERE ExamID= '" + examID + "';";
             PreparedStatement statement = conn.prepareStatement(sql);
             
  
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 // gets file name and file blob data
-                String fileName =  result.getString("ModuleCode") + "-" + result.getString("Title");
-                Blob blob = result.getBlob("ExamPaper");
+                String fileName =  result.getString("ModuleCode") + "-" + result.getString("Title") + " Solutions";
+                Blob blob = result.getBlob("SolutionsPaper");
                 InputStream inputStream = blob.getBinaryStream();
                 int fileLength = inputStream.available();
                  
@@ -63,12 +68,14 @@ public class FileDowloadNew extends HttpServlet {
  
                 // sets MIME type for the file download
                 String mimeType = "application/octet-stream";
-                if (result.getString("ExamPaperFileExtension").equals("pdf")) {        
+                if(result.getString("SolutionsPaperFileExtension")!=null){
+                if (result.getString("SolutionsPaperFileExtension").equals("pdf")) {        
                      mimeType = "application/pdf";
                      fileName = fileName + ".pdf";
-                } else if(result.getString("ExamPaperFileExtension").equals("docx")){ 
+                } else if(result.getString("SolutionsPaperFileExtension").equals("docx")){ 
                     mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
                      fileName = fileName + ".docx";
+                } 
                 }
                  
                 // set content properties and header attributes for the response
