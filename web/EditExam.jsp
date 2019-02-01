@@ -42,6 +42,7 @@
         <br>
         <br>
         <br>
+        <h3>Your Editable Exams</h3>
         <table>
         <tr>
             <th hidden>Exam ID</th>
@@ -58,7 +59,7 @@
         <%
         for(int i=0;i<db.CompletedRowss;i++){
         %>
-            <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="alerting(this)">
+            <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="displayalert(this)">
                 <td hidden><%out.print(examSetterExams[i][0]);%></td>
                 <td><%out.print(examSetterExams[i][1]);%></td>
                 <td><%out.print(examSetterExams[i][2]);%></td>
@@ -97,6 +98,7 @@
                         <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
                         <input type="hidden" name="modalSemesterHidden" id="modalSemesterHidden" value = ' ' />
                         <input type="hidden" name="modalYearHidden" id="modalYearHidden" value = ' ' />
+                        <input type="hidden" name="ExamIDHidden" id="ExamIDHidden" value = ''/>
                         <p id="modalExamID" name="examid">Exam ID</p>
                         <p id="modalExamTitle">Exam Title</p>
                         <p id="modalSchool">School</p>
@@ -113,190 +115,22 @@
                         <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <form action="EditExamm.jsp" method="POST">
-                            <input type="hidden" name="ExamIDHidden" id="ExamIDHidden" value = ''/>
-                            <input type="hidden" name="ExamTitleHidden" id="ExamTitleHidden" value = ' ' />								
-                            <input type="hidden" name="SchoolHidden" id="SchoolHidden" value = ' ' />
-                            <input type="hidden" name="ModuleCoordinatorHidden" id="ModuleCoordinatorHidden" value = ' ' />
-                            <input type="hidden" name="ModuleCodeHidden" id="ModuleCodeHidden" value = ' ' />
-                            <input type="hidden" name="ExamTypeHidden" id="ExamTypeHidden" value = ' ' />
-                            <input type="hidden" name="ExamSittingHidden" id="ExamSittingHidden" value = ' ' />
-                            <input type="hidden" name="ExamLevelHidden" id="ExamLevelHidden" value = ' ' />
-                            <input type="hidden" name="SemesterHidden" id="SemesterHidden" value = ' ' />
-                            <input type="hidden" name="YearHidden" id="YearHidden" value = ' ' />
+                            <input type="hidden" name="1" id="1" value = ' ' />
+                            <input type="hidden" name="2" id="2" value = ' ' />								
+                            <input type="hidden" name="3" id="3" value = ' ' />
+                            <input type="hidden" name="4" id="4" value = ' ' />
+                            <input type="hidden" name="5" id="5" value = ' ' />
+                            <input type="hidden" name="6" id="6" value = ' ' />
+                            <input type="hidden" name="7" id="7" value = ' ' />
+                            <input type="hidden" name="8" id="8" value = ' ' />
+                            <input type="hidden" name="9" id="9" value = ' ' />
+                            <input type="hidden" name="10" id="10" value = ' ' />
                             <button type="submit" id="completed" class="btn btn-default"  name="submit">Edit Exam</button>
                         </form>
                 </div>
             </div>
         </div>
     </div>
-        
-        
-        
-        
-        
-    <br>
-    <br>
-        <br>
-    <br>
-    <br>
-    <br>
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <h1>Edit an exam</h1>
-        
-  <form method = "POST"> 
-  ID of the Exam you want to edit:  
-  <br>  
-  <input type="text" name="examid" value="" pattern="[0-9]+" title="number only">
-  <br>
-  Title:
-  <br>
-  <input type="text" name="title" value="">
-  <br>
-  School:<br>
-  <input type="text" name="school" value="">
-  <br>
-  Module Coordinator:<br>
-  <input type="text" name="modulecoordinator" value="">
-  <br>
-  Module Code:<br>
-  <input type="text" name="modulecode" value="">
-  <br>
-  Exam Type:<br>
-  <input type="text" name="examtype" value="">
-  <br>
-   Exam Period:<br>
-  <input type="text" name="examperiod" value="">
-  <br>
-   Exam Level:<br>
-  <input type="text" name="examlevel" value="">
-  <br>
-  Semester:<br>
-  <input type="text" name="semester" value="" pattern="[0-9]+" title="number only">
-  <br>
-  Year:<br>
-  <input type="text" name="year" value="" pattern="[0-9]+" title="number only">
-  <br>
-  Date Created:<br>
-  <input type="text" name="datecreated" value="" pattern="[0-9]+" title="number only">
-  <br>
-  Status:<br>
-  <input type="text" name="status" value="">
-  <br>
-  Exam Setter:<br>
-  <input type="text" name="examsetter" value="" pattern="[0-9]+" title="number only">
-  <br>
-  Internal Moderator:<br>
-  <input type="text" name="internalmoderator" value="" pattern="[0-9]+" title="number only">
-  <br>
-  External Examiner:<br>
-  <input type="text" name="externalexaminer" value="" pattern="[0-9]+" title="number only" > 
-  <br>
-  Exam Vetting Committee:<br>
-  <input type="text" name="examvettingcommittee" value="" pattern="[0-9]+" title="number only" >
-  <br> <br>
-    <button type = "submit" name = "Update">Update/Change Exam</button>
-  </form> 
-        
-    <% 
-      
-        int AssignedExamID = 0;
-        String Title = "Test Title";
-        String School = "School of hard knocks";
-        String ModuleCoordinator = "Abbas Lawal";
-        String ModuleCode = "12345667";
-        String ExamType = "TestOnline";
-        String ExamPeriod = "Test";
-        String ExamLevel = "TestLevel";
-        String Semester = "1";
-        int Year = 2019;
-        String DateCreated = "2019";
-        String Status = "Complete";
-        int ExamSetter = 10007;
-        int InternalModerator = 10007;
-        int ExternalExaminer = 10007;
-        int ExamVettingComittee = 10007;
-        
-        
-     if (request.getParameter("Update") != null)
-     { 
-        String examid = request.getParameter("examid"); 
-        AssignedExamID =  Integer.parseInt(examid);
-        out.println(AssignedExamID);
-        
-        Title = request.getParameter("title");
-        out.println(Title);
-        School = request.getParameter("school");
-        out.println(School);
-        ModuleCoordinator = request.getParameter("modulecoordinator");
-        out.println(ModuleCoordinator);
-        ModuleCode = request.getParameter("modulecode");
-        out.println(ModuleCode);
-        ExamType = request.getParameter("examtype");
-        out.println(ExamType);
-        ExamPeriod = request.getParameter("examperiod");
-        out.println(ExamPeriod);
-        ExamLevel = request.getParameter("examlevel");
-        out.println(ExamLevel);
-        Semester = request.getParameter("semester");
-        out.println(Semester);
-        
-        
-        String year = request.getParameter("year");
-        Year =  Integer.parseInt(year); 
-        out.println(Year);
-        
-        DateCreated = request.getParameter("datecreated");
-        out.println(DateCreated);
-        
-        Status = request.getParameter("status");
-        out.println(Status);
-        
-        
-
-        
-        String examsetter = request.getParameter("examsetter");
-        ExamSetter =  Integer.parseInt(examsetter); 
-        out.println(ExamSetter);
-        
-        
-        
-        String internalmoderator = request.getParameter("internalmoderator");
-        InternalModerator =  Integer.parseInt(internalmoderator); 
-        out.println(InternalModerator);
-        
-        String externalexaminer = request.getParameter("externalexaminer");
-        ExternalExaminer =  Integer.parseInt(externalexaminer); 
-        out.println(ExternalExaminer);
-        
-
-        String examvettingcommittee = request.getParameter("examvettingcommittee");
-        ExamVettingComittee =  Integer.parseInt(examvettingcommittee); 
-        out.println(ExamVettingComittee);
-        
-        
- 
-        db.EditExam(AssignedExamID, Title, School,ModuleCoordinator,ModuleCode,ExamType,ExamPeriod,ExamLevel,Semester, Year, DateCreated,Status,ExamSetter, InternalModerator,  ExternalExaminer, ExamVettingComittee);
-        
-        
-        
-     }
-   
- 
-
-   
-
-   
-    %>
-        
         
     </body>
 </html>
