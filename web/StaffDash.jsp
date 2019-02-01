@@ -66,7 +66,7 @@ function goBack() {
                 <button class="btn btn-lg" type="button" onclick="openPage('EditExam.jsp')" name="edit">Edit Exam</button>
                 
                 
-                <input type="button" class="btn btn-lg" value="View Exam" name="View Exam" onclick="openPage('ViewComments.jsp')" />
+                <input type="button" class="btn btn-lg" value="View Comments" name="View Exam" onclick="openPage('ViewComments.jsp')" />
                 <input type="button" class="btn btn-lg" value="View Exam Progress" name="View Exam Progress" onclick="openPage('ViewProgressES.jsp')" />
             </form>
 

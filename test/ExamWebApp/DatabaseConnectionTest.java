@@ -345,7 +345,7 @@ public class DatabaseConnectionTest {
         int examID = 00000001;
         DatabaseConnection instance = new DatabaseConnection();
         String expResult = null;
-        String[] result = instance.getAllExamComment(examID);
+        String[][] result = instance.getAllExamComment(examID);
         if ((result[0].equals(expResult)))
         {
             // TODO review the generated test code and remove the default call to fail.
@@ -378,7 +378,7 @@ public class DatabaseConnectionTest {
     @Test
     public void testSetCommentResponse() {
         System.out.println("setCommentResponse");
-        int commentID = 20;
+        String commentID = "20";
         String newResponse = "test";
         DatabaseConnection instance = new DatabaseConnection();
         boolean expResult = true;

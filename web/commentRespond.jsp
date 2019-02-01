@@ -9,17 +9,21 @@
     </head>
     <body>
         <%
-           String strid = request.getParameter("respondComment");
-           int id = Integer.parseInt(strid);
+           
+           String id = request.getParameter("CommentIDHidden");
+           String modulecode = request.getParameter("ModuleCodeHidden");
+           String comment = request.getParameter("CommentHidden");
+
+
         %>
         <%-- Fetch and print exam name and the associated comment --%>
         <h1>
-            Exam: <% out.print(db.getExamModule(id)); %> <br>
-            Comment: <% out.print(db.getExamComment(id)); %> <br>
+            Exam: <% out.print(modulecode); %> <br>
+            Comment: <% out.print(comment); %> <br>
             <%-- Form for user to input response to comment and button to sign their response --%>
             <form action="responseHandler.jsp" method = "POST">
-                Your Response: <input type = "textarea" name = "response" size = 150px required> <br>
-                <input type="hidden" name="hiddenID" value="<% out.print(id); %>"/>
+                Your Response: <input type = "textarea" name = "responce" id = "responce" size = 150px required> <br>
+                <input type="hidden" name="hiddenID" id="hiddenID" value="<% out.print(id); %>"/>
                 <button type = "submit" name = "responseSubmit"> Sign & Submit</button>
             </form>
         </h1>

@@ -41,56 +41,78 @@ function goBack() {
             </form>
 
         </div>
-      <form method="POST">  
+       
        <% 
-           String[][] comment = db.getExamList("Iain Murray");  
+           String[][] comment = db.getUnrepliedComments();  
        %>
-       <div>
-            <table border="2">
-                <tr>
-                    <td>Exam ID</td>
-                    <td>Title</td>
-                    <td>Comment</td>
-                </tr>
-                <%
-                    int i = 0;
-                    for(i=0; i < comment.length; i++)
-                    {
-                        %>
-                        <tr>
-                            <td> 
-                            <% 
-                                out.println(comment[i][0]); 
-                                %> 
-                            </td>
-                            <td>
-                            <% 
-                                out.println(comment[i][1]); 
-                                %> 
-                            </td>
-                            <td>
-                            <% 
-                                out.println(comment[i][2]); 
-                                %> 
-                            </td>
-                            
-                            <td>
-                                <form action="commentRespond.jsp" method="POST">
-                                    <button type = "submit" name = "respondComment" value =<% out.print(comment[i][0]); %>> Respond</button>
-                                 </form> 
-                            </td>
-                            
-                            <td>
-                                <form action="ListComments.jsp" method="POST">
-                                    <button type = "submit" name = "ListComments" value =<% out.print(comment[i][0]); %>> All Comments</button>
-                                 </form> 
-                            </td>
-                        </tr>
-                        <%
-                            
-                    }
-                   %>
-            </table>
-       </div>
-    </form>
+       
+        <table>
+        <tr>
+            <th class="headerTable">Comment ID</th>
+            <th class="headerTable">Exam ID</th>
+            <th hidden>Comment</th>
+            <th class="headerTable">User ID</th>
+            <th class="headerTable">Module Code</th>
+            <th class="headerTable">Title</th>
+        </tr>
+        <%
+        for(int i=0;i<db.CompletedRowsssss;i++){
+        %>
+            <tr class='clickable-row' data-toggle="modal" data-target="#myModal" onclick="alertedthis(this)">
+                <td><%out.print(comment[i][0]);%></td>
+                <td><%out.print(comment[i][1]);%></td>
+                <td hidden><%out.print(comment[i][2]);%></td>
+                <td><%out.print(comment[i][3]);%></td>
+                <td><%out.print(comment[i][4]);%></td>
+                <td><%out.print(comment[i][5]);%></td>
+            </tr>
+        <%
+        }
+
+
+        %>
+    </table>
+       
+    
+        <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form method="post" action="HomePage.jsp">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="modalHeader" class="modal-title">Comment</h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <input type="hidden" name="modalCommentIDHidden" id="modalCommentIDHidden" value = ' ' />
+                        <input type="hidden" name="modalExamIDHidden" id="modalExamIDHidden" value = ' ' />								
+                        <input type="hidden" name="modalCommentHidden" id="modalCommentHidden" value = ' ' />
+                        <input type="hidden" name="modalUserIDHidden" id="modalModuleCoordinatorHidden" value = ' ' />
+                        <input type="hidden" name="modalModuleCodeHidden" id="modalModuleCodeHidden" value = ' ' />
+                        <input type="hidden" name="modalTitleHidden" id="modalTitleHidden" value = ' ' />
+                        <p id="modalCommentID" name="commentid">Comment ID</p>
+                        <p id="modalExamID">Exam ID</p>
+                        <p id="modalComment">Comment</p>
+                        <p id="modalUserID">User ID</p>
+                        <p id="modalModuleCode">Module Code</p>
+                        <p id="modalTitle">Title</p>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <form action="commentRespond.jsp" method="POST">
+                            <input type="hidden" name="CommentIDHidden" id="CommentIDHidden" value = ''/>
+                            <input type="hidden" name="CommentHidden" id="CommentHidden" value = ''/>
+                            <input type="hidden" name="ModuleCodeHidden" id="ModuleCodeHidden" value = ''/>
+                            <button type="submit" id="completed" class="btn btn-default"  name="submit">Reply</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+
+   
 </html>

@@ -25,19 +25,14 @@
             </form>
         </div>
            <%
+           
+            String id = request.getParameter("hiddenID"); 
+            String responce = request.getParameter("responce");    
                
            DatabaseConnection db = new DatabaseConnection();
-           int examID = Integer.parseInt(request.getParameter("hiddenID"));
-           int commentID = Integer.parseInt(db.getCommentID(examID));
-                if ((db.setCommentResponse(commentID, request.getParameter("comment"))) == true)
+           
+                if ((db.setCommentResponse(id, responce)) == true)
                 {
-                    if(db.checkForExternalExam(examID, Integer.parseInt(LoginCheckClass.userID))){
-                        if(db.markExamCompleted(examID)){
-                            System.out.println("Success updating to completed");
-                        }else{
-                            System.out.println("ERROR updating to completed");
-                        }
-                    }
                     out.println("Success!");
                     out.println(
                             "<center>"

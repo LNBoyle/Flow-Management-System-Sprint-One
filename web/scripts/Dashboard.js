@@ -30,6 +30,26 @@ function alerting(x){
 	document.getElementById('modalModuleCoordinatorHidden').value = x.cells[3].innerHTML;
 }
 
+function alertedthis(x){
+    document.getElementById("modalCommentID").innerHTML ="Comment ID: " + x.cells[0].innerHTML;
+    document.getElementById("modalExamID").innerHTML ="Exam ID: " + x.cells[1].innerHTML;
+    document.getElementById("modalComment").innerHTML ="Comment: " + x.cells[2].innerHTML;
+    document.getElementById("modalUserID").innerHTML ="User ID: " + x.cells[3].innerHTML;
+    document.getElementById("modalModuleCode").innerHTML ="Module Code: " + x.cells[4].innerHTML;
+    document.getElementById("modalTitle").innerHTML ="Exam Title: " + x.cells[5].innerHTML;
+    
+    document.getElementById("CommentIDHidden").value = x.cells[0].innerHTML;
+    document.getElementById("CommentHidden").value = x.cells[2].innerHTML;
+    document.getElementById("ModuleCodeHidden").value = x.cells[4].innerHTML;
+    
+    document.getElementById("modalCommentIDHidden").value = x.cells[0].innerHTML;
+    document.getElementById("modalExamIDHidden").value = x.cells[1].innerHTML;
+    document.getElementById("modalCommentHidden").value = x.cells[2].innerHTML;
+    document.getElementById("modalUserIDHidden").value = x.cells[3].innerHTML;
+    document.getElementById("modalModuleCodeHidden").value = x.cells[4].innerHTML;
+    document.getElementById("modalTitleHidden").value = x.cells[5].innerHTML;
+}
+
 function myFunction() {
   var x = document.getElementById("myLinks");
   if (x.style.display === "block") {

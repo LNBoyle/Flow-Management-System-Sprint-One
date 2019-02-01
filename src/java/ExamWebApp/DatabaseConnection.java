@@ -25,7 +25,7 @@ public class DatabaseConnection {
     public int CompletedRowss = 0;
     public int CompletedRowsss = 0;
     public int CompletedRowssss = 0;
-    
+    public int CompletedRowsssss = 0;
     public DatabaseConnection() {
         String password = "8326.at8.6238";
         String username = "18agileteam8";
@@ -532,14 +532,17 @@ public class DatabaseConnection {
     }
 
     //Function that adds a response to a comment in the database
-    public boolean setCommentResponse(int commentID, String newResponse) {
+    public boolean setCommentResponse(String commentID, String response) {
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat (" dd/MM/yyyy hh:mm");
+        String timeStamp = ft.format(dNow);
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            int success = stmt.executeUpdate("UPDATE comment SET Response = '" + newResponse + "' WHERE CommentID = " + commentID + ";");
+            int success = stmt.executeUpdate("INSERT INTO responce (CommentID, Responce, ResponceTimeStamp) VALUES ( '" + commentID + "', '" + response + "', '" + timeStamp +"' ) ;");
 
             //return true if success, false otherwise
-            if (success != 0) {
+            if (success == 1) {
                 return true;
             } else {
                 return false;
@@ -1282,6 +1285,41 @@ public class DatabaseConnection {
             System.out.println("Error: " + exc);
         }
         
+        return null;
+    }
+    
+    
+    public String[][] getUnrepliedComments() {
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT comment.CommentID, comment.ExamID, Comment, comment.UserID,  exam.ModuleCode, exam.Title  FROM comment LEFT JOIN responce ON comment.CommentID = responce.CommentID INNER JOIN exam ON exam.ExamID = comment.ExamID INNER JOIN assignedexams ON assignedexams.AssignedExamID = exam.ExamID WHERE assignedexams.ExamSetter = '" + LoginCheckClass.userID +"' AND responce.CommentID IS NULL ORDER BY examID, CommentID ASC ;");
+
+            int row = 0;
+            if (rs.last()) {
+                row = rs.getRow();
+                rs.beforeFirst();
+            }
+            CompletedRowsssss = row;
+            String[][] setterExams = new String[row][6];
+            int j = 0;
+            while (rs.next()) {
+                setterExams[j][0] = rs.getString("CommentID");
+                setterExams[j][1] = rs.getString("ExamID");
+                setterExams[j][2] = rs.getString("Comment");
+                setterExams[j][3] = rs.getString("UserID");
+                setterExams[j][4] = rs.getString("ModuleCode");
+                setterExams[j][5] = rs.getString("Title");
+                j++;
+            }
+            if (setterExams != null) {
+                return setterExams;
+            } else {
+                System.out.println("Error getExamSetterList, Array is null");
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
         return null;
     }
     
