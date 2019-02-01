@@ -60,7 +60,7 @@ public class CreateExam extends HttpServlet {
             // connects to the database
   
             // constructs SQL statement
-            String sql = "INSERT INTO EXAM (Title, School, ModuleCoordinator, ModuleCode, ExamType, ExamPeriod, ExamLevel, Semester, Year, Status,  ExamPaper, SolutionsPaper) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO EXAM (Title, School, ModuleCoordinator, ModuleCode, ExamType, ExamPeriod, ExamLevel, Semester, Year, Status,  ExamPaper, SolutionsPaper, ExamPaperFileExtension, SolutionsPaperFileExtension) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,request.getParameter("Title"));
             statement.setString(2,request.getParameter("School"));
@@ -77,7 +77,8 @@ public class CreateExam extends HttpServlet {
                 statement.setBlob(11, examPaperStream);
                 statement.setBlob(12, examSolutionStream);
             }
- 
+            statement.setString(13, examPart.getContentType());
+            statement.setString(14, solutionPart.getContentType());
             // sends the statement to the database server
             int row = statement.executeUpdate();
             if (row > 0) {
