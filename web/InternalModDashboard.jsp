@@ -144,6 +144,12 @@ function goBack() {
         </div>
     </div>
     
+    <%
+        Modal displayModal = new Modal();
+        out.print(displayModal.returnModal());
+    %>
+    
+    
     <div id="myOtherModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -157,24 +163,24 @@ function goBack() {
 
                     
                     <div class="modal-body">
-                        <input type="hidden" name="modalExamIDHidden" id="modalExamIDHidden" value = ' ' />
-                        <input type="hidden" name="modalModuleCodeHidden" id="modalModuleCodeHidden" value = ' ' />
-                        <input type="hidden" name="modalExamPeriodHidden" id="modalExamPeriodHidden" value = ' ' />								
-                        <input type="hidden" name="modalExamTypeHidden" id="modalExamTypeHidden" value = ' ' />
-                        <input type="hidden" name="modalExamLevelHidden" id="modalExamLevelHidden" value = ' ' />
-                        <input type="hidden" name="modalCommentHidden" id="modalCommentHidden" value = ' ' />
-                        <input type="hidden" name="modalCommentTimeStampHidden" id="modalCommentTimeStampHidden" value = ' ' />
-                        <input type="hidden" name="modalResponceHidden" id="modalResponceHidden" value = ' ' />
-                        <input type="hidden" name="modalResponceTimeStampHidden" id="modalResponceTimeStampHidden" value = ' ' />
-                        <p id="modalExamID">Exam ID</p>
-                        <p id="modalModuleCode">Module Code</p>
-                        <p id="modalExamPeriod">Exam Period</p>
-                        <p id="modalExamType">Exam Type</p>
-                        <p id="modalExamLevel">Exam Level</p>
-                        <p id="modalComment">Comment</p>
-                        <p id="modalCommentTimeStamp">Comment Time Stamp</p>
-                        <p id="modalResponce">Responce</p>
-                        <p id="modalResponceTimeStamp">Responce Time Stamp</p>
+                        <input type="hidden" name="modalExamIDHidden1" id="modalExamIDHidden1" value = ' ' />
+                        <input type="hidden" name="modalModuleCodeHidden1" id="modalModuleCodeHidden1" value = ' ' />
+                        <input type="hidden" name="modalExamPeriodHidden1" id="modalExamPeriodHidden1" value = ' ' />								
+                        <input type="hidden" name="modalExamTypeHidden1" id="modalExamTypeHidden1" value = ' ' />
+                        <input type="hidden" name="modalExamLevelHidden1" id="modalExamLevelHidden1" value = ' ' />
+                        <input type="hidden" name="modalCommentHidden1" id="modalCommentHidden1" value = ' ' />
+                        <input type="hidden" name="modalCommentTimeStampHidden1" id="modalCommentTimeStampHidden1" value = ' ' />
+                        <input type="hidden" name="modalResponceHidden1" id="modalResponceHidden1" value = ' ' />
+                        <input type="hidden" name="modalResponceTimeStampHidden1" id="modalResponceTimeStampHidden1" value = ' ' />
+                        <p id="modalExamID1">Exam ID</p>
+                        <p id="modalModuleCode1">Module Code</p>
+                        <p id="modalExamPeriod1">Exam Period</p>
+                        <p id="modalExamType1">Exam Type</p>
+                        <p id="modalExamLevel1">Exam Level</p>
+                        <p id="modalComment1">Comment</p>
+                        <p id="modalCommentTimeStamp1">Comment Time Stamp</p>
+                        <p id="modalResponce1">Responce</p>
+                        <p id="modalResponceTimeStamp1">Responce Time Stamp</p>
                     </div>
                 </form>
                 <div class="modal-footer">
@@ -193,10 +199,7 @@ function goBack() {
         class by calling the returnModal function and then this code is placed
         into all 3 of the dashboards to cut out on alot of repeated code.
     -->
-    <%
-        Modal displayModal = new Modal();
-        out.print(displayModal.returnModal());
-    %>
+
 
     
     

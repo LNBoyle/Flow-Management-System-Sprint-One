@@ -52,25 +52,25 @@ function alertedthis(x){
 }
 
 function modal(x){
-    document.getElementById("modalExamID").innerHTML ="Exam ID: " + x.cells[0].innerHTML;
-    document.getElementById("modalModuleCode").innerHTML ="Module Code: " + x.cells[1].innerHTML;
-    document.getElementById("modalExamPeriod").innerHTML ="Exam Period: " + x.cells[2].innerHTML;
-    document.getElementById("modalExamType").innerHTML ="Exam Type: " + x.cells[3].innerHTML;
-    document.getElementById("modalExamLevel").innerHTML ="Exam Level: " + x.cells[4].innerHTML;
-    document.getElementById("modalComment").innerHTML ="Comment: " + x.cells[5].innerHTML;
-    document.getElementById("modalCommentTimeStamp").innerHTML ="Comment Time Stamp: " + x.cells[6].innerHTML;
-    document.getElementById("modalResponce").innerHTML ="Responce: " + x.cells[7].innerHTML;
-    document.getElementById("modalResponceTimeStamp").innerHTML ="Responce Time Stamp: " + x.cells[8].innerHTML;
+    document.getElementById("modalExamID1").innerHTML ="Exam ID: " + x.cells[0].innerHTML;
+    document.getElementById("modalModuleCode1").innerHTML ="Module Code: " + x.cells[1].innerHTML;
+    document.getElementById("modalExamPeriod1").innerHTML ="Exam Period: " + x.cells[2].innerHTML;
+    document.getElementById("modalExamType1").innerHTML ="Exam Type: " + x.cells[3].innerHTML;
+    document.getElementById("modalExamLevel1").innerHTML ="Exam Level: " + x.cells[4].innerHTML;
+    document.getElementById("modalComment1").innerHTML ="Comment: " + x.cells[5].innerHTML;
+    document.getElementById("modalCommentTimeStamp1").innerHTML ="Comment Time Stamp: " + x.cells[6].innerHTML;
+    document.getElementById("modalResponce1").innerHTML ="Responce: " + x.cells[7].innerHTML;
+    document.getElementById("modalResponceTimeStamp1").innerHTML ="Responce Time Stamp: " + x.cells[8].innerHTML;
     
-    document.getElementById("modalExamIDHidden").value = x.cells[0].innerHTML;
-    document.getElementById("modalModuleCodeHidden").value = x.cells[1].innerHTML;
-    document.getElementById("modalExamPeriodHidden").value = x.cells[2].innerHTML;
-    document.getElementById("modalExamTypeHidden").value = x.cells[3].innerHTML;
-    document.getElementById("modalExamLevelHidden").value = x.cells[4].innerHTML;
-    document.getElementById("modalCommentHidden").value = x.cells[5].innerHTML;
-    document.getElementById("modalCommentTimeStampHidden").value = x.cells[6].innerHTML;
-    document.getElementById("modalResponceHidden").value = x.cells[7].innerHTML;
-    document.getElementById("modalResponceTimeStampHidden").value = x.cells[8].innerHTML;
+    document.getElementById("modalExamIDHidden1").value = x.cells[0].innerHTML;
+    document.getElementById("modalModuleCodeHidden1").value = x.cells[1].innerHTML;
+    document.getElementById("modalExamPeriodHidden1").value = x.cells[2].innerHTML;
+    document.getElementById("modalExamTypeHidden1").value = x.cells[3].innerHTML;
+    document.getElementById("modalExamLevelHidden1").value = x.cells[4].innerHTML;
+    document.getElementById("modalCommentHidden1").value = x.cells[5].innerHTML;
+    document.getElementById("modalCommentTimeStampHidden1").value = x.cells[6].innerHTML;
+    document.getElementById("modalResponceHidden1").value = x.cells[7].innerHTML;
+    document.getElementById("modalResponceTimeStampHidden1").value = x.cells[8].innerHTML;
 }
 
 

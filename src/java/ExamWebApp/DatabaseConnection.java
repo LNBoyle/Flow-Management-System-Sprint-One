@@ -818,6 +818,9 @@ public class DatabaseConnection {
                         }else{
                             
                         }
+                        if(j>= row){
+                            break;
+                        }
                         externalExaminer.next();
                         vettingCommittee.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
@@ -851,6 +854,9 @@ public class DatabaseConnection {
                         }else{
                             
                         }
+                        if(j>= row){
+                            break;
+                        }
                         internalModerator.next();
                         vettingCommittee.next();
                         staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
@@ -882,6 +888,9 @@ public class DatabaseConnection {
                             }
                         }else{
                             
+                        }
+                        if(j>= row){
+                            break;
                         }
                            internalModerator.next();
                             externalExaminer.next();
@@ -1329,6 +1338,28 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             System.out.println("Error: " + e);
         }
+        return null;
+    }
+    
+    public String getCommentIDAnnotations(int examID){
+        try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT CommentID FROM comment WHERE ExamID = " + examID + " ORDER BY CommentID DESC ;");
+
+            String LatestCommentID = null;
+
+            reslt.next();
+            LatestCommentID = reslt.getString("CommentID");
+
+            if (LatestCommentID != null) {
+                return LatestCommentID;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        
         return null;
     }
     

@@ -34,15 +34,13 @@
            <%
                
            DatabaseConnection db = new DatabaseConnection();
+           String commentID = null;
            int examID = Integer.parseInt(request.getParameter("hiddenID"));
                 if ((db.setComment(examID, Integer.parseInt(LoginCheckClass.userID),request.getParameter("comment"))) == true)
                 {
-                    if(db.checkForExternalExam(examID, Integer.parseInt(LoginCheckClass.userID))){
-                        if(db.markExamCompleted(examID)){
-                            System.out.println("Success updating to completed");
-                        }else{
-                            System.out.println("ERROR updating to completed");
-                        }
+                    commentID = db.getCommentIDAnnotations(examID);
+                    if(commentID == null){
+                        out.println("Failure!");
                     }
                     out.println("Success!");
                     
@@ -57,12 +55,12 @@
                             <center>
                                 Would you like to attach any annotated copies of exams?
                             <form method = 'POST' action = 'revisionServlet' enctype = 'multipart/form-data'>
-                            <input type='hidden' name='hiddenID' value='"+request.getParameter("hiddenID")+"'/>
+                            <input type='hidden' name='hiddenID' value=' <% out.print(commentID); %> '/>
                             
                             EXAM<input type='file' name='ExamPaper' size='50'/>
                             
                             SOLUTIONS<input type='file' name='ExamSolution' size='50'/>
-                            <button type = 'submit' name = 'ReturnFromSubmit'>Return</button>
+                            <button type = 'submit' name = 'ReturnFromSubmit'>Submit and Confirm</button>
                             </form>
                             </center>
                     

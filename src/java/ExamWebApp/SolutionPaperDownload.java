@@ -69,7 +69,7 @@ public class SolutionPaperDownload extends HttpServlet {
                 // sets MIME type for the file download
                 String mimeType = "application/octet-stream";
                 if(result.getString("SolutionsPaperFileExtension")!=null){
-                if (result.getString("SolutionsPaperFileExtension").equals("pdf")) {        
+                if (result.getString("SolutionsPaperFileExtension").equals("application/pdf")) {        
                      mimeType = "application/pdf";
                      fileName = fileName + ".pdf";
                 } else if(result.getString("SolutionsPaperFileExtension").equals("docx")){ 

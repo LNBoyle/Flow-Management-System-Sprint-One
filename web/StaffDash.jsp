@@ -114,7 +114,7 @@
 
                     <!-- Modal content-->
                     <div class="modal-content">
-                        <form method="post" action="StaffDash.jsp">
+                <form action="downloadServlet" method="POST">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 id="modalHeader" class="modal-title">Exam Details</h4>
@@ -142,9 +142,12 @@
                                 <p id="modalSemester">Semester</p>
                                 <p id="modalYear">Year</p>
                             </div>
-                        </form>
+                      
                         <div class="modal-footer">
+                            
                             <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
+                </form>
+                            
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <form action="CompleteExam.jsp" method="POST">
                                 <input type="hidden" name="ExamIDHidden" id="ExamIDHidden" value = ''/>
@@ -235,7 +238,9 @@
                             </div>
                         </form>
                         <div class="modal-footer">
+                                
                             <button type="submit" name="DownloadExam" class="btn btn-default">Download Exam</button>
+                     
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>

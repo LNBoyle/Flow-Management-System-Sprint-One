@@ -24,7 +24,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet("/revisionServlet")
 @MultipartConfig(maxFileSize = 16177215)
-public class FileUploadRevisions extends HttpServlet {
+public class FileUploadAnnotations extends HttpServlet {
 
     /**
      *
@@ -45,6 +45,7 @@ public class FileUploadRevisions extends HttpServlet {
         Part solutionPart = request.getPart("ExamSolution");
         if (examPart != null && solutionPart == null) {
             // obtains input stream of the upload file
+            System.out.println(examPart.getContentType());
             examPaperStream = examPart.getInputStream();
 
             DatabaseConnection db = new DatabaseConnection();
@@ -54,13 +55,14 @@ public class FileUploadRevisions extends HttpServlet {
             try {
                 // constructs SQL statement
 
-                String sql = "update exam set ExamPaper = ? where ExamID = " + request.getParameter("hiddenID");
+                String sql = "UPDATE comment SET AnnotatedExam = ?, ExamFileType = ? where CommentID = " + request.getParameter("hiddenID");
                 PreparedStatement statement = conn.prepareStatement(sql);
 
                 if (examPaperStream != null) {
                     // fetches input stream of the upload file for the blob column
                     statement.setBlob(1, examPaperStream);
                 }
+                statement.setString(2, examPart.getContentType());
                 // sends the statement to the database server
                 int row = statement.executeUpdate();
                 if (row > 0) {
@@ -92,13 +94,14 @@ public class FileUploadRevisions extends HttpServlet {
             try {
                 // constructs SQL statement
 
-                String sql = "update exam set SolutionsPaper = ? where ExamID = " + request.getParameter("hiddenID");
+                String sql = "UPDATE comment SET AnnotatedSolution = ?, SolutionFileType = ? where CommentID = " + request.getParameter("hiddenID");
                 PreparedStatement statement = conn.prepareStatement(sql);
 
                 if (examSolutionStream != null) {
                     // fetches input stream of the upload file for the blob column
                     statement.setBlob(1, examSolutionStream);
                 }
+                 statement.setString(2, solutionPart.getContentType());
                 // sends the statement to the database server
                 int row = statement.executeUpdate();
                 if (row > 0) {
@@ -125,7 +128,7 @@ public class FileUploadRevisions extends HttpServlet {
             try {
                 // constructs SQL statement
 
-               String sql = "update exam set SolutionsPaper = ?, ExamPaper = ?  where ExamID = " + request.getParameter("hiddenID");
+                String sql = "UPDATE comment SET AnnotatedExam = ?, AnnotatedSolution = ?, ExamFileType = ?,SolutionFileType = ? where CommentID = " + request.getParameter("hiddenID");
                 PreparedStatement statement = conn.prepareStatement(sql);
 
                 if (examSolutionStream != null && examPaperStream != null) {
@@ -133,6 +136,8 @@ public class FileUploadRevisions extends HttpServlet {
                     statement.setBlob(1, examSolutionStream);
                     statement.setBlob(2, examPaperStream);
                 }
+                 statement.setString(3, examPart.getContentType());
+                  statement.setString(4, solutionPart.getContentType());
                 // sends the statement to the database server
                 int row = statement.executeUpdate();
                 if (row > 0) {
