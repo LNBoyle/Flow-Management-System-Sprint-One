@@ -17,30 +17,14 @@
             Exam: <% out.print(db.getExamModule(id)); %> <br>
             Comment: <% out.print(db.getExamComment(id)); %> <br>
             <%-- Form for user to input response to comment and button to sign their response --%>
-            <form method = "POST">
+            <form action="responseHandler.jsp" method = "POST">
                 Your Response: <input type = "textarea" name = "response" size = 150px required> <br>
+                <input type="hidden" name="hiddenID" value="<% out.print(id); %>"/>
                 <button type = "submit" name = "responseSubmit"> Sign & Submit</button>
             </form>
         </h1>
 
-        <%-- Check response on submit and update the database. Tell user if successful. --%>
-        <%
-            if ((request.getParameter("responseSubmit") != null))
-            {
-                if ((db.setCommentResponse(id, request.getParameter("response"))) == true)
-                {
-                    out.println("Success!");
-                    out.println(
-                            "<form method = 'POST' action = 'index.jsp'>"
-                            + "<button type = 'submit' name = 'ReturnFromSubmit'>Return</button>"
-                            + "</form>"
-                    );
-                }
-                else
-                {
-                    out.println("Failure!");
-                }
-            }
-        %>
+       
+      
     </body>
 </html>

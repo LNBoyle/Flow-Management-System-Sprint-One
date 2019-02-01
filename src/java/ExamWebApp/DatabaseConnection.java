@@ -444,11 +444,11 @@ public class DatabaseConnection {
     }
     
     //Function that returns all comments for a given exam
-    public String[] getAllExamComment(int examID) {
+    public String[][] getAllExamComment(int examID) {
         //Try block to add the repsonse to the comment
         try {
             stmt = conn.createStatement();
-            reslt = stmt.executeQuery("SELECT Comment FROM comment WHERE examID = " + examID + ";");
+            reslt = stmt.executeQuery("SELECT CommentID, ExamID, Comment, CommentTimeStamp FROM comment WHERE examID = " + examID + ";");
 
             int rows = 0;
             if (reslt.last()) {
@@ -456,11 +456,14 @@ public class DatabaseConnection {
                 reslt.beforeFirst();
             }
 
-            String[] list = new String[rows];
+            String[][] list = new String[rows][4];
             int i = 0;
             //return string from query
             while (reslt.next()) {
-                list[i] = reslt.getString("Comment");
+                list[i][0] = reslt.getString("CommentID");
+                list[i][1] = reslt.getString("ExamID");
+                list[i][2] = reslt.getString("Comment");
+                list[i][3] = reslt.getString("CommentTimeStamp");
                 i++;
             }
             return list;
@@ -1246,6 +1249,28 @@ public class DatabaseConnection {
             System.out.println("Error: " + e);
         }
         return false;
+    }
+    
+    public String getCommentID(int examID){
+          try {
+            stmt = conn.createStatement();
+            reslt = stmt.executeQuery("SELECT CommentID FROM comment WHERE ExamID = '" + examID + "' ;");
+
+            String commentID = null;
+
+            reslt.next();
+            commentID = reslt.getString("CommentID");
+
+            if (commentID != null) {
+                return commentID;
+            } else {
+                return null;
+            }
+        } catch (SQLException exc) {
+            System.out.println("Error: " + exc);
+        }
+        
+        return null;
     }
     
 }
