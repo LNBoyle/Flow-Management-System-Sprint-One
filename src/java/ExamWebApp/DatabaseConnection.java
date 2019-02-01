@@ -691,10 +691,10 @@ public class DatabaseConnection {
         return null;
     }
     
-    public String[][] getExamList(String ModuleCoordinator) {
+    public String[][] getExamList(String userID) {
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT ExamID,Title,ModuleCode FROM exam WHERE ModuleCoordinator = '" + ModuleCoordinator + "' ORDER BY ExamID;");
+            ResultSet rs = stmt.executeQuery("SELECT exam.ExamID,exam.Title,exam.ModuleCode, exam.ModuleCoordinator FROM exam INNER JOIN assignedexams ON exam.ExamID = assignedexams.AssignedExamID WHERE assignedexams.ExamSetter = '" + userID + "' ORDER BY ExamID;");
 
             int row = 0;
             if (rs.last()) {
@@ -707,7 +707,7 @@ public class DatabaseConnection {
             while (rs.next()) {
                 staffExams[j][0] = Integer.toString(rs.getInt("ExamID"));
                 staffExams[j][1] = rs.getString("Title");
-                staffExams[j][2] = ModuleCoordinator;
+                staffExams[j][2] = rs.getString("ModuleCoordinator");
                 staffExams[j][3] = rs.getString("ModuleCode");
                 j++;
             }
