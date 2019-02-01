@@ -1223,4 +1223,8 @@ public class DatabaseConnection {
         }
         return null;
     }
+    
+    public boolean editExamMetaData(){
+        return false;
+    }
 }

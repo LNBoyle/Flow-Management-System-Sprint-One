@@ -558,6 +558,22 @@ public class DatabaseConnectionTest {
         }
     }
     
+    /**
+     * Test of editExamMetaData method, of class DatabaseConnection.
+     */
+    public void testEditExamMetaData(){
+        System.out.println("EditExamMetaData");
+        DatabaseConnection tester = new DatabaseConnection();
+        boolean expResult = true;
+        boolean result = tester.editExamMetaData();
+        
+        if (result != expResult)
+        {
+        // TODO review the generated test code and remove the default call to fail.
+            fail("Test Failed, No exams for exam setter");
+        }
+    }
+    
     
 
     
